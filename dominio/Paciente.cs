@@ -9,9 +9,14 @@ namespace dominio
     public class Paciente:Persona
     {
         public int IdPaciente { get; set; }
-        public int HistoriaClinica { get; set; }
-        public string NombreUsuario { get; set; }
-        public string Pass { get; set; }
+        public string TipoDocumento { get; set; }
+        public string Documento { get; set; }
+        public string Domicilio { get; set; }
+        public DateTime FechaNacimiento { get; set; }
+
+        //public HistoriaClinica HistoriaClinica { get; set; }
+
+        // public CoberturaMedica CoberturaMedica { get; set; }
 
 
 
