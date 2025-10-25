@@ -10,9 +10,7 @@ namespace dominio
     {
         public int IdUsuario { get; set; }
         public string Email { get; set; }
-
         public string Contrasenia { get; set; }
-
-        //public Permiso IdPermiso { get; set; }
+        public Permiso Permiso { get; set; }
     }
 }
