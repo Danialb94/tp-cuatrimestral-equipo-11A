@@ -14,9 +14,9 @@ namespace dominio
         public string Domicilio { get; set; }
         public DateTime FechaNacimiento { get; set; }
 
-        //public HistoriaClinica HistoriaClinica { get; set; }
+        public HistoriaClinica HistoriaClinica { get; set; }
 
-        // public CoberturaMedica CoberturaMedica { get; set; }
+        public Cobertura CoberturaMedica { get; set; }
 
 
 
