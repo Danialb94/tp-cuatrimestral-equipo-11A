@@ -1,11 +1,18 @@
 ﻿using System;
-using negocio;
-using dominio; 
-using System.Collections.Generic;
+using System.Web.UI;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }
