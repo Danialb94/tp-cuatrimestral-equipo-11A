@@ -1,0 +1,59 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPaciente.master.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.MasterPaciente" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>ClinicApp</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <nav class="navbar navbar-expand-lg pe-5 ps-5" style="background-color: #d3d3d38f;">
+                <div class="container-fluid">
+                    <img src="<%= ResolveUrl("~/Imagenes/Icono.png") %>" class="me-lg-3 rounded-5" style="height: 45px">
+                    <p class="navbar-brand m-0 me-2" style="font-weight: 600;">ClinicApp</p>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="justify-content-end navbar-collapse collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Inicio de pacientes--%>" id="navInicio">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Cartilla Medica--%>" id="navCartilla">Cartilla</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Turnos pendientes--%>" id="navTurnos">Mis Turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="active btn btn-primary nav-link rounded-5" style="color: white; background-color: #0b5ed7;"
+                                    aria-current="page" href="<%--Nuevo Turno--%>" id="navSolicitarTurno">Solicitar Turno</a>
+                            </li>
+                        </ul>
+                        
+
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row" style="background-color: #ffffff;">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
