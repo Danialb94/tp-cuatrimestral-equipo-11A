@@ -36,4 +36,31 @@ public class EspecialidadNegocio
             datos.cerrarConexion();
         }
     }
+
+    public List<string> listarDescripcion()
+    {
+        List<string> lista = new List<string>();
+        AccesoDatos datos = new AccesoDatos();
+
+        try
+        {
+            datos.setearConsulta("SELECT Id, Descripcion, DuracionConsulta FROM Especialidad");
+            datos.ejecutarLectura();
+
+            while (datos.Lector.Read())
+            {
+                lista.Add((string)datos.Lector["Descripcion"]);
+            }
+
+            return lista;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            datos.cerrarConexion();
+        }
+    }
 }
