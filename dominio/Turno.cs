@@ -12,6 +12,6 @@ namespace dominio
         public Paciente Paciente { get; set; }
         public Medico Medico { get; set; }
         public DateTime FechaHora { get; set; }
-        public Estado Estado { get; set; }
+        public string Estado { get; set; }
     }
 }

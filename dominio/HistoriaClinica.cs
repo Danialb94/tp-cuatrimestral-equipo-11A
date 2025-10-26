@@ -10,7 +10,7 @@ namespace dominio
     public class HistoriaClinica
     {
         public int IdHistoriaClinica { get; set; }
-        //public Turno Turno { get; set; };
+        public Turno Turno { get; set; }
         public string Diagnostico { get; set; }
         
     }

@@ -42,11 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administrador.cs" />
-    <Compile Include="Cobertura.cs" />
     <Compile Include="Especialidad.cs" />
-    <Compile Include="Estado.cs" />
     <Compile Include="HistoriaClinica.cs" />
     <Compile Include="Horario.cs" />
+    <Compile Include="Imagen.cs" />
     <Compile Include="Medico.cs" />
     <Compile Include="Paciente.cs" />
     <Compile Include="Permiso.cs" />
