@@ -16,32 +16,47 @@
         <div>
             <nav class="navbar navbar-expand-lg pe-5 ps-5" style="background-color: #d3d3d38f;">
                 <div class="container-fluid">
+
                     <img src="<%= ResolveUrl("~/Imagenes/Icono.png") %>" class="me-lg-3 rounded-5" style="height: 45px">
                     <p class="navbar-brand m-0 me-2" style="font-weight: 600;">ClinicApp</p>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <div class="d-flex ms-auto">
+
+
+
+                        <button class="me-5 navbar-toggler order-last" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
 
                     <div class="justify-content-end navbar-collapse collapse" id="navbarNav">
-                        <ul class="navbar-nav">
+                        <ul class="me-5 navbar-nav p-1 ps-5">
+                            <li class="nav-item"><a class="active btn nav-link" aria-current="page" href="<%--Inicio de pacientes--%>" id="navInicio">Inicio</a></li>
+                            <li class="nav-item"><a class="active btn nav-link" aria-current="page" href="CartillaMedica.aspx" id="navCartilla">Cartilla</a></li>
                             <li class="nav-item">
-                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Inicio de pacientes--%>" id="navInicio">Inicio</a>
+                                <a class="active btn nav-link" aria-current="page" href="<%--Turnos pendientes--%>" id="navTurnos">Mis Turnos</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Cartilla Medica--%>" id="navCartilla">Cartilla</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="active btn nav-link rounded-5" aria-current="page" href="<%--Turnos pendientes--%>" id="navTurnos">Mis Turnos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="active btn btn-primary nav-link rounded-5" style="color: white; background-color: #0b5ed7;"
-                                    aria-current="page" href="<%--Nuevo Turno--%>" id="navSolicitarTurno">Solicitar Turno</a>
+                            <li class="nav-item rounded-5">
+                                <a class="active btn btn-primary nav-link" style="color: white; background-color: #0b5ed7;" aria-current="page" href="SolicitarTurno.aspx" id="navSolicitarTurno">Solicitar Turno</a>
                             </li>
                         </ul>
-                        
+                    </div>
+
+                    <div class="dropdown end-0 me-4 position-absolute top-0">
+                        <a class="dropdown-toggle m-2 nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src=":imagen.urlImagen "
+                                class="rounded-5 order-first order-lg-last me-2"
+                                style="height: 45px"
+                                onerror="this.onerror=null; this.src='<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>';">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="Default.aspx">Cerrar Sesión</a></li>
+                        </ul>
 
                     </div>
+
                 </div>
             </nav>
 

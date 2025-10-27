@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <div>
-            <h1>Encontrá a tu especialista</h1>
+            <h1 class="mt-5">Encontrá a tu especialista</h1>
             <p style="color: gray; font-weight: 100;">¡Conoce a nuestro equipo! Navega la cartilla médica o usa los filtros de nombre o especialidad para encontrar a tu profesional ideal.</p>
         </div>
         <div class="d-flex">
