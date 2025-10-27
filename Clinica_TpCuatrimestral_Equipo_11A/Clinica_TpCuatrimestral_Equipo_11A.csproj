@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CartillaMedica.aspx" />
+    <Content Include="ConfirmarEmail.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
@@ -82,6 +83,13 @@
     </Compile>
     <Compile Include="CartillaMedica.aspx.designer.cs">
       <DependentUpon>CartillaMedica.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmarEmail.aspx.cs">
+      <DependentUpon>ConfirmarEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmarEmail.aspx.designer.cs">
+      <DependentUpon>ConfirmarEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

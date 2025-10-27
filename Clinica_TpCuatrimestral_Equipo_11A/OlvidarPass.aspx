@@ -17,6 +17,7 @@
       <div class="mb-3">
         <div class="form-text">Ingresa tu correo electrónico y te enviaremos un código para reestablecer tu contraseña.</div>
         <label for="txtEmail" class="form-label">Correo Electrónico</label>
+
         <asp:TextBox ID="txtEmail" CssClass="form-control" placeholder="Ingresa tu correo electrónico"  TextMode="Email" runat="server"></asp:TextBox>
        
       </div>
@@ -24,7 +25,7 @@
       
    
 
-<asp:Button ID="btnSubmit" Text="Enviar código" CssClass="btn btn-primary w-100" runat="server" />
+<asp:Button ID="btnSubmit" Text="Enviar código" CssClass="btn btn-primary w-100" runat="server" OnClick="btnSubmit_Click" />
 
 <div class="text-center mt-3">
   <a href="Default.aspx" class="text-decoration-none">Volver al inicio</a>

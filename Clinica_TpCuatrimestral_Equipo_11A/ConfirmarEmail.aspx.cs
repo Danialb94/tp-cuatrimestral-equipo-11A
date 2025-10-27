@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
-    public partial class OlvidarPass : System.Web.UI.Page
+    public partial class ConfirmarEmail : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -16,7 +16,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/ConfirmarEmail.aspx");
+           
         }
     }
 }
