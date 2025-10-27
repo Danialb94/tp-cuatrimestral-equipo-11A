@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="AgendaMedico.aspx" />
     <Content Include="CartillaMedica.aspx" />
+    <Content Include="ConfiguracionMedico.aspx" />
     <Content Include="ConfirmarEmail.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="EditarPerfilPaciente.aspx" />
@@ -76,6 +77,7 @@
     <Content Include="InicioMedico.aspx" />
     <Content Include="OlvidarPass.aspx" />
     <Content Include="ReestablecerPass.aspx" />
+    <Content Include="SeguridadMedico.aspx" />
     <Content Include="SolicitarTurno.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -93,6 +95,13 @@
     </Compile>
     <Compile Include="CartillaMedica.aspx.designer.cs">
       <DependentUpon>CartillaMedica.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfiguracionMedico.aspx.cs">
+      <DependentUpon>ConfiguracionMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfiguracionMedico.aspx.designer.cs">
+      <DependentUpon>ConfiguracionMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="ConfirmarEmail.aspx.cs">
       <DependentUpon>ConfirmarEmail.aspx</DependentUpon>
@@ -160,6 +169,13 @@
     </Compile>
     <Compile Include="ReestablecerPass.aspx.designer.cs">
       <DependentUpon>ReestablecerPass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SeguridadMedico.aspx.cs">
+      <DependentUpon>SeguridadMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SeguridadMedico.aspx.designer.cs">
+      <DependentUpon>SeguridadMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="SolicitarTurno.aspx.cs">
       <DependentUpon>SolicitarTurno.aspx</DependentUpon>

@@ -15,9 +15,10 @@
             <!-- 🔹 Sidebar Médico -->
             <div class="bg-light border-end vh-100 p-3 shadow-sm" style="width: 250px;">
                 <div class="text-center mb-4">
-                    <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width:90px;height:90px;" />
+                    <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width: 90px; height: 90px;" />
                     <h6 class="fw-bold mb-0">Dr. Juan Pérez</h6>
-                    <small class="text-muted">Cardiólogo</small>
+                    <small class="text-muted d-block">Cardiólogo</small>
+                    <small class="text-muted d-block">Matrícula: MN 12345</small>
                 </div>
 
                 <ul class="nav flex-column">
