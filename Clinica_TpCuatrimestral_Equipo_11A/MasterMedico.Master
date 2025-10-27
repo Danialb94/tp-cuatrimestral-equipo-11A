@@ -1,0 +1,65 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterMedico.master.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.MasterMedico" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>ClinicApp - Médico</title>
+    <asp:ContentPlaceHolder ID="head" runat="server" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="d-flex">
+            <!-- 🔹 Sidebar Médico -->
+            <div class="bg-light border-end vh-100 p-3 shadow-sm" style="width: 250px;">
+                <div class="text-center mb-4">
+                    <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width:90px;height:90px;" />
+                    <h6 class="fw-bold mb-0">Dr. Juan Pérez</h6>
+                    <small class="text-muted">Cardiólogo</small>
+                </div>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="InicioMedico.aspx">
+                            <i class="bi bi-speedometer2 me-2"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="AgendaMedico.aspx">
+                            <i class="bi bi-calendar-event me-2"></i>Agenda
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="#">
+                            <i class="bi bi-person-lines-fill me-2"></i>Pacientes
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="#">
+                            <i class="bi bi-envelope me-2"></i>Mensajes
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="mt-4">
+                    <hr />
+                    <!-- 🔹 Agregamos Configuración -->
+                    <a href="ConfiguracionMedico.aspx" class="d-block text-decoration-none text-muted mb-2">
+                        <i class="bi bi-gear me-2"></i>Configuración
+                    </a>
+                    <a href="Default.aspx" class="d-block text-decoration-none text-danger">
+                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                    </a>
+                </div>
+            </div>
+
+            <!-- 🔹 Contenido dinámico -->
+            <div class="flex-grow-1 p-4 bg-white">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>

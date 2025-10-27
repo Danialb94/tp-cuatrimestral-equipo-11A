@@ -67,17 +67,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AgendaMedico.aspx" />
     <Content Include="CartillaMedica.aspx" />
     <Content Include="ConfirmarEmail.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="InicioMedico.aspx" />
     <Content Include="OlvidarPass.aspx" />
     <Content Include="ReestablecerPass.aspx" />
     <Content Include="SolicitarTurno.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgendaMedico.aspx.cs">
+      <DependentUpon>AgendaMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgendaMedico.aspx.designer.cs">
+      <DependentUpon>AgendaMedico.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CartillaMedica.aspx.cs">
       <DependentUpon>CartillaMedica.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -108,6 +117,20 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="InicioMedico.aspx.cs">
+      <DependentUpon>InicioMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InicioMedico.aspx.designer.cs">
+      <DependentUpon>InicioMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterMedico.Master.cs">
+      <DependentUpon>MasterMedico.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterMedico.Master.designer.cs">
+      <DependentUpon>MasterMedico.Master</DependentUpon>
     </Compile>
     <Compile Include="MasterPaciente.Master.cs">
       <DependentUpon>MasterPaciente.Master</DependentUpon>
@@ -149,6 +172,7 @@
   <ItemGroup>
     <Content Include="MasterPage.Master" />
     <Content Include="MasterPaciente.Master" />
+    <Content Include="MasterMedico.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
