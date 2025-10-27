@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        <a href="OlvidarPass.aspx" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
                     </div>
 
 
