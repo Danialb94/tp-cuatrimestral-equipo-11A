@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="CartillaMedica.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
     <Content Include="SolicitarTurno.aspx" />
     <Content Include="Web.config" />
@@ -87,6 +88,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarPerfilPaciente.aspx.cs">
+      <DependentUpon>EditarPerfilPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarPerfilPaciente.aspx.designer.cs">
+      <DependentUpon>EditarPerfilPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

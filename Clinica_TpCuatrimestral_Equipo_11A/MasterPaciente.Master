@@ -50,7 +50,7 @@
                                 onerror="this.onerror=null; this.src='<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>';">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                            <li><a class="dropdown-item" href="EditarPerfilPaciente.aspx">Editar Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="Default.aspx">Cerrar Sesión</a></li>
                         </ul>
