@@ -76,6 +76,7 @@
     <Content Include="Global.asax" />
     <Content Include="InicioMedico.aspx" />
     <Content Include="InicioPaciente.aspx" />
+    <Content Include="InicioRecepcionista.aspx" />
     <Content Include="ModificarEmail.aspx" />
     <Content Include="OlvidarPass.aspx" />
     <Content Include="ReestablecerPass.aspx" />
@@ -144,6 +145,13 @@
     </Compile>
     <Compile Include="InicioPaciente.aspx.designer.cs">
       <DependentUpon>InicioPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InicioRecepcionista.aspx.cs">
+      <DependentUpon>InicioRecepcionista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InicioRecepcionista.aspx.designer.cs">
+      <DependentUpon>InicioRecepcionista.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterMedico.Master.cs">
       <DependentUpon>MasterMedico.Master</DependentUpon>
