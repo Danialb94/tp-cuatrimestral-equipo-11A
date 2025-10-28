@@ -76,6 +76,7 @@
     <Content Include="Global.asax" />
     <Content Include="InicioMedico.aspx" />
     <Content Include="InicioPaciente.aspx" />
+    <Content Include="ModificarEmail.aspx" />
     <Content Include="OlvidarPass.aspx" />
     <Content Include="ReestablecerPass.aspx" />
     <Content Include="RegistrarsePaciente.aspx" />
@@ -164,6 +165,13 @@
     </Compile>
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ModificarEmail.aspx.cs">
+      <DependentUpon>ModificarEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModificarEmail.aspx.designer.cs">
+      <DependentUpon>ModificarEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="OlvidarPass.aspx.cs">
       <DependentUpon>OlvidarPass.aspx</DependentUpon>

@@ -59,5 +59,8 @@
                 </div>
             </div>
 
-            <asp:Button ID="btnSubmit" Text="Guardar contraseña" CssClass="btn btn-primary w-100" runat="server" onclick="btnSubmit_Click"/>
+            <asp:Button ID="btnSubmit" Text="Guardar contraseña" CssClass="btn btn-primary w-100" runat="server" OnClick="btnSubmit_Click" />
+            <div class="text-center mt-3">
+                <a href="Default.aspx" class="text-decoration-none">Volver al inicio</a>
+            </div>
 </asp:Content>

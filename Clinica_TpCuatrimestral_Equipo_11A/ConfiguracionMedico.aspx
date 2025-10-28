@@ -54,25 +54,27 @@
                 <form>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Nombre completo</label>
-                            <input type="text" class="form-control" value="Dr. Juan Pérez" />
+                            <label for="txtNombre" class="form-label fw-semibold">Nombre completo</label>
+                            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Dr. Juan Pérez"></asp:TextBox>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Fecha de nacimiento</label>
-                            <input type="text" class="form-control" value="01/01/1975" />
+                            <label for="txtFechaNac" class="form-label fw-semibold">Fecha de nacimiento</label>
+                            <asp:TextBox ID="txtFechaNac" runat="server" CssClass="form-control" placeholder="01/01/1975"></asp:TextBox>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Correo electrónico</label>
-                            <input type="text" class="form-control" value="dr.juanperez@clinica.com" />
+                            <label for="txtCorreo" class="form-label fw-semibold">Correo electrónico</label>
+                            <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control" placeholder="dr.juanperez@clinica.com"></asp:TextBox>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Número de teléfono</label>
-                            <input type="text" class="form-control" value="(555) 123-4567" />
+                            <label for="txtTelefono" class="form-label fw-semibold">Número de teléfono</label>
+                            <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" placeholder="(555) 123-4567"></asp:TextBox>
                         </div>
                     </div>
+
+
 
                     <div class="mt-3">
                         <button type="submit" class="btn btn-primary me-2">Guardar cambios</button>

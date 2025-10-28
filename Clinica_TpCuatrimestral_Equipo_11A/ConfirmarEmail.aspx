@@ -18,18 +18,35 @@
 
 
             <div class="d-flex justify-content-center gap-2 my-4">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
-                <input type="text" maxlength="1" class="form-control text-center shadow-sm"
-                    style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                <asp:TextBox ID="txtCodigo1" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
+
+                <asp:TextBox ID="txtCodigo2" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
+
+                <asp:TextBox ID="txtCodigo3" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
+
+                <asp:TextBox ID="txtCodigo4" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
+
+                <asp:TextBox ID="txtCodigo5" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
+
+                <asp:TextBox ID="txtCodigo6" runat="server" MaxLength="1"
+                    CssClass="form-control text-center shadow-sm"
+                    Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
+                </asp:TextBox>
             </div>
 
 
