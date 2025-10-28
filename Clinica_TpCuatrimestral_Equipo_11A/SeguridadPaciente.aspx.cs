@@ -7,16 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
-    public partial class ReestablecerPass : System.Web.UI.Page
+    public partial class SeguridadPaciente : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-        protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Default.aspx");
         }
     }
 }

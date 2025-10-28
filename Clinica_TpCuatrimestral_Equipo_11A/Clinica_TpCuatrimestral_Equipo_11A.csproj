@@ -75,9 +75,12 @@
     <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
     <Content Include="InicioMedico.aspx" />
+    <Content Include="InicioPaciente.aspx" />
     <Content Include="OlvidarPass.aspx" />
     <Content Include="ReestablecerPass.aspx" />
+    <Content Include="RegistrarsePaciente.aspx" />
     <Content Include="SeguridadMedico.aspx" />
+    <Content Include="SeguridadPaciente.aspx" />
     <Content Include="SolicitarTurno.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -134,6 +137,13 @@
     <Compile Include="InicioMedico.aspx.designer.cs">
       <DependentUpon>InicioMedico.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InicioPaciente.aspx.cs">
+      <DependentUpon>InicioPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InicioPaciente.aspx.designer.cs">
+      <DependentUpon>InicioPaciente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterMedico.Master.cs">
       <DependentUpon>MasterMedico.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,12 +180,26 @@
     <Compile Include="ReestablecerPass.aspx.designer.cs">
       <DependentUpon>ReestablecerPass.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RegistrarsePaciente.aspx.cs">
+      <DependentUpon>RegistrarsePaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarsePaciente.aspx.designer.cs">
+      <DependentUpon>RegistrarsePaciente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SeguridadMedico.aspx.cs">
       <DependentUpon>SeguridadMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SeguridadMedico.aspx.designer.cs">
       <DependentUpon>SeguridadMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SeguridadPaciente.aspx.cs">
+      <DependentUpon>SeguridadPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SeguridadPaciente.aspx.designer.cs">
+      <DependentUpon>SeguridadPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="SolicitarTurno.aspx.cs">
       <DependentUpon>SolicitarTurno.aspx</DependentUpon>

@@ -60,7 +60,7 @@
 
                     <div class="text-center mt-3">
                         <span class="text-muted">¿No tenés una cuenta?</span>
-                        <a href="#" class="text-decoration-none fw-bold">Registrate</a>
+                        <a href="RegistrarsePaciente.aspx" class="text-decoration-none fw-bold">Registrate</a>
                     </div>
 
 

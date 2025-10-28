@@ -22,7 +22,7 @@
                         <!-- Seguridad -->
                         <li class="nav-item">
                             <a class="nav-link <% = Page.Title == "Seguridad Médico" ? "active" : "text-dark" %>"
-                                href="SeguridadMedico.aspx">
+                                href="SeguridadPaciente.aspx">
                                 <i class="bi bi-lock me-2"></i>Seguridad
                             </a>
                         </li>

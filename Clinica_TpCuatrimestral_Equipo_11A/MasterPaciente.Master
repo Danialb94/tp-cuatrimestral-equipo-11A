@@ -11,62 +11,55 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
-<body>
+
+    <body>
     <form id="form1" runat="server">
-        <div>
-            <nav class="navbar navbar-expand-lg pe-5 ps-5" style="background-color: #d3d3d38f;">
-                <div class="container-fluid">
+        <div class="d-flex row">
+            <!-- 🔹 Sidebar Paciente -->
+            <div class="bg-light border-end p-3 shadow-sm col-2" style="min-height: 700px">
+                <div class="text-center mb-4">
+                    <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width: 90px; height: 90px;" />
+                    <h6 class="fw-bold mb-0">Nombre Apellido</h6>
+                </div>
 
-                    <img src="<%= ResolveUrl("~/Imagenes/Icono.png") %>" class="me-lg-3 rounded-5" style="height: 45px">
-                    <p class="navbar-brand m-0 me-2" style="font-weight: 600;">ClinicApp</p>
-
-                    <div class="d-flex ms-auto">
-
-
-
-                        <button class="me-5 navbar-toggler order-last" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-
-                    <div class="justify-content-end navbar-collapse collapse" id="navbarNav">
-                        <ul class="me-5 navbar-nav p-1 ps-5">
-                            <li class="nav-item"><a class="active btn nav-link" aria-current="page" href="<%--Inicio de pacientes--%>" id="navInicio">Inicio</a></li>
-                            <li class="nav-item"><a class="active btn nav-link" aria-current="page" href="CartillaMedica.aspx" id="navCartilla">Cartilla</a></li>
-                            <li class="nav-item">
-                                <a class="active btn nav-link" aria-current="page" href="<%--Turnos pendientes--%>" id="navTurnos">Mis Turnos</a>
-                            </li>
-                            <li class="nav-item rounded-5">
-                                <a class="active btn btn-primary nav-link" style="color: white; background-color: #0b5ed7;" aria-current="page" href="SolicitarTurno.aspx" id="navSolicitarTurno">Solicitar Turno</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown end-0 me-4 position-absolute top-0">
-                        <a class="dropdown-toggle m-2 nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src=":imagen.urlImagen "
-                                class="rounded-5 order-first order-lg-last me-2"
-                                style="height: 45px"
-                                onerror="this.onerror=null; this.src='<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>';">
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="InicioPaciente.aspx">
+                            <i class="bi bi-speedometer2 me-2"></i>Inicio
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="EditarPerfilPaciente.aspx">Editar Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="Default.aspx">Cerrar Sesión</a></li>
-                        </ul>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="CartillaMedica.aspx">
+                            <i class="bi bi-calendar-event me-2"></i>Cartilla
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="#">
+                            <i class="bi bi-person-lines-fill me-2"></i>Mis Turnos
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="#">
+                            <i class="bi bi-envelope me-2"></i>Solicitar Turno
+                        </a>
+                    </li>
+                </ul>
 
-                    </div>
-
+                <div class="mt-4">
+                    <hr />
+                    <!-- 🔹 Agregamos Configuración -->
+                    <a href="EditarPerfilPaciente.aspx" class="d-block text-decoration-none text-muted mb-2">
+                        <i class="bi bi-gear me-2"></i>Configuración
+                    </a>
+                    <a href="Default.aspx" class="d-block text-decoration-none text-danger">
+                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                    </a>
                 </div>
-            </nav>
+            </div>
 
-            <div class="row" style="background-color: #ffffff;">
-                <div class="col-1"></div>
-                <div class="col-10">
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                    </asp:ContentPlaceHolder>
-                </div>
-                <div class="col-1"></div>
+            <!-- 🔹 Contenido dinámico -->
+            <div class="flex-grow-1 p-4 bg-white col-10">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
             </div>
         </div>
     </form>

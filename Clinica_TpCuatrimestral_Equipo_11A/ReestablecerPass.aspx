@@ -59,5 +59,5 @@
                 </div>
             </div>
 
-            <asp:Button ID="btnSubmit" Text="Guardar contraseña" CssClass="btn btn-primary w-100" runat="server" />
+            <asp:Button ID="btnSubmit" Text="Guardar contraseña" CssClass="btn btn-primary w-100" runat="server" onclick="btnSubmit_Click"/>
 </asp:Content>
