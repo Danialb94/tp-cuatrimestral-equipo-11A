@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="InicioRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.InicioRecepcionista" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Recepcionista.Master" AutoEventWireup="true" CodeBehind="InicioRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.InicioRecepcionista" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h4 class="fw-bold mb-3">Turnos de esta semana</h4>
+    <h4 class="fw-bold mb-3">Turnos de la semana</h4>
 
     <div class="mb-4">
         <asp:DropDownList 
