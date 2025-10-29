@@ -22,24 +22,8 @@
                         <!-- Seguridad -->
                         <li class="nav-item">
                             <a class="nav-link <% = Page.Title == "Seguridad Médico" ? "active" : "text-dark" %>"
-                                href="SeguridadPaciente.aspx">
+                                href="SeguridadMedico.aspx">
                                 <i class="bi bi-lock me-2"></i>Seguridad
-                            </a>
-                        </li>
-
-                        <!-- Notificaciones -->
-                        <li class="nav-item">
-                            <a class="nav-link <% = Page.Title == "Notificaciones Médico" ? "active" : "text-dark" %>"
-                                href="NotificacionesMedico.aspx">
-                                <i class="bi bi-bell me-2"></i>Notificaciones
-                            </a>
-                        </li>
-
-                        <!-- Privacidad -->
-                        <li class="nav-item">
-                            <a class="nav-link <% = Page.Title == "Privacidad Médico" ? "active" : "text-dark" %>"
-                                href="PrivacidadMedico.aspx">
-                                <i class="bi bi-shield-lock me-2"></i>Privacidad
                             </a>
                         </li>
                     </ul>

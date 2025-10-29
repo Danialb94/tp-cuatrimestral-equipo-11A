@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a class="nav-link fw-semibold text-dark" href="#">
+                        <a class="nav-link fw-semibold text-dark" href="SolicitarTurno.aspx">
                             <i class="bi bi-envelope me-2"></i>Solicitar Turno
                         </a>
                     </li>

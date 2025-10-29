@@ -48,10 +48,6 @@
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
             </div>
-
-
-
-
             <asp:Button ID="btnSubmit" Text="Confirmar correo electrónico" CssClass="btn btn-primary w-100" runat="server" OnClick="btnSubmit_Click" />
 
             <div class="text-center mt-3">

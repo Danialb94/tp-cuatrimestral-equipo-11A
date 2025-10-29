@@ -67,9 +67,10 @@
                         <td>Control</td>
                         <td>Programado</td>
                         <td>
-                            <button class="btn btn-outline-primary btn-sm" title="Ver historial del paciente">
+                            <!-- 🔹 Botón modificado: lleva al historial -->
+                            <a href="HistoriaClinicaMedico.aspx" class="btn btn-outline-primary btn-sm" title="Ver historial del paciente">
                                 <i class="bi bi-person"></i>
-                            </button>
+                            </a>
                             <button class="btn btn-outline-secondary btn-sm" title="Ver detalles del turno">
                                 <i class="bi bi-eye"></i>
                             </button>

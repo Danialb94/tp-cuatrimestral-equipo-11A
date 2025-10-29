@@ -13,18 +13,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="#">
+               <a class="nav-link active" href="#">
                     <i class="bi bi-lock me-2"></i>Seguridad
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="NotificacionesMedico.aspx">
-                    <i class="bi bi-bell me-2"></i>Notificaciones
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="PrivacidadMedico.aspx">
-                    <i class="bi bi-shield-lock me-2"></i>Privacidad
                 </a>
             </li>
         </ul>

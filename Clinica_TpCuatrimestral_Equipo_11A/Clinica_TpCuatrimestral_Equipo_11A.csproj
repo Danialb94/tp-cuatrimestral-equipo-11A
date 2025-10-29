@@ -74,6 +74,7 @@
     <Content Include="Default.aspx" />
     <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistoriaClinicaMedico.aspx" />
     <Content Include="InicioMedico.aspx" />
     <Content Include="InicioPaciente.aspx" />
     <Content Include="InicioRecepcionista.aspx" />
@@ -131,6 +132,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistoriaClinicaMedico.aspx.cs">
+      <DependentUpon>HistoriaClinicaMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistoriaClinicaMedico.aspx.designer.cs">
+      <DependentUpon>HistoriaClinicaMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="InicioMedico.aspx.cs">
       <DependentUpon>InicioMedico.aspx</DependentUpon>
