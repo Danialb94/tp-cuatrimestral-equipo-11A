@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Recepcionista.Master" AutoEventWireup="true" CodeBehind="SolicitarTurnoRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.SolicitarTurnoRecepcionista" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterRecepcionista.Master" AutoEventWireup="true" CodeBehind="SolicitarTurnoRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.SolicitarTurnoRecepcionista" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

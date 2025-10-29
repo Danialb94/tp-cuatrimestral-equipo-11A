@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Recepcionista.Master.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.Recepcionista" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterRecepcionista.Master.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.Recepcionista" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,6 +39,13 @@
                     <li class="nav-item mb-2">
                         <a class="nav-link fw-semibold text-dark" href="MedicosRecepcionista.aspx">
                             <i class="bi bi-heart-pulse me-2"></i>Médicos
+                        </a>
+                    </li>
+
+                    
+                    <li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="CancelarTurnosRecepcionista.aspx">
+                            <i class="bi bi-x-circle"></i> Cancelar turnos
                         </a>
                     </li>
 

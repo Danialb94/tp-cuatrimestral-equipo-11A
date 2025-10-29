@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Agregar Médico" Language="C#" MasterPageFile="~/Recepcionista.Master" AutoEventWireup="true" CodeBehind="AgregarMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.AgregarMedico" %>
+﻿<%@ Page Title="Agregar Médico" Language="C#" MasterPageFile="~/MasterRecepcionista.Master" AutoEventWireup="true" CodeBehind="AgregarMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.AgregarMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 

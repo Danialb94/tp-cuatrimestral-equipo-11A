@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Médicos" Language="C#" MasterPageFile="~/Recepcionista.Master" AutoEventWireup="true" CodeBehind="MedicosRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.MedicosRecepcionista" %>
+﻿<%@ Page Title="Médicos" Language="C#" MasterPageFile="~/MasterRecepcionista.Master" AutoEventWireup="true" CodeBehind="MedicosRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.MedicosRecepcionista" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="fw-bold">Médicos Registrados</h4>
-                <a class="btn btn-primary" href="AgregarMedico.aspx">Nuevo Médico</a>
+                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx"> Nuevo Médico</a>
             </div>
 
             <div class="d-flex mb-2 justify-content-between rounded-2" style="background-color: #d3d3d38f; width: 450px;">

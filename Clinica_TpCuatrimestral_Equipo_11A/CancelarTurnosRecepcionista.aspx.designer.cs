@@ -11,43 +11,34 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 {
 
 
-    public partial class SolicitarTurnoRecepcionista
+    public partial class CancelarTurnosRecepcionista
     {
 
         /// <summary>
-        /// ddlEspecialidades control.
+        /// ddlCancelarRecepcionista control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidades;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCancelarRecepcionista;
 
         /// <summary>
-        /// ddlProfesionales control.
+        /// ddlMedicoCancelar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProfesionales;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMedicoCancelar;
 
         /// <summary>
-        /// txtMotivoConsulta control.
+        /// ddlFechaCancelar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMotivoConsulta;
-
-        /// <summary>
-        /// txtObservaciones control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFechaCancelar;
     }
 }

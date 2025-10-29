@@ -71,6 +71,7 @@
     <Content Include="AgregarHistorialMedico.aspx" />
     <Content Include="AgregarMedico.aspx" />
     <Content Include="AltaPaciente.aspx" />
+    <Content Include="CancelarTurnosRecepcionista.aspx" />
     <Content Include="CartillaMedica.aspx" />
     <Content Include="ConfiguracionMedico.aspx" />
     <Content Include="ConfirmarEmail.aspx" />
@@ -124,6 +125,13 @@
     </Compile>
     <Compile Include="AltaPaciente.aspx.designer.cs">
       <DependentUpon>AltaPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CancelarTurnosRecepcionista.aspx.cs">
+      <DependentUpon>CancelarTurnosRecepcionista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CancelarTurnosRecepcionista.aspx.designer.cs">
+      <DependentUpon>CancelarTurnosRecepcionista.aspx</DependentUpon>
     </Compile>
     <Compile Include="CartillaMedica.aspx.cs">
       <DependentUpon>CartillaMedica.aspx</DependentUpon>
@@ -255,12 +263,12 @@
       <DependentUpon>PacientesRecepcionista.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recepcionista.Master.cs">
-      <DependentUpon>Recepcionista.Master</DependentUpon>
+    <Compile Include="MasterRecepcionista.Master.cs">
+      <DependentUpon>MasterRecepcionista.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Recepcionista.Master.designer.cs">
-      <DependentUpon>Recepcionista.Master</DependentUpon>
+    <Compile Include="MasterRecepcionista.Master.designer.cs">
+      <DependentUpon>MasterRecepcionista.Master</DependentUpon>
     </Compile>
     <Compile Include="ReestablecerPass.aspx.cs">
       <DependentUpon>ReestablecerPass.aspx</DependentUpon>
@@ -317,7 +325,7 @@
     <Content Include="MasterPaciente.Master" />
     <Content Include="MasterMedico.Master" />
     <None Include="packages.config" />
-    <Content Include="Recepcionista.Master" />
+    <Content Include="MasterRecepcionista.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
