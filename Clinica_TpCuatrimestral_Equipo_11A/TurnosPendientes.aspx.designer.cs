@@ -11,7 +11,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 {
 
 
-    public partial class AgendaMedico
+    public partial class TurnosPendientes
     {
     }
 }

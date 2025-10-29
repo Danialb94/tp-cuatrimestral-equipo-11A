@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPaciente.Master" AutoEventWireup="true" CodeBehind="SolicitarTurno.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.SolicitarTurno" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Recepcionista.Master" AutoEventWireup="true" CodeBehind="SolicitarTurnoRecepcionista.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.SolicitarTurnoRecepcionista" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="container mt-4">
-        <h2 class="fw-bold">Solicitar un nuevo turno</h2>
+        <h2 class="fw-bold">Brindar un nuevo turno</h2>
         <div class="row d-flex">
             <div class="col-8">
                 <div class="card shadow-sm border-0 ">
@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <a href="InicioPaciente.aspx" class="btn btn-secondery border-black me-2" style="width: 100px;">Volver</a>
+                <a href="PacientesRecepcionista.aspx" class="btn btn-secondery border-black me-2" style="width: 100px;">Volver</a>
                 <button type="button" class="btn btn-primary" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Turno</button>
             </div>
 
@@ -133,7 +133,7 @@
                             El turno se asignó con éxito!
                         </div>
                         <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="InicioPaciente.aspx">OK</a>
+                            <a type="button" class="btn btn-primary" href="InicioRecepcionista.aspx">OK</a>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
@@ -15,12 +16,14 @@
     <body>
     <form id="form1" runat="server">
         <div class="d-flex row">
-            <!-- 🔹 Sidebar Paciente -->
+
+
             <div class="bg-light border-end p-3 shadow-sm col-2" style="min-height: 700px">
                 <div class="text-center mb-4">
                     <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width: 90px; height: 90px;" />
                     <h6 class="fw-bold mb-0">Nombre Apellido</h6>
                 </div>
+
 
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
@@ -33,11 +36,11 @@
                             <i class="bi bi-calendar-event me-2"></i>Cartilla
                         </a>
                     </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link fw-semibold text-dark" href="#">
+                    <%--<li class="nav-item mb-2">
+                        <a class="nav-link fw-semibold text-dark" href="TurnosPendientes.aspx">
                             <i class="bi bi-person-lines-fill me-2"></i>Mis Turnos
                         </a>
-                    </li>
+                    </li>--%>
                     <li class="nav-item mb-2">
                         <a class="nav-link fw-semibold text-dark" href="SolicitarTurno.aspx">
                             <i class="bi bi-envelope me-2"></i>Solicitar Turno
@@ -47,7 +50,6 @@
 
                 <div class="mt-4">
                     <hr />
-                    <!-- 🔹 Agregamos Configuración -->
                     <a href="EditarPerfilPaciente.aspx" class="d-block text-decoration-none text-muted mb-2">
                         <i class="bi bi-gear me-2"></i>Configuración
                     </a>
@@ -57,7 +59,7 @@
                 </div>
             </div>
 
-            <!-- 🔹 Contenido dinámico -->
+
             <div class="flex-grow-1 p-4 bg-white col-10">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
             </div>

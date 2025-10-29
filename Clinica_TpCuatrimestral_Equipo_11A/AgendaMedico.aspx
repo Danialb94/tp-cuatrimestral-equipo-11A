@@ -6,7 +6,7 @@
 <div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-12">
-            <h4 class="fw-bold mb-3">Semana del 23 al 29 de Octubre</h4>
+            <h4 class="fw-bold mb-3">Semana del 23 al 27 de Octubre</h4>
 
             <div class="table-responsive bg-white shadow-sm rounded-3 p-3">
                 <table class="table table-bordered align-middle text-center">

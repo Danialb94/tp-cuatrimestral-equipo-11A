@@ -15,7 +15,6 @@
             </div>
             <div>
                 <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle h-100 rounded-2" Style="width: 210px;">
-                    <asp:ListItem Selected hidden>Seleccione la Especialidad</asp:ListItem>
                 </asp:DropDownList>
             </div>
         </div>
@@ -36,7 +35,7 @@
                         <h5 class="card-title">Dr. Nombre Apellido</h5>
                         <p class="card-text overflow-auto">Especialidades</p>
                         <p class="card-text overflow-auto">Horarios</p>
-                        <a class="btn btn-primary w-100" href="<%--Pantalla para sacar el turno--%>">Solicitar Turno</a>
+                        <a class="btn btn-primary w-100" href="SolicitarTurno.aspx">Solicitar Turno</a>
                     </div>
                 </div>
 

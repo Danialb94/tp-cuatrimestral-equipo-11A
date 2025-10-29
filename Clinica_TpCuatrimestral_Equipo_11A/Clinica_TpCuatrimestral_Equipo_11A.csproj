@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AgendaMedico.aspx" />
+    <Content Include="AltaPaciente.aspx" />
     <Content Include="CartillaMedica.aspx" />
     <Content Include="ConfiguracionMedico.aspx" />
     <Content Include="ConfirmarEmail.aspx" />
@@ -80,11 +81,14 @@
     <Content Include="InicioRecepcionista.aspx" />
     <Content Include="ModificarEmail.aspx" />
     <Content Include="OlvidarPass.aspx" />
+    <Content Include="PacientesRecepcionista.aspx" />
     <Content Include="ReestablecerPass.aspx" />
     <Content Include="RegistrarsePaciente.aspx" />
     <Content Include="SeguridadMedico.aspx" />
     <Content Include="SeguridadPaciente.aspx" />
     <Content Include="SolicitarTurno.aspx" />
+    <Content Include="SolicitarTurnoRecepcionista.aspx" />
+    <Content Include="TurnosPendientes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +98,13 @@
     </Compile>
     <Compile Include="AgendaMedico.aspx.designer.cs">
       <DependentUpon>AgendaMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AltaPaciente.aspx.cs">
+      <DependentUpon>AltaPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AltaPaciente.aspx.designer.cs">
+      <DependentUpon>AltaPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="CartillaMedica.aspx.cs">
       <DependentUpon>CartillaMedica.aspx</DependentUpon>
@@ -196,6 +207,13 @@
     <Compile Include="OlvidarPass.aspx.designer.cs">
       <DependentUpon>OlvidarPass.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PacientesRecepcionista.aspx.cs">
+      <DependentUpon>PacientesRecepcionista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PacientesRecepcionista.aspx.designer.cs">
+      <DependentUpon>PacientesRecepcionista.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recepcionista.Master.cs">
       <DependentUpon>Recepcionista.Master</DependentUpon>
@@ -238,6 +256,20 @@
     </Compile>
     <Compile Include="SolicitarTurno.aspx.designer.cs">
       <DependentUpon>SolicitarTurno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SolicitarTurnoRecepcionista.aspx.cs">
+      <DependentUpon>SolicitarTurnoRecepcionista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SolicitarTurnoRecepcionista.aspx.designer.cs">
+      <DependentUpon>SolicitarTurnoRecepcionista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TurnosPendientes.aspx.cs">
+      <DependentUpon>TurnosPendientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TurnosPendientes.aspx.designer.cs">
+      <DependentUpon>TurnosPendientes.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
