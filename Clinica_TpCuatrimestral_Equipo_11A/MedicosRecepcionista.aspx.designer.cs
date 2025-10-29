@@ -11,16 +11,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 {
 
 
-    public partial class PacientesRecepcionista
+    public partial class MedicosRecepcionista
     {
 
         /// <summary>
-        /// Controllo txtFiltro.
+        /// Controllo txtFiltroMedico.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltro;
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMedico;
     }
 }

@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <generado automáticamente>
-//     Este código fue generado por una herramienta.
+// <generato automaticamente>
+//     Questo codice è stato generato da uno strumento.
 //
-//     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
-//     se vuelve a generar el código. 
-// </generado automáticamente>
+//     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
+//     il codice viene rigenerato. 
+// </generato automaticamente>
 //------------------------------------------------------------------------------
 
 namespace Clinica_TpCuatrimestral_Equipo_11A

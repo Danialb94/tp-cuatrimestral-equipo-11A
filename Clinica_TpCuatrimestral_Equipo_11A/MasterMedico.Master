@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a class="nav-link fw-semibold text-dark" href="#">
+                        <a class="nav-link fw-semibold text-dark" href="PacienteMedico.aspx">
                             <i class="bi bi-person-lines-fill me-2"></i>Pacientes
                         </a>
                     </li>

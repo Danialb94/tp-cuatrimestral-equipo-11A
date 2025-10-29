@@ -24,7 +24,7 @@
                             <th>Apellido</th>
                             <th>Documento</th>
                             <th>Cobertura</th>
-                            <th></th>
+                            <th>Solicitar Turno</th>
                         </tr>
                     </thead>
                     <tbody>

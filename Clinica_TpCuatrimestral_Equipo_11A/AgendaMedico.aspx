@@ -6,18 +6,18 @@
 <div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-12">
-            <h4 class="fw-bold mb-3">Semana del 23 al 27 de Octubre</h4>
+            <h4 class="fw-bold mb-3">Semana del 27 al 31 de Octubre</h4>
 
             <div class="table-responsive bg-white shadow-sm rounded-3 p-3">
                 <table class="table table-bordered align-middle text-center">
                     <thead class="table-light">
                         <tr>
                             <th>Hora</th>
-                            <th>Lunes 23</th>
-                            <th>Martes 24</th>
-                            <th>Miércoles 25</th>
-                            <th>Jueves 26</th>
-                            <th>Viernes 27</th>
+                            <th>Lunes 27</th>
+                            <th>Martes 28</th>
+                            <th>Miércoles 29</th>
+                            <th>Jueves 30</th>
+                            <th>Viernes 31</th>
                         </tr>
                     </thead>
                     <tbody>

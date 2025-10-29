@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <generado automáticamente>
-//     Este código fue generado por una herramienta.
+// <generato automaticamente>
+//     Questo codice è stato generato da uno strumento.
 //
-//     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
-//     se vuelve a generar el código. 
-// </generado automáticamente>
+//     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
+//     il codice viene rigenerato. 
+// </generato automaticamente>
 //------------------------------------------------------------------------------
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
@@ -15,21 +15,39 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
 
         /// <summary>
-        /// Control ddlEspecialidades.
+        /// Controllo ddlEspecialidades.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidades;
 
         /// <summary>
-        /// Control ddlProfesionales.
+        /// Controllo ddlProfesionales.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlProfesionales;
+
+        /// <summary>
+        /// Controllo txtMotivoConsulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMotivoConsulta;
+
+        /// <summary>
+        /// Controllo txtObservaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
     }
 }
