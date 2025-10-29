@@ -12,8 +12,6 @@
                 <i class="bi bi-plus-circle me-1"></i>Agregar nuevo historial
             </a>
         </div>
-
-
         <p class="text-muted mb-4">Aquí puedes visualizar los antecedentes y registros médicos del paciente seleccionado.</p>
 
         <!-- 🔹 Datos básicos del paciente -->
@@ -70,7 +68,7 @@
 
         <!-- 🔹 Botón volver -->
         <div class="mt-4">
-            <button type="button" class="btn btn-secondary" onclick="location.href='InicioMedico.aspx'">Volver</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='PacienteMedico.aspx'">Volver</button>
         </div>
     </div>
 </asp:Content>

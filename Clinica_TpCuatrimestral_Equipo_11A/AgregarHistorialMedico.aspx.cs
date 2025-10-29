@@ -9,9 +9,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 {
     public partial class AgregarHistorialMedico : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void btnGuardarHistorial_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("PacienteMedico.aspx");
         }
+
+
     }
 }

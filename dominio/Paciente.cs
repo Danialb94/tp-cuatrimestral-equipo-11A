@@ -13,6 +13,7 @@ namespace dominio
         public string Documento { get; set; }
         public string Domicilio { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public string Cobertura { get; set; } 
         public HistoriaClinica HistoriaClinica { get; set; }
         public Imagen Imagen { get; set; }
         public List<string> Alergias { get; set; }

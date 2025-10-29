@@ -15,6 +15,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
 
         /// <summary>
+        /// Controllo btnGuardarHistorial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGuardarHistorial;
+
+        /// <summary>
         /// Controllo btnVolver.
         /// </summary>
         /// <remarks>
