@@ -1,10 +1,10 @@
-﻿<%@ Page Title="Agregar Historial Médico" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="AgregarHistorialMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.AgregarHistorialMedico" %>
+﻿<%@ Page Title="Registrar Consulta Médica" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="RegistroConsultaMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.RegistroConsultaMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
-        <h3 class="fw-bold mb-3">Agregar nuevo historial médico</h3>
+        <h3 class="fw-bold mb-3">Registrar nueva consulta médica</h3>
         <p class="text-muted mb-4">Complete la información correspondiente al paciente.</p>
 
         <div class="card shadow-sm border-0">
@@ -39,8 +39,8 @@
 
                     <div class="d-flex justify-content-start mt-4">
                         <!-- Botón Guardar -->
-                        <asp:LinkButton ID="btnGuardarHistorial" runat="server" CssClass="btn btn-primary me-2" OnClick="btnGuardarHistorial_Click">
-                            <i class="bi bi-save me-1"></i>Guardar historial
+                        <asp:LinkButton ID="btnGuardarConsulta" runat="server" CssClass="btn btn-primary me-2" OnClick="btnGuardarConsulta_Click">
+                            <i class="bi bi-save me-1"></i>Guardar consulta
                         </asp:LinkButton>
 
                         <!-- Botón Cancelar -->
@@ -48,8 +48,6 @@
                             Text="Cancelar" CssClass="btn btn-secondary"
                             PostBackUrl="~/HistoriaClinicaMedico.aspx" />
                     </div>
-
-
                 </form>
             </div>
         </div>

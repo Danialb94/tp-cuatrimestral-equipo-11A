@@ -7,9 +7,9 @@
 
         <!-- 🔹 Título y botón agregar nuevo historial -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="fw-bold mb-0">Historia Clínica del Paciente</h3>
-            <a href="AgregarHistorialMedico.aspx" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i>Agregar nuevo historial
+            <h3 class="fw-bold mb-0">Registro Clínico del Paciente</h3>
+            <a href="RegistroConsultaMedico.aspx" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>Agregar nueva consulta médica
             </a>
         </div>
         <p class="text-muted mb-4">Aquí puedes visualizar los antecedentes y registros médicos del paciente seleccionado.</p>
@@ -46,6 +46,8 @@
                             <th>Motivo</th>
                             <th>Diagnóstico</th>
                             <th>Tratamiento</th>
+                            <th>Acciones</th>
+                            <!-- Nueva columna para el botón -->
                         </tr>
                     </thead>
                     <tbody>
@@ -54,17 +56,24 @@
                             <td>Control de presión</td>
                             <td>Hipertensión leve</td>
                             <td>Ajuste de medicación</td>
+                            <td>
+                                <a href="RegistroConsultaMedico.aspx" class="btn btn-primary btn-sm">Ver detalle</a>
+                            </td>
                         </tr>
                         <tr>
                             <td>15/06/2025</td>
                             <td>Chequeo anual</td>
                             <td>Sin alteraciones</td>
                             <td>Revisión en 6 meses</td>
+                            <td>
+                                <a href="RegistroConsultaMedico.aspx" class="btn btn-primary btn-sm">Ver detalle</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
 
         <!-- 🔹 Botón volver -->
         <div class="mt-4">

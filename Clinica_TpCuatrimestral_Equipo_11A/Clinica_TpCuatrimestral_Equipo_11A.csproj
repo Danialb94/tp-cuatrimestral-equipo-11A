@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AgendaMedico.aspx" />
-    <Content Include="AgregarHistorialMedico.aspx" />
+    <Content Include="RegistroConsultaMedico.aspx" />
     <Content Include="AgregarMedico.aspx" />
     <Content Include="AltaPaciente.aspx" />
     <Content Include="CancelarTurnosRecepcionista.aspx" />
@@ -105,12 +105,12 @@
     <Compile Include="AgendaMedico.aspx.designer.cs">
       <DependentUpon>AgendaMedico.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AgregarHistorialMedico.aspx.cs">
-      <DependentUpon>AgregarHistorialMedico.aspx</DependentUpon>
+    <Compile Include="RegistroConsultaMedico.aspx.cs">
+      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AgregarHistorialMedico.aspx.designer.cs">
-      <DependentUpon>AgregarHistorialMedico.aspx</DependentUpon>
+    <Compile Include="RegistroConsultaMedico.aspx.designer.cs">
+      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="AgregarMedico.aspx.cs">
       <DependentUpon>AgregarMedico.aspx</DependentUpon>
