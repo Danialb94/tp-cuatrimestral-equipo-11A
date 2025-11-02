@@ -324,6 +324,7 @@ GO
 INSERT INTO PacientesCondiciones (IdPaciente, IdCondicion) VALUES
 (1, 1), -- Hipertensión - Valeria Torres
 (2, 2), -- Diabetes Tipo 2 - Diego Morales
+(2, 4), -- Obesidad - Diego Morales
 (3, 3); -- Asma - Camila Vega
 GO
 -- Tabla PacientesAlergias
@@ -338,7 +339,9 @@ GO
 -- INSERT PacientesAlergias
 INSERT INTO PacientesAlergias (IdPaciente, IdAlergia) VALUES
 (1, 1), -- Penicilina - Valeria Torres
+(1, 2), -- Latex - Valeria Torres
 (4,2); -- Latex - Fernando Castro
+
 
 
 
