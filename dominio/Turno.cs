@@ -11,6 +11,7 @@ namespace dominio
         public int IdTurno { get; set; }
         public Paciente Paciente { get; set; }
         public Medico Medico { get; set; }
+        public Especialidad Especialidad { get; set; }
         public DateTime FechaHora { get; set; }
         public string Estado { get; set; }
         public string Motivo { get; set; }
