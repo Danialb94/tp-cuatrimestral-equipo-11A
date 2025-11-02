@@ -13,7 +13,6 @@ namespace dominio
         public string Matricula { get; set; }
         public List<Especialidad> Especialidades { get; set; }
         public Horario Horario { get; set; }
-
         public Medico()
         {
             Especialidades = new List<Especialidad>();

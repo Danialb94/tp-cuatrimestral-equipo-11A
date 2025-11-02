@@ -34,10 +34,6 @@
                             <label class="form-label fw-bold">Motivo de la consulta:</label>
                             <asp:TextBox ID="txtMotivoConsulta" runat="server" CssClass="form-control" placeholder="Ej: Control, Consulta general..." />
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Observaciones:</label>
-                            <asp:TextBox ID="txtObservaciones" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" placeholder="Escriba observaciones adicionales..." />
-                        </div>
                     </div>
                 </div>
 

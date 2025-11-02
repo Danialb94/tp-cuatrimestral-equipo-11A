@@ -5,142 +5,229 @@ CREATE DATABASE TPC_PROG3_EQUIPO_11A;
 GO
 USE TPC_PROG3_EQUIPO_11A;
 GO
-
--- Tabla Permiso
-CREATE TABLE Permiso (
+-- Tabla Imagenes
+CREATE TABLE Imagenes (
+    IdImagen INT IDENTITY(1,1) PRIMARY KEY,
+    UrlImagen VARCHAR(200) NOT NULL
+);
+GO
+-- Tabla Permisos
+CREATE TABLE Permisos (
     IdPermiso INT IDENTITY(1,1) PRIMARY KEY,
-    Rol VARCHAR(50) NOT NULL,
+    Rol VARCHAR(50) NOT NULL UNIQUE,
     Descripcion VARCHAR(100) NULL
 );
-
-INSERT INTO Permiso (Rol, Descripcion) VALUES
+GO
+-- INSERT Permisos
+INSERT INTO Permisos (Rol, Descripcion) VALUES
 ('Administrador', 'Acceso total al sistema'),
 ('Medico', 'Acceso a agenda, pacientes y consultas'),
 ('Recepcionista', 'Acceso a turnos y gestión de pacientes'),
 ('Paciente', 'Acceso limitado a sus datos y turnos');
-
--- Tabla Usuario
-CREATE TABLE Usuario (
+GO
+-- Tabla Usuarios
+CREATE TABLE Usuarios (
     IdUsuario INT IDENTITY(1,1) PRIMARY KEY,
-    Email VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
     Contrasenia VARCHAR(50) NOT NULL,
     IdPermiso INT NOT NULL,
-    FOREIGN KEY (IdPermiso) REFERENCES Permiso(IdPermiso)
+    FOREIGN KEY (IdPermiso) REFERENCES Permisos(IdPermiso)
 );
-
--- Tabla Persona
-CREATE TABLE Persona (
+GO
+-- INSERT Usuarios
+INSERT INTO Usuarios (Email, Contrasenia, IdPermiso) VALUES
+('administrador@hospital.com', 'AdminPass123', 1),
+('medico.general@hospital.com', 'DoctorSecure', 2),
+('recepcion@hospital.com', 'RecepClave', 3),
+('paciente1@mail.com', 'MiContrasena', 4),
+('paciente2@mail.com', 'MiContrasena', 4),
+('otro.medico@hospital.com', 'Medico2025', 2);
+GO
+-- Tabla Personas
+CREATE TABLE Personas (
     IdPersona INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
-    Telefono VARCHAR(20) NULL,
+    Telefono INT,
     IdUsuario INT NOT NULL,
-    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
+    FOREIGN KEY (IdUsuario) REFERENCES Usuarios(IdUsuario),
+    IdImagen INT,
+    FOREIGN KEY (IdImagen) REFERENCES Imagenes(IdImagen)
 );
-
--- Tabla Administrador
-CREATE TABLE Administrador (
+GO
+-- Tabla Adminitradores
+CREATE TABLE Administradores (
     IdAdministrador INT IDENTITY(1,1) PRIMARY KEY,
     IdPersona INT NOT NULL,
-    FOREIGN KEY (IdPersona) REFERENCES Persona(IdPersona)
+    FOREIGN KEY (IdPersona) REFERENCES Personas(IdPersona)
 );
-
--- Tabla Recepcionista
-CREATE TABLE Recepcionista (
+GO
+-- Tabla Recepcionistas
+CREATE TABLE Recepcionistas (
     IdRecepcionista INT IDENTITY(1,1) PRIMARY KEY,
     IdPersona INT NOT NULL,
-    FOREIGN KEY (IdPersona) REFERENCES Persona(IdPersona)
+    FOREIGN KEY (IdPersona) REFERENCES Personas(IdPersona)
 );
-
--- Tabla Especialidad
-CREATE TABLE Especialidad (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Descripcion VARCHAR(50) NOT NULL,
+GO
+-- Tabla Especialidades
+CREATE TABLE Especialidades (
+    IdEspecialidad INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL UNIQUE,
     DuracionConsulta INT NOT NULL
 );
-
--- Inserts de Especialidad
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Clínica Médica', 30);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Pediatría', 30);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Cardiología', 45);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Dermatología', 30);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Ginecología', 45);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Traumatología', 45);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Oftalmología', 30);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Neurología', 60);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Psiquiatría', 60);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Otorrinolaringología', 30);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Endocrinología', 45);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Reumatología', 60);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Urología', 45);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Gastroenterología', 60);
-INSERT INTO Especialidad (Descripcion, DuracionConsulta) VALUES ('Neumonología', 45);
-
--- Tabla Horario
-CREATE TABLE Horario (
-    IdHorario INT IDENTITY(1,1) PRIMARY KEY,
-    DiasSemana VARCHAR(100) NULL,
-    HoraEntrada INT NOT NULL,
-    HoraSalida INT NOT NULL
+GO
+-- INSERT Especialidades
+INSERT INTO Especialidades (Descripcion, DuracionConsulta) VALUES 
+('Clínica Médica', 30),
+('Pediatría', 30),
+('Cardiología', 45),
+('Dermatología', 30),
+('Ginecología', 45),
+('Traumatología', 45),
+('Oftalmología', 30),
+('Neurología', 60),
+('Psiquiatría', 60),
+('Otorrinolaringología', 30),
+('Endocrinología', 45),
+('Reumatología', 60),
+('Urología', 45),
+('Gastroenterología', 60),
+('Neumonología', 45);
+GO
+-- Tabla Estados
+CREATE TABLE Estados (
+    IdEstado INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL UNIQUE
 );
-
--- Tabla Medico
-CREATE TABLE Medico (
+GO
+-- INSERT Estados
+INSERT INTO Estados (Descripcion) VALUES 
+('Atendido'),
+('Pendiente'),
+('Cancelado por Clínica'),
+('Cancelado por Paciente');
+GO
+-- Tabla Coberturas
+CREATE TABLE Coberturas (
+    IdCobertura INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL UNIQUE
+);
+GO
+-- INSERT Coberturas
+INSERT INTO Coberturas (Descripcion) VALUES 
+('Accord Salud'),
+('Avalian'),
+('Galeano'),
+('Medifé'),
+('Medicus'),
+('Osde'),
+('Pami'),
+('Swiss Medical');
+GO
+-- Tabla Medicos
+CREATE TABLE Medicos (
     IdMedico INT IDENTITY(1,1) PRIMARY KEY,
     Matricula VARCHAR(20) NOT NULL,
-    IdPersona INT NOT NULL,
-    IdHorario INT NULL,
-    FOREIGN KEY (IdPersona) REFERENCES Persona(IdPersona),
-    FOREIGN KEY (IdHorario) REFERENCES Horario(IdHorario)
-);
-
--- Tabla de relación Medico-Especialidad (muchos a muchos)
-CREATE TABLE MedicoEspecialidad (
-    IdMedico INT NOT NULL,
-    IdEspecialidad INT NOT NULL,
-    PRIMARY KEY (IdMedico, IdEspecialidad),
-    FOREIGN KEY (IdMedico) REFERENCES Medico(IdMedico),
-    FOREIGN KEY (IdEspecialidad) REFERENCES Especialidad(Id)
-);
-
--- Tabla Imagen
-CREATE TABLE Imagen (
-    IdImagen INT IDENTITY(1,1) PRIMARY KEY,
-    UrlImagen VARCHAR(200) NOT NULL
-);
-
--- Tabla Paciente
-CREATE TABLE Paciente (
-    IdPaciente INT IDENTITY(1,1) PRIMARY KEY,
-    TipoDocumento VARCHAR(20) NOT NULL,
-    Documento VARCHAR(20) NOT NULL,
-    Domicilio VARCHAR(100) NOT NULL,
-    FechaNacimiento DATE NOT NULL,
-    Cobertura VARCHAR(50) NULL,
-    IdPersona INT NOT NULL,
     IdImagen INT NULL,
-    FOREIGN KEY (IdPersona) REFERENCES Persona(IdPersona),
-    FOREIGN KEY (IdImagen) REFERENCES Imagen(IdImagen)
+    IdUsuario INT NOT NULL,
+    IdPersona INT,
+    FOREIGN KEY (IdPersona) REFERENCES Personas(IdPersona),
+    FOREIGN KEY (IdUsuario) REFERENCES Usuarios(IdUsuario),
+    FOREIGN KEY (IdImagen) REFERENCES Imagenes(IdImagen)
 );
-
--- Tabla Turno
-CREATE TABLE Turno (
+GO
+-- Tabla Horarios
+CREATE TABLE Horarios (
+    IdHorario INT IDENTITY(1,1) PRIMARY KEY,
+    DiaSemana TINYINT,
+    HorarioEntrada TIME,
+    HorarioSalida TIME
+);
+GO
+-- Tabla MedicosHorarios
+CREATE TABLE MedicosHorarios (
+    IdMedico INT,
+    IdHorario INT,
+    PRIMARY KEY (IdMedico, IdHorario),
+    FOREIGN KEY (IdMedico) REFERENCES Medicos(IdMedico),
+    FOREIGN KEY (IdHorario) REFERENCES Horarios(IdHorario)
+);
+GO
+-- Tabla MedicosEspecialidades
+CREATE TABLE MedicosEspecialidades (
+    IdMedico INT,
+    IdEspecialidad INT,
+    PRIMARY KEY (IdMedico, IdEspecialidad),
+    FOREIGN KEY (IdMedico) REFERENCES Medicos(IdMedico),
+    FOREIGN KEY (IdEspecialidad) REFERENCES Especialidades(IdEspecialidad)
+);
+GO
+-- Tabla TiposDocumento
+CREATE TABLE TiposDocumento (
+    IdTipoDocumento INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(20) NOT NULL UNIQUE
+);
+GO
+-- INSERT TiposDocumento
+INSERT INTO TiposDocumento (Descripcion) VALUES 
+('DNI'),
+('Pasaporte');
+GO
+-- Tabla Pacientes
+CREATE TABLE Pacientes (
+    IdPaciente INT IDENTITY(1,1) PRIMARY KEY,
+    IdTipoDocumento INT NOT NULL,
+    FOREIGN KEY (IdTipoDocumento) REFERENCES TiposDocumento(IdTipoDocumento),
+    Documento INT NOT NULL,
+    Domicilio VARCHAR(20) NOT NULL,
+    FechaNacimiento DATE NOT NULL,
+    IdPersona INT,
+    FOREIGN KEY (IdPersona) REFERENCES Personas(IdPersona),
+    IdCobertura INT,
+    FOREIGN KEY (IdCobertura) REFERENCES Coberturas(IdCobertura)
+);
+GO
+-- Tabla Turnos
+CREATE TABLE Turnos (
     IdTurno INT IDENTITY(1,1) PRIMARY KEY,
-    IdPaciente INT NOT NULL,
+    IdPaciente INT,
+    FOREIGN KEY (IdPaciente) REFERENCES Pacientes(IdPaciente),
     IdMedico INT NOT NULL,
-    FechaHora DATETIME NOT NULL,
-    Estado VARCHAR(20) NOT NULL,
-    Motivo VARCHAR(100) NULL,
-    Observaciones VARCHAR(200) NULL,
-    FOREIGN KEY (IdPaciente) REFERENCES Paciente(IdPaciente),
-    FOREIGN KEY (IdMedico) REFERENCES Medico(IdMedico)
-);
+    FOREIGN KEY (IdMedico) REFERENCES Medicos(IdMedico),
+    FechaTurno DATETIME NOT NULL,
+    IdEstado INT NOT NULL,
+    Diagnostico VARCHAR(200),
+    Observacion VARCHAR(1000),
+    FOREIGN KEY (IdEstado) REFERENCES Estados(IdEstado)
 
--- Tabla HistoriaClinica
-CREATE TABLE HistoriaClinica (
-    IdHistoriaClinica INT IDENTITY(1,1) PRIMARY KEY,
-    IdTurno INT NOT NULL,
-    Diagnostico VARCHAR(200) NULL,
-    Tratamiento VARCHAR(200) NULL,
-    FOREIGN KEY (IdTurno) REFERENCES Turno(IdTurno)
+);
+GO
+-- Tabla CondicionesBase
+CREATE TABLE CondicionesBase (
+    IdCondicion INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(20) NOT NULL UNIQUE
+);
+GO
+-- Tabla Alergias
+CREATE TABLE Alergias (
+    IdAlergia INT IDENTITY(1,1) PRIMARY KEY,
+    Descripcion VARCHAR(20) NOT NULL UNIQUE
+);
+GO
+-- Tabla PacientesCondiciones
+CREATE TABLE PacientesCondiciones (
+    IdPaciente INT,
+    IdCondicion INT,
+    PRIMARY KEY (IdPaciente, IdCondicion),
+    FOREIGN KEY (IdPaciente) REFERENCES Pacientes(IdPaciente),
+    FOREIGN KEY (IdCondicion) REFERENCES CondicionesBase(IdCondicion)
+);
+GO
+-- Tabla PacientesAlergias
+CREATE TABLE PacientesAlergias (
+    IdPaciente INT,
+    IdAlergia INT,
+    PRIMARY KEY (IdPaciente, IdAlergia),
+    FOREIGN KEY (IdPaciente) REFERENCES Pacientes(IdPaciente),
+    FOREIGN KEY (IdAlergia) REFERENCES Alergias(IdAlergia)
 );

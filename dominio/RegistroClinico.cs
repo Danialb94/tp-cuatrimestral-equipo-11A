@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    public class HistoriaClinica
+    public class RegistroClinico
     {
-        public int IdHistoriaClinica { get; set; }
         public Turno Turno { get; set; }
         public string Diagnostico { get; set; }
-        public string Tratamiento { get; set; }
-
+        public string Observaciones { get; set; }
     }
 }

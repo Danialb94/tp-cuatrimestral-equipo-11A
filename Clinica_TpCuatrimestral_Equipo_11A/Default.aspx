@@ -56,7 +56,7 @@
                     </div>
 
 
-                    <asp:Button ID="btnSubmit" Text="Ingresar" CssClass="btn btn-primary w-100 py-2" runat="server" />
+                    <asp:Button ID="btnSubmit" Text="Ingresar" CssClass="btn btn-primary w-100 py-2" runat="server" OnClick="btnLogin_Click"/>
 
                     <div class="text-center mt-3">
                         <span class="text-muted">¿No tenés una cuenta?</span>

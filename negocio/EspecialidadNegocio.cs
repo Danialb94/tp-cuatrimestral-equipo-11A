@@ -12,13 +12,13 @@ public class EspecialidadNegocio
 
         try
         {
-            datos.setearConsulta("SELECT Id, Descripcion, DuracionConsulta FROM Especialidad");
+            datos.setearConsulta("SELECT IdEspecialidad, Descripcion, DuracionConsulta FROM Especialidades");
             datos.ejecutarLectura();
 
             while (datos.Lector.Read())
             {
                 Especialidad esp = new Especialidad();
-                esp.IdEspecialidad = (int)datos.Lector["Id"];
+                esp.IdEspecialidad = (int)datos.Lector["IdEspecialidad"];
                 esp.Descripcion = (string)datos.Lector["Descripcion"];
                 esp.DuracionConsulta = (int)datos.Lector["DuracionConsulta"];
 
@@ -44,7 +44,7 @@ public class EspecialidadNegocio
 
         try
         {
-            datos.setearConsulta("SELECT Id, Descripcion, DuracionConsulta FROM Especialidad");
+            datos.setearConsulta("SELECT IdEspecialidad, Descripcion, DuracionConsulta FROM Especialidades");
             datos.ejecutarLectura();
 
             while (datos.Lector.Read())

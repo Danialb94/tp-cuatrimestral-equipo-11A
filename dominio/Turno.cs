@@ -14,6 +14,5 @@ namespace dominio
         public DateTime FechaHora { get; set; }
         public string Estado { get; set; }
         public string Motivo { get; set; }
-        public string Observaciones { get; set; }
     }
 }

@@ -12,7 +12,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-           
+            Response.Redirect("~/InicioPaciente.aspx");
+            //Response.Redirect("~/InicioMedico.aspx");
+            //Response.Redirect("~/InicioRecepcionista.aspx");
         }
     }
 }
