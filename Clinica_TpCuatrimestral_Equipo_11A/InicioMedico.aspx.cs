@@ -1,19 +1,21 @@
-﻿using dominio;
-using negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
     public partial class InicioMedico : System.Web.UI.Page
     {
-        // 🔹 Guarda la fecha seleccionada en ViewState para mantenerla entre postbacks
-        private DateTime fechaSeleccionada
+        // Guarda la fecha seleccionada en ViewState para mantenerla entre postbacks
+        private DateTime FechaSeleccionada
         {
-            get { return (DateTime)(ViewState["FechaSeleccionada"] ?? DateTime.Now); }
-            set { ViewState["FechaSeleccionada"] = value; }
+            get => (DateTime)(ViewState["FechaSeleccionada"] ?? DateTime.Now);
+            set => ViewState["FechaSeleccionada"] = value;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,50 +24,40 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             {
                 // Inicializa el DatePicker con la fecha actual
                 txtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
-                fechaSeleccionada = DateTime.Now;
-
+                FechaSeleccionada = DateTime.Now;
                 // Carga los turnos del médico en la fecha actual
                 CargarTurnos();
             }
         }
-
-        // 🔹 Botón “Buscar” o “Ver Turnos” que usa la fecha seleccionada en el DatePicker
+        //Botón “Buscar” o “Ver Turnos” que usa la fecha seleccionada en el DatePicker
         protected void btnBuscarFecha_Click(object sender, EventArgs e)
         {
             if (DateTime.TryParse(txtFecha.Text, out DateTime fecha))
             {
-                fechaSeleccionada = fecha;
+                FechaSeleccionada = fecha;
                 CargarTurnos();
             }
         }
 
-        // 🔹 Método principal: carga los turnos del médico para la fecha seleccionada
+        // Método principal: carga los turnos del médico para la fecha seleccionada
         private void CargarTurnos()
         {
-            MedicoNegocio negocio = new MedicoNegocio();
+            var negocio = new MedicoNegocio();
+            int idMedico = 1; // reemplazar por Session["Medico"].IdMedico
 
-            // ⚠️ Por ahora usamos un ID fijo. Después se reemplaza con Session["Medico"].IdMedico
-            int idMedico = 1;
+            var turnos = negocio.ListarTurnos(idMedico)
+                                .Where(t => t.FechaHora.Date == FechaSeleccionada.Date)
+                                .ToList();
 
-            List<Turno> lista = negocio.ListarTurnos(idMedico);
-            var turnosDia = lista.Where(t => t.FechaHora.Date == fechaSeleccionada.Date).ToList();
+            lblTotalTurnos.Text = turnos.Count.ToString();
+            lblAtendidos.Text = turnos.Count(t => t.Estado == "Atendido").ToString();
+            lblAtendidosTotal.Text = turnos.Count.ToString();
+            lblPendientes.Text = turnos.Count(t => t.Estado == "Pendiente" || t.Estado == "Programado").ToString();
 
-            // 📊 Calculamos estadísticas del día
-            int total = turnosDia.Count;
-            int atendidos = turnosDia.Count(t => t.Estado == "Atendido");
-            int pendientes = turnosDia.Count(t => t.Estado == "Pendiente" || t.Estado == "Programado");
+            lblFechaActual.Text = FechaSeleccionada.ToString("dddd, dd 'de' MMMM 'de' yyyy");
+            lblTurnosFecha.Text = FechaSeleccionada.ToString("dd/MM/yyyy");
 
-            lblTotalTurnos.Text = total.ToString();
-            lblAtendidos.Text = atendidos.ToString();
-            lblAtendidosTotal.Text = total.ToString();
-            lblPendientes.Text = pendientes.ToString();
-
-            // 📅 Actualizamos etiquetas de fecha
-            lblFechaActual.Text = fechaSeleccionada.ToString("dddd, dd 'de' MMMM 'de' yyyy");
-            lblTurnosFecha.Text = fechaSeleccionada.ToString("dd/MM/yyyy");
-
-            // 🩺 Cargamos la grilla con los turnos del día
-            gvTurnos.DataSource = turnosDia.Select(t => new
+            gvTurnos.DataSource = turnos.Select(t => new
             {
                 Hora = t.FechaHora.ToString("HH:mm"),
                 Paciente = $"{t.Paciente.Nombre} {t.Paciente.Apellido}",
@@ -77,19 +69,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             gvTurnos.DataBind();
         }
 
-        // 🔹 Manejo de los botones dentro del GridView
-        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            int idTurno = Convert.ToInt32(e.CommandArgument);
-
-            if (e.CommandName == "VerHistorial")
-            {
-                Response.Redirect($"HistoriaClinicaMedico.aspx?idTurno={idTurno}");
-            }
-            else if (e.CommandName == "VerDetalle")
-            {
-                Response.Redirect($"DetalleTurnoMedico.aspx?idTurno={idTurno}");
-            }
-        }
+      
     }
 }
