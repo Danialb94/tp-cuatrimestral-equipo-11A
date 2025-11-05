@@ -32,8 +32,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     }
                     else if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.MEDICO)
                     {
+                        // Cargar datos completos del médico (nombre, apellido, matrícula, especialidades, etc.)
+                        var usuarioMedico = (Usuario)Session["usuario"];
+                        MedicoNegocio medicoNegocio = new MedicoNegocio();
+                        Medico medico = medicoNegocio.BuscarPorIdUsuario(usuarioMedico.IdUsuario);
+
+                        // Guardamos el objeto médico completo para usar en MasterMedico y otras páginas
+                        Session["Medico"] = medico;
                         Response.Redirect("InicioMedico.aspx", false);
                     }
+
                     else if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
                     {
                         Response.Redirect("InicioRecepcionista.aspx", false);

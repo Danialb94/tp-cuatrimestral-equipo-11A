@@ -14,12 +14,33 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario usuario = (Usuario)Session["usuario"];
-            if (!Seguridad.sesionActiva(usuario) ||
-                !(Seguridad.esMedico (usuario) || Seguridad.esAdministrador(usuario)))
+            if (!IsPostBack)
             {
-                Session.Add("Error", "No tenés permisos para ver esta página");
-                Response.Redirect("Error.aspx", false);
+                Medico medico = (Medico)Session["Medico"];
+
+                if (medico == null)
+                {
+                    Response.Redirect("Default.aspx");
+                    return;
+                }
+
+                lblNombreMedico.Text = medico.Nombre + " " + medico.Apellido;
+                lblMatricula.Text = medico.Matricula;
+
+                if (medico.Especialidades != null && medico.Especialidades.Count > 0)
+                {
+                    // Mostrar todas las especialidades del médico (una o varias)
+                    lblEspecialidad.Text = string.Join(", ", medico.Especialidades.Select(esp => esp.Descripcion));
+                }
+                else
+                {
+                    lblEspecialidad.Text = "Sin especialidad";
+                }
+
+                if (medico.Imagen != null && !string.IsNullOrEmpty(medico.Imagen.UrlImagen))
+                    imgPerfil.ImageUrl = medico.Imagen.UrlImagen;
+                else
+                    imgPerfil.ImageUrl = "~/Imagenes/Perfil_Placeholder.png";
             }
         }
     }
