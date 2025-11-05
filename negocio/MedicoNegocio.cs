@@ -48,7 +48,7 @@ namespace negocio
                     aux.Paciente = new Paciente();
                     aux.Paciente.Nombre = (string)datos.Lector["Nombre"];
                     aux.Paciente.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Paciente.Cobertura = (string)datos.Lector["Cobertura"];
+                    aux.Paciente.Cobertura.Descripcion = (string)datos.Lector["Cobertura"];
 
                     aux.Especialidad = new Especialidad();
                     aux.Especialidad.Descripcion = (string)datos.Lector["Especialidad"];
