@@ -16,7 +16,7 @@ namespace negocio
         {
             List<Turno> lista = new List<Turno>();
             AccesoDatos datos = new AccesoDatos();
-
+            Turno aux = new Turno();
             try
             {
                 datos.setearConsulta(@"SELECT T.IdTurno, T.FechaTurno, E.Descripcion AS Especialidad, ES.Descripcion AS Estado,
@@ -42,8 +42,6 @@ namespace negocio
                     {
                         Descripcion = (string)datos.Lector["Especialidad"]
                     };
-
-<<<<<<< HEAD
                     aux.Paciente = new Paciente();
                     aux.Paciente.Nombre = (string)datos.Lector["Nombre"];
                     aux.Paciente.Apellido = (string)datos.Lector["Apellido"];
@@ -53,9 +51,7 @@ namespace negocio
                     aux.Especialidad.Descripcion = (string)datos.Lector["Especialidad"];
 
                     lista.Add(aux);
-=======
                     lista.Add(turno);
->>>>>>> 09f72929e9613b656ca47084f20d8ba21e619cab
                 }
 
                 return lista;
