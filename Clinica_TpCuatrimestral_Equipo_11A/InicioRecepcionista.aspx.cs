@@ -13,6 +13,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             if (!IsPostBack)
             {
                 cargarEspecialidades();
+                cargarTurnosRecepcionista();
             }
         }
 
@@ -41,6 +42,13 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             string especialidadSeleccionada = ddlEspecialidadesRecepcionista.SelectedValue;
            
+        }
+
+        private void cargarTurnosRecepcionista()
+        {
+            TurnoNegocio negocio = new TurnoNegocio();
+            gvTurnosRecepcionista.DataSource = negocio.listarTurnos(); 
+            gvTurnosRecepcionista.DataBind();
         }
     }
 }

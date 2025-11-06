@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 09f72929e9613b656ca47084f20d8ba21e619cab
 
 namespace negocio
 {

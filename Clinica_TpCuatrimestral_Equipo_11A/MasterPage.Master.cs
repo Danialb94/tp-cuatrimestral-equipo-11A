@@ -12,7 +12,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!(Page is Default || Page is RegistrarsePaciente||Page is OlvidarPass))
+            if (!(Page is Default || Page is RegistrarsePaciente || Page is OlvidarPass ||Page is ConfirmarEmail||Page is ReestablecerPass))
             {
                 if (!Seguridad.sesionActiva(Session["usuario"]))
                     Response.Redirect("Default.aspx", false);

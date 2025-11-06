@@ -15,55 +15,24 @@
                 </asp:DropDownList>
             </div>
 
-            <table class="table table-bordered align-middle text-center">
-                <thead class="table-light">
-                    <tr>
-                        <th>Hora</th>
-                        <th>Lunes 23</th>
-                        <th>Martes 24</th>
-                        <th>Miércoles 25</th>
-                        <th>Jueves 26</th>
-                        <th>Viernes 27</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>09:00</td>
-                        <td class="turno bg-info text-white">Paciente Ejemplo</td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                    </tr>
-                    <tr>
-                        <td>10:00</td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                    </tr>
-                    <tr class="table-secondary">
-                        <td colspan="6" class="fw-bold">Almuerzo</td>
-                    </tr>
-                    <tr>
-                        <td>13:00</td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                    </tr>
-                    <tr>
-                        <td>14:00</td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                        <td class="turno"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <asp:GridView ID="gvTurnosRecepcionista" runat="server"
+                CssClass="table table-bordered text-center align-middle"
+                AutoGenerateColumns="false">
+                <Columns>
+                    <asp:BoundField DataField="FechaHora" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                    <asp:TemplateField HeaderText="Paciente">
+                        <ItemTemplate><%# Eval("Paciente.Nombre") %></ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Médico">
+                        <ItemTemplate><%# Eval("Medico.Nombre") %></ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Especialidad">
+                        <ItemTemplate><%# Eval("Especialidad.Descripcion") %></ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                </Columns>
+            </asp:GridView>
+
         </div>
     </div>
 </asp:Content>

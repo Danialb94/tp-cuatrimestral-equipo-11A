@@ -44,22 +44,23 @@ CREATE TABLE Usuarios (
     Email VARCHAR(100) NOT NULL UNIQUE,
     Contrasenia VARCHAR(50) NOT NULL,
     IdPermiso INT NOT NULL,
+    Estado BIT,
     FOREIGN KEY (IdPermiso) REFERENCES Permisos(IdPermiso)
 );
 GO
 -- INSERT Usuarios
-INSERT INTO Usuarios (Email, Contrasenia, IdPermiso) VALUES
-('administrador@hospital.com', 'AdminPass123', 1),
-('medico1@hospital.com', 'MedClave1', 2),
-('medico2@hospital.com', 'MedClave2', 2),
-('medico3@hospital.com', 'MedClave3', 2),
-('medico4@hospital.com', 'MedClave4', 2),
-('recepcion1@hospital.com', 'RecepClave1', 3),
-('recepcion2@hospital.com', 'RecepClave2', 3),
-('paciente1@mail.com', 'PacClave1', 4),
-('paciente2@mail.com', 'PacClave2', 4),
-('paciente3@mail.com', 'PacClave3', 4),
-('paciente4@mail.com', 'PacClave4', 4)
+INSERT INTO Usuarios (Email, Contrasenia, IdPermiso, Estado) VALUES
+('administrador@hospital.com', 'AdminPass123', 1, 1),
+('medico1@hospital.com', 'MedClave1', 2, 1),
+('medico2@hospital.com', 'MedClave2', 2, 1),
+('medico3@hospital.com', 'MedClave3', 2, 1),
+('medico4@hospital.com', 'MedClave4', 2, 1),
+('recepcion1@hospital.com', 'RecepClave1', 3, 1),
+('recepcion2@hospital.com', 'RecepClave2', 3, 1),
+('paciente1@mail.com', 'PacClave1', 4, 1),
+('paciente2@mail.com', 'PacClave2', 4, 1),
+('paciente3@mail.com', 'PacClave3', 4, 1),
+('paciente4@mail.com', 'PacClave4', 4, 1)
 GO
 -- Tabla Personas
 CREATE TABLE Personas (

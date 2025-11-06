@@ -42,15 +42,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.Label lblAtendidos;
 
         /// <summary>
-        /// Controllo lblAtendidosTotal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAtendidosTotal;
-
-        /// <summary>
         /// Controllo lblPendientes.
         /// </summary>
         /// <remarks>
@@ -69,13 +60,13 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.TextBox txtFecha;
 
         /// <summary>
-        /// Controllo btnBuscarFecha.
+        /// Controllo btnBuscar.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarFecha;
+        protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
         /// Controllo lblTurnosFecha.
@@ -85,15 +76,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTurnosFecha;
-
-        /// <summary>
-        /// Controllo txtBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
 
         /// <summary>
         /// Controllo gvTurnos.
