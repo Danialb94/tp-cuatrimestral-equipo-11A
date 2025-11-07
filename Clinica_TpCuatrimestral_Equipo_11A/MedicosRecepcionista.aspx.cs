@@ -1,4 +1,5 @@
-﻿using System;
+﻿using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+                cargarMedicos();
+        }
 
+        private void cargarMedicos()
+        {
+            RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            gvMedicos.DataSource = negocio.listarMedicos();
+            gvMedicos.DataBind();
         }
     }
 }

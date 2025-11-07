@@ -41,8 +41,27 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected void ddlEspecialidadesRecepcionista_SelectedIndexChanged(object sender, EventArgs e)
         {
             string especialidadSeleccionada = ddlEspecialidadesRecepcionista.SelectedValue;
-           
+
+            TurnoNegocio negocio = new TurnoNegocio();
+            List<Turno> listaTurnos = negocio.listarTurnos(); 
+
+            if (string.IsNullOrEmpty(especialidadSeleccionada))
+            {
+                gvTurnosRecepcionista.DataSource = listaTurnos;
+            }
+            else
+            {
+                var filtrados = listaTurnos.FindAll(x =>
+                    x.Especialidad != null &&
+                    x.Especialidad.Descripcion == especialidadSeleccionada
+                );
+
+                gvTurnosRecepcionista.DataSource = filtrados;
+            }
+
+            gvTurnosRecepcionista.DataBind();
         }
+
 
         private void cargarTurnosRecepcionista()
         {

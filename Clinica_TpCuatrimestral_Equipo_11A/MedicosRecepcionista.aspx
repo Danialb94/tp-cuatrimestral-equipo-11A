@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="fw-bold">Médicos Registrados</h4>
-                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx"> Nuevo Médico</a>
+                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx">Nuevo Médico</a>
             </div>
 
             <div class="d-flex mb-2 justify-content-between rounded-2" style="background-color: #d3d3d38f; width: 450px;">
@@ -18,50 +18,41 @@
                 <asp:TextBox ID="txtFiltroMedico" runat="server" class="border-dark-subtle form-control ms-2" Style="width: 300px;" placeholder="Nombre / Apellido / Especialidad" />
             </div>
 
-            <table class="table table-bordered align-middle text-center">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Especialidad</th>
-                        <th>Matrícula</th>
-                        <th>Teléfono</th>
-                        <th>Franja horaria</th>
-                        <th>Días disponibles</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan</td>
-                        <td>Pérez</td>
-                        <td>Cardiología</td>
-                        <td>MN 12345</td>
-                        <td>(555) 123-4567</td>
-                        <td>08:00 - 16:00</td>
-                        <td>Lun, Mié, Vie</td>
-                        <td>
-                            <a href="AgregarMedico.aspx" class="btn btn-outline-secondary btn-sm" title="Editar">
+            <asp:GridView ID="gvMedicos" runat="server"
+                CssClass="table table-bordered align-middle text-center"
+                AutoGenerateColumns="False">
+                <Columns>
+                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                    <asp:BoundField DataField="Matricula" HeaderText="Matrícula" />
+                    <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+                    <asp:TemplateField HeaderText="Especialidad">
+                        <ItemTemplate><%# Eval("Especialidades[0].Descripcion") %></ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Franja horaria">
+                        <ItemTemplate>
+                            <%# Eval("Horario.HoraEntrada") %>:00 - <%# Eval("Horario.HoraSalida") %>:00
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Días disponibles">
+                        <ItemTemplate>
+                            <%# string.Join(", ", ((dominio.Horario)Eval("Horario")).DiasSemana) %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="">
+                        <ItemTemplate>
+                            <a href='AgregarMedico.aspx?id=<%# Eval("IdMedico") %>'
+                                class="btn btn-outline-secondary btn-sm" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Laura</td>
-                        <td>Gómez</td>
-                        <td>Pediatría</td>
-                        <td>MN 98765</td>
-                        <td>(555) 987-6543</td>
-                        <td>10:00 - 18:00</td>
-                        <td>Mar, Jue</td>
-                        <td>
-                            <a href="AgregarMedico.aspx" class="btn btn-outline-secondary btn-sm" title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+
+
         </div>
     </div>
 </asp:Content>
