@@ -17,6 +17,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             {
                 txtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 CargarTurnos(DateTime.Now);
+                lblFechaActual.Text = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy");
             }
         }
 
@@ -46,7 +47,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             lblPendientes.Text = turnos.Count(t => t.Estado == "Pendiente" || t.Estado == "Programado").ToString();
 
             // Encabezados
-            lblFechaActual.Text = fecha.ToString("dddd, dd 'de' MMMM 'de' yyyy");
             lblTurnosFecha.Text = fecha.ToString("dd/MM/yyyy");
 
             // Grilla

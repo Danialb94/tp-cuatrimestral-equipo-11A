@@ -17,23 +17,42 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"
-            SELECT 
-                M.IdMedico,
-                P.Nombre,
-                P.Apellido,
-                P.Telefono,
-                M.Matricula,
-                E.Descripcion AS Especialidad,
-                H.IdHorario,
-                H.HorarioEntrada,
-                H.HorarioSalida,
-                H.DiaSemana
-            FROM Medicos M
-            INNER JOIN Personas P ON M.IdPersona = P.IdPersona
-            INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
-            INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
-            INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
-        ");
+                    SELECT DISTINCT
+                        M.IdMedico,
+                        P.Nombre,
+                        P.Apellido,
+                        P.Telefono,
+                        M.Matricula,
+                        E.Descripcion AS Especialidad,
+                        H.HorarioEntrada,
+                        H.HorarioSalida,
+                        (
+                            SELECT STRING_AGG(
+                                CASE H2.DiaSemana
+                                    WHEN 1 THEN 'Lunes'
+                                    WHEN 2 THEN 'Martes'
+                                    WHEN 3 THEN 'Miércoles'
+                                    WHEN 4 THEN 'Jueves'
+                                    WHEN 5 THEN 'Viernes'
+                                    WHEN 6 THEN 'Sábado'
+                                    WHEN 7 THEN 'Domingo'
+                                END,
+                                ', '
+                            ) WITHIN GROUP (ORDER BY H2.DiaSemana)
+                            FROM MedicosHorariosEspecialidades MHE2
+                            INNER JOIN Horarios H2 ON MHE2.IdHorario = H2.IdHorario
+                            WHERE MHE2.IdMedico = M.IdMedico
+                              AND MHE2.IdEspecialidad = E.IdEspecialidad
+                              AND H2.HorarioEntrada = H.HorarioEntrada
+                              AND H2.HorarioSalida = H.HorarioSalida
+                        ) AS DiasSemana
+                    FROM Medicos M
+                    INNER JOIN Personas P ON M.IdPersona = P.IdPersona
+                    INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                    INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                    INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                    ORDER BY E.Descripcion, M.IdMedico;
+                    ");
 
                 datos.ejecutarLectura();
 
@@ -46,28 +65,22 @@ namespace negocio
                     aux.Telefono = datos.Lector["Telefono"].ToString();
                     aux.Matricula = (string)datos.Lector["Matricula"];
 
-
                     Especialidad esp = new Especialidad();
                     esp.Descripcion = (string)datos.Lector["Especialidad"];
                     aux.Especialidades.Add(esp);
 
                     Horario horario = new Horario();
-                    horario.IdHorario = (int)datos.Lector["IdHorario"];
-
 
                     TimeSpan entrada = (TimeSpan)datos.Lector["HorarioEntrada"];
                     TimeSpan salida = (TimeSpan)datos.Lector["HorarioSalida"];
                     horario.HoraEntrada = entrada.Hours;
                     horario.HoraSalida = salida.Hours;
 
-
-                    int dia = int.Parse(datos.Lector["DiaSemana"].ToString());
-                    string[] nombresDias = { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
-                    horario.DiasSemana.Add(nombresDias[dia % 7]);
-
+                    horario.DiasSemana.Add((string)datos.Lector["DiasSemana"]);
 
                     aux.Horario = horario;
                     lista.Add(aux);
+
                 }
 
                 return lista;

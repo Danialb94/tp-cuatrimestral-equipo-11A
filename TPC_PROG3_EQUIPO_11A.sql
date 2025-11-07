@@ -277,16 +277,32 @@ CREATE TABLE Turnos (
 );
 GO
 INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, IdEstado, Diagnostico, Observacion, IdEspecialidad) VALUES
-(1, 1, '2025-10-29 08:00:00', 1, 'Control de hipertensión arterial', 'Paciente controlado, continuar con medicación actual', 1),
+(1, 1, '20251029 08:00:00', 1, 'Control de hipertensión arterial', 'Paciente controlado, continuar con medicación actual', 1),
 -- Valeria Torres, Dra. Ana Martinez
-(2, 2, '2025-10-30 15:00:00', 2, NULL, NULL, 2),
+(1, 1, '20251203 10:00:00', 2, NULL, NULL, 3),
+-- Valeria Torres, Dra. Ana Martinez
+(1, 1, '20251128 09:00:00', 2, NULL, NULL, 1),
+-- Valeria Torres, Dra. Ana Martinez
+(1, 1, '20251201 10:00:00', 2, NULL, NULL, 1),
+-- Valeria Torres, Dra. Ana Martinez
+(2, 2, '20251030 15:00:00', 4, NULL, NULL, 2),
 -- Diego Morales, Dra. Laura Fernández
-(3, 3, '2025-12-1 17:00:00', 1, 'Dermatitis alérgica', 'Se prescribe tratamiento tópico', 4),
+(2, 2, '20251125 15:00:00', 3, NULL, NULL, 2),
+-- Diego Morales, Dra. Laura Fernández
+(2, 2, '20251127 15:00:00', 2, NULL, NULL, 2),
+-- Diego Morales, Dra. Laura Fernández
+(3, 3, '20251201 17:00:00', 1, 'Dermatitis alérgica', 'Se prescribe tratamiento tópico', 4),
 -- Camila Vega, Dr. Juan Pérez
-(4, 4, '2024-10-25 09:00:00', 4, NULL, NULL, 6),
+(3, 3, '20251201 14:00:00', 2, NULL, NULL, 4),
+-- Camila Vega, Dr. Juan Pérez
+(3, 3, '20251201 15:00:00', 2, NULL, NULL, 4),
+-- Camila Vega, Dr. Juan Pérez
+(4, 4, '20251128 15:00:00', 2, NULL, NULL, 6),
 -- Fernando Castro, Dra. María López
-(1, 1, '2024-12-3 10:00:00', 2, NULL, NULL, 3);
--- Valeria Torres, Dra. Ana Martinez
+(4, 4, '20251128 16:00:00', 2, NULL, NULL, 6),
+-- Fernando Castro, Dra. María López
+(4, 4, '20251025 09:00:00', 2, NULL, NULL, 6);
+-- Fernando Castro, Dra. María López
 GO
 -- Tabla CondicionesBase
 CREATE TABLE CondicionesBase (
@@ -342,7 +358,6 @@ INSERT INTO PacientesAlergias (IdPaciente, IdAlergia) VALUES
 (1, 1), -- Penicilina - Valeria Torres
 (1, 2), -- Latex - Valeria Torres
 (4,2); -- Latex - Fernando Castro
-
 
 
 

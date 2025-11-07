@@ -85,23 +85,23 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"
-     SELECT 
-         M.IdMedico,
-         P.Nombre,
-         P.Apellido,
-         P.Telefono,
-         M.Matricula,
-         E.Descripcion AS Especialidad,
-         H.IdHorario,
-         H.HorarioEntrada,
-         H.HorarioSalida,
-         H.DiaSemana
-     FROM Medicos M
-     INNER JOIN Personas P ON M.IdPersona = P.IdPersona
-     INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
-     INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
-     INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
- ");
+                     SELECT 
+                         M.IdMedico,
+                         P.Nombre,
+                         P.Apellido,
+                         P.Telefono,
+                         M.Matricula,
+                         E.Descripcion AS Especialidad,
+                         H.IdHorario,
+                         H.HorarioEntrada,
+                         H.HorarioSalida,
+                         H.DiaSemana
+                     FROM Medicos M
+                     INNER JOIN Personas P ON M.IdPersona = P.IdPersona
+                     INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                     INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                     INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                 ");
 
                 datos.ejecutarLectura();
 
