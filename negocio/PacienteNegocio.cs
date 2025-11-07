@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace negocio
 {
-    internal class PacienteNegocio
+    public class PacienteNegocio
     {
         public List<Paciente> Listar()
         {
@@ -104,7 +104,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
+        //agregar alta de alergias y de condiciones base
         public void Modificar(Paciente nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -147,7 +147,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
+        //modificar alergias y de condiciones base
         public void Baja(int IdPaciente)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -202,6 +202,13 @@ namespace negocio
                         paciente.Imagen.IdImagen = (int)datos.Lector["IdImagen"];
                         paciente.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
                     }
+
+                    List<string> aux = new List<string>();
+                    aux = ListarAlergias(paciente.IdPaciente);
+                    if (aux.Count() != 0) paciente.Alergias = aux;
+
+                    aux = ListarCondiciones(paciente.IdPaciente);
+                    if (aux.Count() != 0) paciente.CondicionBase = aux;
                 }
 
                 return paciente;
