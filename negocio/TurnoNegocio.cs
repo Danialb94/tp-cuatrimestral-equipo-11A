@@ -69,9 +69,77 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public List<Turno> listarTurnosxPaciente(int IdPaciente)
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                datos.setearConsulta(@"SELECT  
+                    T.IdTurno,
+                    PM.Nombre,
+                    PM.Apellido,
+                    T.FechaTurno,
+                    ESP.Descripcion AS Especialidad
+                FROM Turnos T
+                INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+                INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+                INNER JOIN Medicos M ON T.IdMedico = M.IdMedico
+                INNER JOIN Personas PM ON M.IdPersona = PM.IdPersona
+                INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+                INNER JOIN Especialidades ESP ON T.IdEspecialidad = ESP.IdEspecialidad
+                WHERE PA.IdPaciente = @IdPaciente
+                AND E.Descripcion = 'Pendiente'
+                ORDER BY t.FechaTurno ASC");
+                datos.setearParametro("@IdPaciente", IdPaciente);
+                datos.ejecutarLectura();
 
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.IdTurno = (int)datos.Lector["IdTurno"];
+                    aux.Medico = new Medico();
+                    aux.Medico.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Medico.Apellido = (string)datos.Lector["Apellido"];
+                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+                    aux.Especialidad = new Especialidad();
+                    aux.Especialidad.Descripcion = (string)datos.Lector["Especialidad"];
+                    lista.Add(aux);
+                }
 
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void CancelarxPaciente(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"UPDATE Turnos
+                    SET IdEstado = '4'
+                    WHERE IdTurno = @IdTurno");
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 
