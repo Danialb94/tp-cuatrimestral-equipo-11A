@@ -26,6 +26,7 @@ namespace negocio
                         E.Descripcion AS Especialidad,
                         H.HorarioEntrada,
                         H.HorarioSalida,
+                        I.UrlImagen,
                         (
                             SELECT STRING_AGG(
                                 CASE H2.DiaSemana
@@ -51,6 +52,7 @@ namespace negocio
                     INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
                     INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
                     INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                    LEFT JOIN Imagenes I ON I.IdImagen = P.IdImagen
                     ORDER BY E.Descripcion, M.IdMedico;
                     ");
 
@@ -79,6 +81,9 @@ namespace negocio
                     horario.DiasSemana.Add((string)datos.Lector["DiasSemana"]);
 
                     aux.Horario = horario;
+
+                    aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+                        
                     lista.Add(aux);
 
                 }

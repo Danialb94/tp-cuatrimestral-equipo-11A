@@ -9,6 +9,7 @@ namespace negocio
 {
     public class MedicoNegocio
     {
+
         // ===============================================
         //      Listar todos los turnos de un médico
         // ===============================================

@@ -16,6 +16,7 @@ namespace dominio
         public Medico()
         {
             Especialidades = new List<Especialidad>();
+            Imagen = new Imagen();
         }
     }
 }
