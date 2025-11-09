@@ -13,15 +13,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
-    <body>
+<body>
     <form id="form1" runat="server">
         <div class="d-flex row">
 
 
             <div class="bg-light border-end p-3 shadow-sm col-2" style="min-height: 700px">
                 <div class="text-center mb-4">
-                    <img src="<%= ResolveUrl("~/Imagenes/Perfil_Placeholder.png") %>" class="rounded-circle mb-2" style="width: 90px; height: 90px;" />
-                    <h6 class="fw-bold mb-0">Nombre Apellido</h6>
+
+                    <!-- Imagen del paciente -->
+                    <asp:Image ID="imgPerfil" runat="server" class="mb-2 object-fit-cover rounded-circle" Style="height: 90px; width: 90px; background-color: white;" ImageUrl="~/Imagenes/Perfil_Placeholder.png" />
+
+                    <!-- Datos dinámicos -->
+                    <h6 class="fw-bold mb-0">
+                        <asp:Label ID="lblNombrePaciente" runat="server" Text="Nombre Apellido" />
+                    </h6>
                 </div>
 
 

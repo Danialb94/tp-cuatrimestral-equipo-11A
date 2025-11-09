@@ -26,7 +26,7 @@ namespace negocio
                     paciente.Nombre = (string)datos.Lector["Nombre"];
                     paciente.Apellido = (string)datos.Lector["Apellido"];
                     if (!(datos.Lector["Telefono"] is DBNull))
-                        paciente.Telefono = (string)datos.Lector["Telefono"];
+                        paciente.Telefono = Convert.ToString(datos.Lector["Telefono"]);
                     paciente.TipoDocumento.IdTipoDocumento = (int)datos.Lector["IdTipoDocumento"];
                     paciente.TipoDocumento.Descripcion = (string)datos.Lector["TipoDocumento"];
                     paciente.Documento = (string)datos.Lector["Documento"];
@@ -186,10 +186,10 @@ namespace negocio
                     paciente.Nombre = (string)datos.Lector["Nombre"];
                     paciente.Apellido = (string)datos.Lector["Apellido"];
                     if (!(datos.Lector["Telefono"] is DBNull))
-                        paciente.Telefono = (string)datos.Lector["Telefono"];
+                        paciente.Telefono = Convert.ToString(datos.Lector["Telefono"]);
                     paciente.TipoDocumento.IdTipoDocumento = (int)datos.Lector["IdTipoDocumento"];
                     paciente.TipoDocumento.Descripcion = (string)datos.Lector["TipoDocumento"];
-                    paciente.Documento = (string)datos.Lector["Documento"];
+                    paciente.Documento = Convert.ToString(datos.Lector["Documento"]);
                     paciente.Domicilio = (string)datos.Lector["Domicilio"];
                     paciente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     if (!(datos.Lector["Cobertura"] is DBNull))

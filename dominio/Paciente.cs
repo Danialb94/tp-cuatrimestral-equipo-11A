@@ -21,6 +21,9 @@ namespace dominio
         {
             Alergias = new List<string>();
             CondicionBase = new List<string>();
+            TipoDocumento = new TipoDocumento();
+            Cobertura = new Cobertura();
+            Imagen = new Imagen();
         }
 
     }

@@ -16,11 +16,9 @@
             <!-- 🔹 Sidebar Médico -->
             <div class="bg-light border-end vh-100 p-3 shadow-sm" style="width: 250px;">
                 <div class="text-center mb-4">
+
                     <!-- Imagen del médico -->
-                    <asp:Image ID="imgPerfil" runat="server" 
-                        CssClass="rounded-circle mb-2" 
-                        Width="90px" Height="90px" 
-                        ImageUrl="~/Imagenes/Perfil_Placeholder.png" />
+                    <asp:Image ID="imgPerfil" runat="server" class="mb-2 object-fit-cover rounded-circle" style="height:90px; width:90px; background-color: white;" ImageUrl="~/Imagenes/Perfil_Placeholder.png"/>
 
                     <!-- Datos dinámicos -->
                     <h6 class="fw-bold mb-0">
