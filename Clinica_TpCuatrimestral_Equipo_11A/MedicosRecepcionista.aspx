@@ -10,15 +10,30 @@
                 <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx">Nuevo Médico</a>
             </div>
 
-            <div class="d-flex mb-2 justify-content-between rounded-2" style="background-color: #d3d3d38f; width: 450px;">
+            <div class="d-flex mb-2 justify-content-between rounded-2 align-items-center"
+                style="background-color: #d3d3d38f; width: 700px;">
                 <img src="<%= ResolveUrl("~/Imagenes/Lupa.png") %>" class="m-2" style="height: 20px;" />
                 <div class="align-content-around">
-                    <label><b>Filtro rápido</b></label>
+                    <asp:Label><b>Filtro rápido</b></asp:Label>
                 </div>
-                <asp:TextBox ID="txtFiltroMedico" runat="server" class="border-dark-subtle form-control ms-2" Style="width: 300px;" placeholder="Nombre / Apellido / Especialidad" />
+                <asp:TextBox ID="txtFiltroMedico" runat="server"
+                    class="border-dark-subtle form-control ms-2" Style="width: 300px;" placeholder="Nombre / Apellido" AutoPostBack="true" OnTextChanged="txtFiltroMedico_TextChanged">
+                </asp:TextBox>
+
+                <asp:DropDownList
+                    ID="ddlEspecialidadesRecepcionistaMedicos"
+                    runat="server"
+                    CssClass="border-dark-subtle h-100 rounded-2 form-select ms-2"
+                    Style="width: 240px;"
+                    AutoPostBack="true"
+                    OnSelectedIndexChanged="ddlEspecialidadesRecepcionistaMedicos_SelectedIndexChanged">
+                    <asp:ListItem Selected hidden>Seleccione la Especialidad</asp:ListItem>
+                </asp:DropDownList>
+
             </div>
 
-            <asp:GridView ID="gvMedicos" runat="server"
+
+            <asp:GridView ID="dgvMedicos" runat="server"
                 CssClass="table table-bordered align-middle text-center"
                 AutoGenerateColumns="False">
                 <Columns>

@@ -24,12 +24,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.TextBox txtFiltroMedico;
 
         /// <summary>
-        /// gvMedicos control.
+        /// ddlEspecialidadesRecepcionistaMedicos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMedicos;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidadesRecepcionistaMedicos;
+
+        /// <summary>
+        /// dgvMedicos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvMedicos;
     }
 }

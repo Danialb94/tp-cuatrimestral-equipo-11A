@@ -82,7 +82,7 @@ namespace negocio
 
                     aux.Horario = horario;
 
-                    aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+                  //  aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
                         
                     lista.Add(aux);
 
@@ -100,8 +100,123 @@ namespace negocio
             }
         }
 
+        public void AgregarMedico(Medico nuevo, List<string> diasSeleccionados, string franjaHoraria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            int idMedico = 0;
+
+            try
+            {
+                
+                datos.setearConsulta(@"
+            DECLARE @IDU int, @IDP int;
+
+            INSERT INTO Usuarios (Email, Contrasenia, IdPermiso, Estado) 
+            VALUES (@Email, @Contrasenia, @IdPermiso, 1);
+
+            SET @IDU = SCOPE_IDENTITY();
+
+            INSERT INTO Personas (Nombre, Apellido, Telefono, IdUsuario)  
+            VALUES (@Nombre, @Apellido, @Telefono, @IDU);
+
+            SET @IDP = SCOPE_IDENTITY();
+
+            INSERT INTO Medicos (Matricula, IdUsuario, IdPersona)  
+            VALUES (@Matricula, @IDU, @IDP);
+
+            SELECT SCOPE_IDENTITY() AS IdMedico;
+        ");
+
+                
+                datos.setearParametro("@Email", nuevo.Usuario.Email);
+                datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
+                datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+                datos.setearParametro("@Matricula", nuevo.Matricula);
+
+                datos.ejecutarLectura();
+
+                
+                if (datos.Lector.Read())
+                    idMedico = Convert.ToInt32(datos.Lector["IdMedico"]);
+
+                datos.cerrarConexion();
+
+                foreach (string dia in diasSeleccionados)
+                {
+                    int diaSemana = ObtenerNumeroDia(dia); 
+
+                    int idHorario = ObtenerIdHorario(diaSemana, franjaHoraria); 
+                    {
+                        datos = new AccesoDatos();
+                        datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades (IdMedico, IdHorario, IdEspecialidad) VALUES (@idMedico, @idHorario, @idEspecialidad)");
+
+                        datos.setearParametro("@IdMedico", idMedico);
+                        datos.setearParametro("@IdHorario", idHorario);
+                        datos.setearParametro("@IdEspecialidad", nuevo.Especialidades.First().IdEspecialidad); 
+                        datos.ejecutarAccion();
+                        datos.cerrarConexion();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        private int ObtenerNumeroDia(string dia)
+        {
+            switch (dia.ToLower())
+            {
+                case "lunes": return 1;
+                case "martes": return 2;
+                case "miércoles":
+                case "miercoles": return 3;
+                case "jueves": return 4;
+                case "viernes": return 5;
+                case "sábado":
+                case "sabado": return 6;
+                case "domingo": return 7;
+                default: return 0;
+            }
+        }
+
+        private int ObtenerIdHorario(int diaSemana, string franja)
+        {
+           
+            string[] partes = franja.Split('-');
+            string entrada = partes[0].Trim();
+            string salida = partes[1].Trim();
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT IdHorario FROM Horarios WHERE DiaSemana = @dia AND HorarioEntrada = @entrada AND HorarioSalida = @salida");
+                datos.setearParametro("@dia", diaSemana);
+                datos.setearParametro("@entrada", entrada);
+                datos.setearParametro("@salida", salida);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return Convert.ToInt32(datos.Lector["IdHorario"]);
+                else
+                    return 0;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
     }
+
 }
+
 
