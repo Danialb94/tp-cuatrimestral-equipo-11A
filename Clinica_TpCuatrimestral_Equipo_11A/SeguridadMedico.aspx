@@ -1,101 +1,102 @@
-﻿<%@ Page Title="Configuración Médico" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="ConfiguracionMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.ConfiguracionMedico" %>
+﻿<%@ Page Title="Seguridad Médico" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="SeguridadMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.SeguridadMedico" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        // 🔹 Mostrar / ocultar contraseña (funciona para los 3 campos)
+        function togglePassword(idTxt, idIcon) {
+            var input = document.getElementById(idTxt);
+            var icon = document.getElementById(idIcon);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
+</asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
 
-                <!-- Barra de navegación -->
+                <!-- 🔹 Barra de navegación -->
                 <div class="d-flex justify-content-start align-items-center bg-white p-2 rounded shadow-sm mb-4">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link <% = Page.Title == "Configuración Médico" ? "active" : "text-dark" %>"
-                               href="ConfiguracionMedico.aspx">
-                                <i class="bi bi-person me-2"></i>Información personal
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <% = Page.Title == "Seguridad Médico" ? "active" : "text-dark" %>"
-                               href="SeguridadMedico.aspx">
-                                <i class="bi bi-lock me-2"></i>Seguridad
-                            </a>
-                        </li>
-                    </ul>
+                    <asp:Panel runat="server" CssClass="nav nav-pills">
+                        <asp:HyperLink runat="server" NavigateUrl="ConfiguracionMedico.aspx" CssClass="nav-link text-dark">
+                            <i class="bi bi-person me-2"></i>Información personal
+                        </asp:HyperLink>
+                        <asp:HyperLink runat="server" NavigateUrl="SeguridadMedico.aspx" CssClass="nav-link active">
+                            <i class="bi bi-lock me-2"></i>Seguridad
+                        </asp:HyperLink>
+                    </asp:Panel>
                 </div>
 
-                <!-- Contenido -->
-                <h3 class="fw-bold mb-3">Configuración del perfil médico</h3>
-                <p class="text-muted mb-4">
-                    Aquí puedes visualizar y actualizar tu información personal y profesional registrada en la clínica.
-                </p>
+                <!-- 🔹 Contenido -->
+                <asp:Label ID="lblTitulo" runat="server" Text="Seguridad de la cuenta" CssClass="fw-bold h3 mb-3 d-block"></asp:Label>
+                <asp:Label ID="lblDescripcion" runat="server"
+                    Text="Aquí puedes actualizar tu contraseña de acceso al sistema."
+                    CssClass="text-muted mb-4 d-block"></asp:Label>
 
-                <asp:Panel ID="PanelDatos" runat="server" CssClass="bg-white p-4 rounded shadow-sm">
+                <asp:Panel ID="PanelSeguridad" runat="server" CssClass="bg-white p-4 rounded shadow-sm">
 
-                    <!--  Datos personales -->
-                    <h5 class="fw-bold mb-3">Datos personales</h5>
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">Nombre</label>
-                            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                    <!-- Contraseña actual -->
+                    <div class="mb-3">
+                        <asp:Label ID="lblActualClave" runat="server" Text="Contraseña actual" CssClass="form-label fw-semibold"></asp:Label>
+                        <div class="input-group">
+                            <asp:TextBox ID="txtActualClave" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="togglePassword('<%= txtActualClave.ClientID %>', 'eyeIcon1')">
+                                <i id="eyeIcon1" class="bi bi-eye"></i>
+                            </button>
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">Apellido</label>
-                            <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">DNI</label>
-                            <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">Fecha de nacimiento</label>
-                            <asp:TextBox ID="txtFechaNac" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                        </div>
+                        <asp:Label ID="lblErrorActual" runat="server" CssClass="text-danger small d-block"></asp:Label>
                     </div>
 
-                    <!-- Datos de contacto -->
-                    <h5 class="fw-bold mb-3 mt-4">Datos de contacto</h5>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Correo electrónico</label>
-                            <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-control"></asp:TextBox>
+                    <!-- Nueva contraseña -->
+                    <div class="mb-3">
+                        <asp:Label ID="lblNuevaClave" runat="server" Text="Nueva contraseña" CssClass="form-label fw-semibold"></asp:Label>
+                        <div class="input-group">
+                            <asp:TextBox ID="txtNuevaClave" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="togglePassword('<%= txtNuevaClave.ClientID %>', 'eyeIcon2')">
+                                <i id="eyeIcon2" class="bi bi-eye"></i>
+                            </button>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Teléfono</label>
-                            <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Dirección</label>
-                            <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
+                        <asp:Label ID="lblErrorNueva" runat="server" CssClass="text-danger small d-block"></asp:Label>
                     </div>
 
-                    <!-- Datos profesionales -->
-                    <h5 class="fw-bold mb-3 mt-4">Datos profesionales</h5>
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Matrícula</label>
-                            <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                    <!-- Confirmar contraseña -->
+                    <div class="mb-3">
+                        <asp:Label ID="lblConfirmarClave" runat="server" Text="Confirmar nueva contraseña" CssClass="form-label fw-semibold"></asp:Label>
+                        <div class="input-group">
+                            <asp:TextBox ID="txtConfirmarClave" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="togglePassword('<%= txtConfirmarClave.ClientID %>', 'eyeIcon3')">
+                                <i id="eyeIcon3" class="bi bi-eye"></i>
+                            </button>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Especialidad</label>
-                            <asp:TextBox ID="txtEspecialidad" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
-                        </div>
+                        <asp:Label ID="lblErrorConfirmar" runat="server" CssClass="text-danger small d-block"></asp:Label>
                     </div>
 
-                    <!-- Botones -->
-                    <div class="mt-4">
-                        <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" CssClass="btn btn-primary me-2" OnClick="btnGuardar_Click" />
-                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" PostBackUrl="~/InicioMedico.aspx" />
+                    <!-- Botón principal -->
+                    <div class="mt-4 d-flex gap-2">
+                        <asp:Button ID="btnGuardar" runat="server" Text="Actualizar contraseña"
+                            CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
+
+                        <asp:Button ID="btnVolver" runat="server" Text="Volver"
+                            CssClass="btn btn-secondary" PostBackUrl="~/ConfiguracionMedico.aspx" />
                     </div>
 
-                    <!-- Mensaje -->
-                    <asp:Label ID="lblMensaje" runat="server" CssClass="fw-semibold mt-3 d-block"></asp:Label>
+                    <!-- Mensaje general -->
+                    <asp:Label ID="lblMensajeGeneral" runat="server" CssClass="fw-semibold mt-3 d-block"></asp:Label>
+
                 </asp:Panel>
             </div>
         </div>
     </div>
-
 </asp:Content>

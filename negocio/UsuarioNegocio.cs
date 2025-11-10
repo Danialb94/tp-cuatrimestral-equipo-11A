@@ -81,6 +81,44 @@ namespace negocio
             }
         }
 
+        public bool ValidarClave(int idUsuario, string clave)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE IdUsuario = @id AND Contrasenia = @clave");
+                datos.setearParametro("@id", idUsuario);
+                datos.setearParametro("@clave", clave);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0] > 0;
+
+                return false;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void ActualizarClave(int idUsuario, string nuevaClave)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Contrasenia = @clave WHERE IdUsuario = @id");
+                datos.setearParametro("@id", idUsuario);
+                datos.setearParametro("@clave", nuevaClave);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
     }
 }
