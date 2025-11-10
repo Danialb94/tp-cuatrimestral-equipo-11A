@@ -9,9 +9,8 @@ namespace negocio
 {
     public class MedicoNegocio
     {
-
         // ===============================================
-        //      Listar todos los turnos de un médico
+        // Listar todos los turnos de un médico
         // ===============================================
         public List<Turno> ListarTurnos(int idMedico)
         {
@@ -120,9 +119,11 @@ namespace negocio
                     SELECT 
                         M.IdMedico,
                         M.Matricula,
+                        P.IdPersona,
                         P.Nombre,
                         P.Apellido,
                         P.Telefono,
+                        U.IdUsuario,
                         U.Email,
                         U.Contrasenia,
                         I.UrlImagen
@@ -141,6 +142,8 @@ namespace negocio
                     medico = new Medico
                     {
                         IdMedico = (int)datos.Lector["IdMedico"],
+                        IdPersona = (int)datos.Lector["IdPersona"],
+                        IdUsuario = (int)datos.Lector["IdUsuario"],
                         Matricula = (string)datos.Lector["Matricula"],
                         Nombre = (string)datos.Lector["Nombre"],
                         Apellido = (string)datos.Lector["Apellido"],
@@ -159,33 +162,10 @@ namespace negocio
 
                 datos.cerrarConexion();
 
-                // 🔹 Obtener las especialidades del médico
+                // Obtener las especialidades del médico
                 if (medico != null)
                 {
-                    AccesoDatos datosEsp = new AccesoDatos();
-                    datosEsp.setearConsulta(@"
-                        SELECT DISTINCT 
-                            E.IdEspecialidad, 
-                            E.Descripcion 
-                        FROM MedicosHorariosEspecialidades MHE
-                        INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
-                        WHERE MHE.IdMedico = @IdMedico
-                    ");
-                    datosEsp.setearParametro("@IdMedico", medico.IdMedico);
-                    datosEsp.ejecutarLectura();
-
-                    while (datosEsp.Lector.Read())
-                    {
-                        Especialidad esp = new Especialidad
-                        {
-                            IdEspecialidad = (int)datosEsp.Lector["IdEspecialidad"],
-                            Descripcion = (string)datosEsp.Lector["Descripcion"]
-                        };
-
-                        medico.Especialidades.Add(esp);
-                    }
-
-                    datosEsp.cerrarConexion();
+                    medico.Especialidades = ListarEspecialidadesPorMedico(medico.IdMedico);
                 }
 
                 return medico;
@@ -201,9 +181,53 @@ namespace negocio
         }
 
         // ===================================================
-        // Actualizar los datos personales del médico
+        // Listar especialidades del médico
         // ===================================================
-        public void ActualizarDatos(Medico medico)
+        public List<Especialidad> ListarEspecialidadesPorMedico(int idMedico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            List<Especialidad> lista = new List<Especialidad>();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    SELECT DISTINCT 
+                        E.IdEspecialidad, 
+                        E.Descripcion 
+                    FROM MedicosHorariosEspecialidades MHE
+                    INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                    WHERE MHE.IdMedico = @IdMedico
+                ");
+
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Especialidad esp = new Especialidad
+                    {
+                        IdEspecialidad = (int)datos.Lector["IdEspecialidad"],
+                        Descripcion = (string)datos.Lector["Descripcion"]
+                    };
+                    lista.Add(esp);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar las especialidades del médico.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        // ===================================================
+        // Actualizar datos personales (Nombre, Apellido, Teléfono, Email)
+        // ===================================================
+        public void ActualizarDatosBasicos(Medico medico)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -214,26 +238,25 @@ namespace negocio
                     SET Nombre = @Nombre, 
                         Apellido = @Apellido, 
                         Telefono = @Telefono
-                    WHERE IdPersona = (SELECT IdPersona FROM Medicos WHERE IdMedico = @IdMedico);
+                    WHERE IdPersona = @IdPersona;
 
                     UPDATE Usuarios 
-                    SET Email = @Email, 
-                        Contrasenia = @Contrasenia
-                    WHERE IdUsuario = (SELECT IdUsuario FROM Medicos WHERE IdMedico = @IdMedico);
+                    SET Email = @Email
+                    WHERE IdUsuario = @IdUsuario;
                 ");
 
                 datos.setearParametro("@Nombre", medico.Nombre);
                 datos.setearParametro("@Apellido", medico.Apellido);
                 datos.setearParametro("@Telefono", medico.Telefono);
                 datos.setearParametro("@Email", medico.Email);
-                datos.setearParametro("@Contrasenia", medico.Contrasenia);
-                datos.setearParametro("@IdMedico", medico.IdMedico);
+                datos.setearParametro("@IdPersona", medico.IdPersona);
+                datos.setearParametro("@IdUsuario", medico.IdUsuario);
 
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al actualizar los datos del médico.", ex);
+                throw new Exception("Error al actualizar los datos personales del médico.", ex);
             }
             finally
             {
