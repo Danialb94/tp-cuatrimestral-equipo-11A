@@ -202,7 +202,7 @@ namespace negocio
                     horario.DiasSemana.Add(nombresDias[dia % 7]);
 
 
-                    aux.Horario = horario;
+                    aux.Horario.Add(horario);
                     lista.Add(aux);
                 }
 

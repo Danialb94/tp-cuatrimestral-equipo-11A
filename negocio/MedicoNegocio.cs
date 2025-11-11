@@ -1,14 +1,170 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using dominio;
 
 namespace negocio
 {
     public class MedicoNegocio
     {
+        // MÉTODO PRINCIPAL - Lista todos los médicos con sus datos de Medico y Persona
+        public List<Medico> ListarMedicos()
+        {
+            List<Medico> lista = new List<Medico>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    SELECT M.IdMedico, M.Matricula, P.Nombre, P.Apellido, I.UrlImagen
+                    FROM MEDICOS M
+                    JOIN PERSONAS P ON M.IdPersona = P.IdPersona
+                    JOIN IMAGENES I ON P.IdImagen = I.IdImagen
+                ");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Medico medico = new Medico();
+                    medico.IdMedico = (int)datos.Lector["IdMedico"];
+                    medico.Matricula = (string)datos.Lector["Matricula"];
+                    medico.Nombre = (string)datos.Lector["Nombre"];
+                    medico.Apellido = (string)datos.Lector["Apellido"];
+                    medico.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+
+                    // Cargar especialidades y horarios del médico
+                    medico.Especialidades = EspecialidadesPorMedico(medico.IdMedico);
+                    for (int i = 0; i < medico.Especialidades.Count(); i++)
+                    {
+                        medico.Horario.Add(HorariosPorEspecialidad(medico.IdMedico, medico.Especialidades[i].Descripcion));
+                    }
+
+                    lista.Add(medico);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar los médicos.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        // MÉTODOS AUXILIARES
+        private List<Especialidad> EspecialidadesPorMedico(int idMedico)
+        {
+            List<Especialidad> especialidades = new List<Especialidad>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    SELECT DISTINCT E.IdEspecialidad, E.Descripcion
+                    FROM Medicos M
+                    INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                    INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                    WHERE M.IdMedico = @IdMedico
+                    ORDER BY E.Descripcion
+                ");
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Especialidad esp = new Especialidad();
+                    esp.IdEspecialidad = (int)datos.Lector["IdEspecialidad"];
+                    esp.Descripcion = (string)datos.Lector["Descripcion"];
+                    especialidades.Add(esp);
+                }
+
+                return especialidades;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener especialidades del médico {idMedico}.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        private Horario HorariosPorEspecialidad(int idMedico, string especialidad)
+        {
+            Horario Hor = new Horario();
+            AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datosH = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                            SELECT DISTINCT 
+                            E.Descripcion,
+                                CASE H.DiaSemana
+                                    WHEN 1 THEN 'Lunes'
+                                    WHEN 2 THEN 'Martes'
+                                    WHEN 3 THEN 'Miércoles'
+                                    WHEN 4 THEN 'Jueves'
+                                    WHEN 5 THEN 'Viernes'
+                                    WHEN 6 THEN 'Sábado'
+                                    WHEN 7 THEN 'Domingo'
+                                END AS DiaSemana
+                            FROM Medicos M
+                            INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                            INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                            INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                            WHERE M.IdMedico = @IdMedico
+                            AND E.Descripcion = @Descripcion
+                        ");
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.setearParametro("@Descripcion", especialidad);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    //CONSULTA DE HORARIOS POR ESPECIALIDAD
+                    Hor.DiasSemana.Add((string)datos.Lector["DiaSemana"]);
+                }
+                datosH.setearConsulta(@"
+                            SELECT DISTINCT E.Descripcion, H.HorarioEntrada, h.HorarioSalida
+                            FROM Medicos M
+                            INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                            INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                            INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                            WHERE M.IdMedico = @IdMedico
+                            AND E.Descripcion = @Descripcion
+                            ORDER BY E.Descripcion
+                        ");
+                datosH.setearParametro("@IdMedico", idMedico);
+                datosH.setearParametro("@Descripcion", especialidad);
+                datosH.ejecutarLectura();
+                datosH.Lector.Read();
+                TimeSpan entrada = (TimeSpan)datosH.Lector["HorarioEntrada"];
+                TimeSpan salida = (TimeSpan)datosH.Lector["HorarioSalida"];
+                Hor.HoraEntrada = entrada.Hours;
+                Hor.HoraSalida = salida.Hours;
+
+                return Hor;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener días del médico {idMedico} para {especialidad}.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
         // ===============================================
         // Listar todos los turnos de un médico
         // ===============================================

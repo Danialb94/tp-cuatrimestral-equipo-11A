@@ -32,8 +32,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     itemporDefecto.Selected = true; // El atributo "Selected" asegura que aparezca por defecto
                     ddlEspecialidades.Items.Insert(0, itemporDefecto);
 
-                    RecepcionistaNegocio negocio = new RecepcionistaNegocio();
-                    ListaMedico = negocio.listarMedicos();
+                    MedicoNegocio negocio = new MedicoNegocio();
+                    ListaMedico = negocio.ListarMedicos();
                 }
             }
             catch(Exception ex)

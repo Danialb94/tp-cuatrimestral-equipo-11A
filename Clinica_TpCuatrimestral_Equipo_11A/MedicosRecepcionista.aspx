@@ -35,24 +35,29 @@
 
             <asp:GridView ID="dgvMedicos" runat="server"
                 CssClass="table table-bordered align-middle text-center"
-                AutoGenerateColumns="False">
+                AutoGenerateColumns="false"
+                OnRowDataBound="dgvMedicos_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                     <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
                     <asp:BoundField DataField="Matricula" HeaderText="Matrícula" />
                     <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+
                     <asp:TemplateField HeaderText="Especialidad">
-                        <ItemTemplate><%# Eval("Especialidades[0].Descripcion") %></ItemTemplate>
+                        <ItemTemplate>
+                            <asp:Literal ID="litEspecialidad" runat="server"></asp:Literal>
+                        </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Franja horaria">
                         <ItemTemplate>
-                            <%# Eval("Horario.HoraEntrada") %>:00 - <%# Eval("Horario.HoraSalida") %>:00
+                            <asp:Literal ID="litHorario" runat="server"></asp:Literal>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Días disponibles">
                         <ItemTemplate>
-                            <%# string.Join(", ", ((dominio.Horario)Eval("Horario")).DiasSemana) %>
+                            <asp:Literal ID="litDias" runat="server"></asp:Literal>
                         </ItemTemplate>
                     </asp:TemplateField>
 

@@ -80,7 +80,7 @@ namespace negocio
 
                     horario.DiasSemana.Add((string)datos.Lector["DiasSemana"]);
 
-                    aux.Horario = horario;
+                    aux.Horario.Add(horario);
 
                   //  aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
                         
