@@ -82,7 +82,7 @@ namespace negocio
 
                     aux.Horario.Add(horario);
 
-                  //  aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+                    aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
                         
                     lista.Add(aux);
 
@@ -100,6 +100,97 @@ namespace negocio
             }
         }
 
+
+        public List<Medico> listarMedicosRecepcionista()
+        {
+            List<Medico> lista = new List<Medico>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    SELECT DISTINCT
+                        M.IdMedico,
+                        P.Nombre,
+                        P.Apellido,
+                        P.Telefono,
+                        M.Matricula,
+                        E.Descripcion AS Especialidad,
+                        H.HorarioEntrada,
+                        H.HorarioSalida,
+                        I.UrlImagen,
+                        (
+                            SELECT STRING_AGG(
+                                CASE H2.DiaSemana
+                                    WHEN 1 THEN 'Lunes'
+                                    WHEN 2 THEN 'Martes'
+                                    WHEN 3 THEN 'Miércoles'
+                                    WHEN 4 THEN 'Jueves'
+                                    WHEN 5 THEN 'Viernes'
+                                    WHEN 6 THEN 'Sábado'
+                                    WHEN 7 THEN 'Domingo'
+                                END,
+                                ', '
+                            ) WITHIN GROUP (ORDER BY H2.DiaSemana)
+                            FROM MedicosHorariosEspecialidades MHE2
+                            INNER JOIN Horarios H2 ON MHE2.IdHorario = H2.IdHorario
+                            WHERE MHE2.IdMedico = M.IdMedico
+                              AND MHE2.IdEspecialidad = E.IdEspecialidad
+                              AND H2.HorarioEntrada = H.HorarioEntrada
+                              AND H2.HorarioSalida = H.HorarioSalida
+                        ) AS DiasSemana
+                    FROM Medicos M
+                    INNER JOIN Personas P ON M.IdPersona = P.IdPersona
+                    INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                    INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                    INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                    LEFT JOIN Imagenes I ON I.IdImagen = P.IdImagen
+                    ORDER BY E.Descripcion, M.IdMedico;
+                    ");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Medico aux = new Medico();
+                    aux.IdMedico = (int)datos.Lector["IdMedico"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Telefono = datos.Lector["Telefono"].ToString();
+                    aux.Matricula = (string)datos.Lector["Matricula"];
+
+                    Especialidad esp = new Especialidad();
+                    esp.Descripcion = (string)datos.Lector["Especialidad"];
+                    aux.Especialidades.Add(esp);
+
+                    Horario horario = new Horario();
+
+                    TimeSpan entrada = (TimeSpan)datos.Lector["HorarioEntrada"];
+                    TimeSpan salida = (TimeSpan)datos.Lector["HorarioSalida"];
+                    horario.HoraEntrada = entrada.Hours;
+                    horario.HoraSalida = salida.Hours;
+
+                    horario.DiasSemana.Add((string)datos.Lector["DiasSemana"]);
+
+                    aux.Horario.Add(horario);
+
+                   
+
+                    lista.Add(aux);
+
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void AgregarMedico(Medico nuevo, List<string> diasSeleccionados, string franjaHoraria)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -213,6 +304,187 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+
+        public void cancelarAgendaMedico(int idMedico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            UPDATE Turnos
+            SET IdEstado = (
+                SELECT IdEstado FROM Estados WHERE Descripcion = 'Cancelado por Clínica'
+            )
+            WHERE IdMedico = @idMedico
+            AND CONVERT(date, FechaTurno) = CONVERT(date, GETDATE())
+            AND IdEstado IN (
+                SELECT IdEstado FROM Estados WHERE Descripcion = 'Pendiente'
+            )");
+
+                datos.setearParametro("@idMedico", idMedico);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Turno> listarTurnosPorEspecialidad(int idEspecialidad)
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT  
+                T.IdTurno,
+                P.Nombre + ' ' + P.Apellido AS Paciente,
+                PM.Nombre + ' ' + PM.Apellido AS Medico,
+                T.FechaTurno,
+                E.Descripcion AS Estado,
+                ESP.Descripcion AS Especialidad
+            FROM Turnos T
+            INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+            INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+            INNER JOIN Medicos M ON T.IdMedico = M.IdMedico
+            INNER JOIN Personas PM ON M.IdPersona = PM.IdPersona
+            INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+            INNER JOIN Especialidades ESP ON T.IdEspecialidad = ESP.IdEspecialidad
+            WHERE ESP.IdEspecialidad = @idEspecialidad
+              AND T.FechaTurno >= CAST(GETDATE() AS DATE)
+              AND E.Descripcion = 'Pendiente'
+            ORDER BY T.FechaTurno ASC");
+
+                datos.setearParametro("@idEspecialidad", idEspecialidad);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+
+                    aux.IdTurno = (int)datos.Lector["IdTurno"];
+
+                    aux.Paciente = new Paciente();
+                    aux.Paciente.Nombre = datos.Lector["Paciente"].ToString();
+
+                    aux.Medico = new Medico();
+                    aux.Medico.Nombre = datos.Lector["Medico"].ToString();
+
+                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+
+                    aux.Estado = datos.Lector["Estado"].ToString();
+
+                    aux.Especialidad = new Especialidad();
+                    aux.Especialidad.Descripcion = datos.Lector["Especialidad"].ToString();
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void CancelarClinica(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"UPDATE Turnos
+                    SET IdEstado = '3'
+                    WHERE IdTurno = @IdTurno");
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Turno> listarTurnosDesdeHoy()
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT  
+                T.IdTurno,
+                P.Nombre + ' ' + P.Apellido AS Paciente,
+                PM.Nombre + ' ' + PM.Apellido AS Medico,
+                T.FechaTurno,
+                E.Descripcion AS Estado,
+                ESP.IdEspecialidad,
+                ESP.Descripcion AS Especialidad
+            FROM Turnos T
+            INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+            INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+            INNER JOIN Medicos M ON T.IdMedico = M.IdMedico
+            INNER JOIN Personas PM ON M.IdPersona = PM.IdPersona
+            INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+            INNER JOIN Especialidades ESP ON T.IdEspecialidad = ESP.IdEspecialidad
+            WHERE T.FechaTurno >= CAST(GETDATE() AS DATE)
+              AND E.Descripcion = 'Pendiente'
+            ORDER BY T.FechaTurno ASC");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.IdTurno = (int)datos.Lector["IdTurno"];
+
+                    aux.Paciente = new Paciente();
+                    aux.Paciente.Nombre = datos.Lector["Paciente"].ToString();
+
+                    aux.Medico = new Medico();
+                    aux.Medico.Nombre = datos.Lector["Medico"].ToString();
+
+                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+
+                    aux.Estado = datos.Lector["Estado"].ToString();
+
+                    aux.Especialidad = new Especialidad();
+                    aux.Especialidad.IdEspecialidad = (int)datos.Lector["IdEspecialidad"];
+                    aux.Especialidad.Descripcion = datos.Lector["Especialidad"].ToString();
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
 
     }

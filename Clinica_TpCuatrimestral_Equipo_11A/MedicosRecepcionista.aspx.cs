@@ -22,7 +22,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         private void cargarMedicos()
         {
             RecepcionistaNegocio negocio = new RecepcionistaNegocio();
-            List<Medico> lista = negocio.listarMedicos();
+            List<Medico> lista = negocio.listarMedicosRecepcionista();
             Session["listaMedicos"] = lista;
             dgvMedicos.DataSource = lista;
             dgvMedicos.DataBind();
@@ -77,6 +77,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             dgvMedicos.DataBind();
         }
 
+
+      
+
         protected void dgvMedicos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -127,5 +130,42 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 }
             }
         }
+        protected void dgvMedicos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "MostrarConfirmacion")
+            {
+               
+                hiddenIdMedico.Value = e.CommandArgument.ToString();
+
+                panelConfirmacion.Visible = true;
+            }
+        }
+
+        protected void btnConfirmarCancelar_Click(object sender, EventArgs e)
+        {
+            int idMedico = int.Parse(hiddenIdMedico.Value);
+
+            
+            RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            negocio.cancelarAgendaMedico(idMedico);
+
+            
+            panelConfirmacion.Visible = false;
+
+           
+            cargarMedicos();
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            
+            panelConfirmacion.Visible = false;
+        }
+
+
+        
+
+
+
     }
 }

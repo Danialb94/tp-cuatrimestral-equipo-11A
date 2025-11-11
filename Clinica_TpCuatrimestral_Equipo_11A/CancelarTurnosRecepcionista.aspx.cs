@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
@@ -16,6 +15,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             if (!IsPostBack)
             {
                 cargarEspecialidades();
+                cargarTurnos(); 
             }
         }
 
@@ -24,15 +24,13 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             EspecialidadNegocio negocioEsp = new EspecialidadNegocio();
             try
             {
-
-                ddlCancelarRecepcionista.DataSource = negocioEsp.listarDescripcion();
+                var lista = negocioEsp.listar();
+                ddlCancelarRecepcionista.DataSource = lista;
+                ddlCancelarRecepcionista.DataTextField = "Descripcion";
+                ddlCancelarRecepcionista.DataValueField = "IdEspecialidad";
                 ddlCancelarRecepcionista.DataBind();
 
-
-                ListItem itemPorDefecto = new ListItem("Seleccione la especialidad", "");
-                itemPorDefecto.Attributes.Add("disabled", "disabled");
-                itemPorDefecto.Selected = true;
-                ddlCancelarRecepcionista.Items.Insert(0, itemPorDefecto);
+                ddlCancelarRecepcionista.Items.Insert(0, new ListItem("Todas las especialidades", "0"));
             }
             catch (Exception ex)
             {
@@ -40,24 +38,52 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
         }
 
-        protected void ddlEspecialidadesRecepcionista_SelectedIndexChanged(object sender, EventArgs e)
+        private void cargarTurnos(int idEspecialidad = 0)
         {
-            string especialidadSeleccionada = ddlCancelarRecepcionista.SelectedValue;
+            RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            try
+            {
+                List<Turno> listaTurnos = negocio.listarTurnosDesdeHoy();
 
+                if (idEspecialidad != 0)
+                    listaTurnos = listaTurnos.Where(t => t.Especialidad.IdEspecialidad == idEspecialidad).ToList();
+
+                dgvCancelarTurnosRecepcionista.DataSource = listaTurnos;
+                dgvCancelarTurnosRecepcionista.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+            }
         }
+
         protected void ddlCancelarRecepcionista_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            int idEspecialidad = int.Parse(ddlCancelarRecepcionista.SelectedValue);
+            cargarTurnos(idEspecialidad);
         }
 
-        protected void ddlMedicoCancelar_SelectedIndexChanged(object sender, EventArgs e)
+        protected void dgvCancelarTurnosRecepcionista_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            
-        }
+            if (e.CommandName == "CancelarTurno")
+            {
+                int idTurno = Convert.ToInt32(e.CommandArgument);
+                RecepcionistaNegocio negocio = new RecepcionistaNegocio();
 
-        protected void ddlFechaCancelar_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           
+                try
+                {
+                    negocio.CancelarClinica(idTurno);
+                    
+                    int idEspecialidad = int.Parse(ddlCancelarRecepcionista.SelectedValue);
+                    cargarTurnos(idEspecialidad);
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.CssClass = "text-danger fw-semibold";
+                    lblMensaje.Text = "Error al cancelar el turno.";
+                    Session.Add("error", ex);
+                }
+            }
         }
     }
 }

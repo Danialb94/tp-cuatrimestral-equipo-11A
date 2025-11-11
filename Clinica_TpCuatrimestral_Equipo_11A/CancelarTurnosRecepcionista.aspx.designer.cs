@@ -24,21 +24,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.DropDownList ddlCancelarRecepcionista;
 
         /// <summary>
-        /// ddlMedicoCancelar control.
+        /// dgvCancelarTurnosRecepcionista control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMedicoCancelar;
+        protected global::System.Web.UI.WebControls.GridView dgvCancelarTurnosRecepcionista;
 
         /// <summary>
-        /// ddlFechaCancelar control.
+        /// lblMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFechaCancelar;
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

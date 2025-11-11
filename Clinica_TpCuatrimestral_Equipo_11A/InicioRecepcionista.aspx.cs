@@ -34,7 +34,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
             catch (Exception ex)
             {
+
                 Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
