@@ -29,7 +29,7 @@ namespace negocio
                         paciente.Telefono = Convert.ToString(datos.Lector["Telefono"]);
                     paciente.TipoDocumento.IdTipoDocumento = (int)datos.Lector["IdTipoDocumento"];
                     paciente.TipoDocumento.Descripcion = (string)datos.Lector["TipoDocumento"];
-                    paciente.Documento = (string)datos.Lector["Documento"];
+                    paciente.Documento = Convert.ToString(datos.Lector["Documento"]);
                     paciente.Domicilio = (string)datos.Lector["Domicilio"];
                     paciente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     if (!(datos.Lector["Cobertura"] is DBNull))

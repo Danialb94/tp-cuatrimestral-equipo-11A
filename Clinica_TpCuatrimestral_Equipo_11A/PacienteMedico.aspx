@@ -1,4 +1,6 @@
-﻿<%@ Page Title="Pacientes Médico" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="PacienteMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.PacienteMedico" %>
+﻿<%@ Page Title="Pacientes Médico" Language="C#" MasterPageFile="~/MasterMedico.Master"
+    AutoEventWireup="true" CodeBehind="PacienteMedico.aspx.cs"
+    Inherits="Clinica_TpCuatrimestral_Equipo_11A.PacienteMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
@@ -7,59 +9,59 @@
         <h3 class="fw-bold mb-3">Listado de Pacientes</h3>
         <p class="text-muted mb-4">Seleccione un paciente para ver su historial clínico.</p>
 
+        <!-- 🔹 Tarjeta + filtro en la misma fila -->
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+            <div class="card border-0 shadow-sm p-3 mb-3 mb-md-0" style="width: 18rem;">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-people-fill text-primary fs-3 me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Pacientes activos</h6>
+                        <p class="fw-bold text-primary mb-0">
+                            <asp:Label ID="lblTotalPacientes" runat="server" Text="0"></asp:Label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🔹 Filtro rápido -->
+            <div class="input-group w-auto">
+                <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control"
+                    placeholder="Buscar paciente..." AutoPostBack="true"
+                    OnTextChanged="txtBuscar_TextChanged" />
+                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
+                    CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+            </div>
+        </div>
+
+        <hr class="my-3" />
+
+        <!-- 🔹 Tabla de pacientes -->
         <div class="card shadow-sm border-0">
             <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0">Pacientes</h5>
-                    <input type="text" class="form-control w-25" placeholder="Buscar paciente..." />
-                </div>
+                <asp:GridView ID="gvPacientes" runat="server" AutoGenerateColumns="False"
+                    CssClass="table align-middle table-hover" GridLines="None"
+                    EmptyDataText="No se encontraron pacientes.">
 
-                <table class="table align-middle table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nombre y Apellido</th>
-                            <th>Teléfono</th>
-                            <th>Documento</th>
-                            <th>Obra Social</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Juan Pérez</td>
-                            <td>123456789</td>
-                            <td>12.345.678</td>
-                            <td>OSDE</td>
-                            <td>
-                                <a href="HistoriaClinicaMedico.aspx" class="btn btn-outline-primary btn-sm" title="Ver historial del paciente">
-                                    <i class="bi bi-person"></i>Ver historial
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>María Gómez</td>
-                            <td>987654321</td>
-                            <td>87.654.321</td>
-                            <td>Galeno</td>
-                            <td>
-                                <a href="HistoriaClinicaMedico.aspx" class="btn btn-outline-primary btn-sm" title="Ver historial del paciente">
-                                    <i class="bi bi-person"></i>Ver historial
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Carlos Fernández</td>
-                            <td>456123789</td>
-                            <td>45.612.378</td>
-                            <td>Medife</td>
-                            <td>
-                                <a href="HistoriaClinicaMedico.aspx" class="btn btn-outline-primary btn-sm" title="Ver historial del paciente">
-                                    <i class="bi bi-person"></i>Ver historial
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <Columns>
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                        <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+                        <asp:BoundField DataField="Documento" HeaderText="Documento" />
+                        <asp:TemplateField HeaderText="Obra Social">
+                            <ItemTemplate>
+                                <%# Eval("Cobertura.Descripcion") %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <asp:HyperLink ID="lnkHistorial" runat="server"
+                                    CssClass="btn btn-outline-primary btn-sm"
+                                    NavigateUrl='<%# "RegistroConsultaMedico.aspx?idPaciente=" + Eval("IdPaciente") %>'
+                                    Text="Ver historial" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
             </div>
         </div>
     </div>

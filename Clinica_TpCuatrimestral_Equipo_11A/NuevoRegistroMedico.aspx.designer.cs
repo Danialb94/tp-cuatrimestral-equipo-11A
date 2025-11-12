@@ -11,43 +11,25 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 {
 
 
-    public partial class PacienteMedico
+    public partial class NuevoRegistroMedico
     {
 
         /// <summary>
-        /// Controllo lblTotalPacientes.
+        /// Controllo btnGuardarConsulta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalPacientes;
+        protected global::System.Web.UI.WebControls.LinkButton btnGuardarConsulta;
 
         /// <summary>
-        /// Controllo txtBuscar.
+        /// Controllo btnVolver.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
-
-        /// <summary>
-        /// Controllo btnLimpiar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
-
-        /// <summary>
-        /// Controllo gvPacientes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPacientes;
+        protected global::System.Web.UI.WebControls.Button btnVolver;
     }
 }
