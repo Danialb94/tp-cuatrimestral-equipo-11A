@@ -118,7 +118,31 @@ namespace negocio
             }
         }
 
+        public bool ExisteEmail(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Email = @Email");
+                datos.setearParametro("@Email", email);
+                datos.ejecutarLectura();
 
+                if (datos.Lector.Read())
+                {
+                    int cantidad = (int)datos.Lector[0];
+                    return cantidad > 0;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al verificar el email del usuario.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
     }
 }
