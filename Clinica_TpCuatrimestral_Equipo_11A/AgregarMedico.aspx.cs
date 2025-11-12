@@ -42,6 +42,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
+
             Medico nuevo = new Medico();
             nuevo.Nombre = txtNombre.Text;
             nuevo.Apellido = txtApellido.Text;

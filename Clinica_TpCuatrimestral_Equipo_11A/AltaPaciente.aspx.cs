@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,6 +16,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             if (!IsPostBack)
             {
+                txtNacimiento.Attributes["max"] = DateTime.Today.AddYears(-18).ToString("yyyy-MM-dd");
                 CargarCoberturas();
                 CargarTiposDocumento();
             }
@@ -25,6 +27,29 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return;
+
+                DateTime fechaNacimiento;
+
+                if (!DateTime.TryParse(txtNacimiento.Text, out fechaNacimiento))
+                {
+                    lblError.Text = "Por favor ingrese una fecha válida.";
+                    lblError.Visible = true;
+                    return;
+                }
+
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+                if (fechaNacimiento > DateTime.Today.AddYears(-edad)) edad--;
+
+                if (edad < 18)
+                {
+                    lblError.Text = "Debe ser mayor de 18 años para registrarse.";
+                    lblError.Visible = true;
+                    return;
+                }
+
                 Paciente nuevo = new Paciente();
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Apellido = txtApellido.Text;

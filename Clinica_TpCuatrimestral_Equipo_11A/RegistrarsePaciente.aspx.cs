@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,6 +16,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             if (!IsPostBack)
             {
+                txtNacimiento.Attributes["max"] = DateTime.Today.AddYears(-18).ToString("yyyy-MM-dd");
+                
                 CargarCoberturas();
                 CargarTiposDocumento();
             }
@@ -24,32 +27,56 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             try
             {
-                Paciente nuevo = new Paciente();
-                nuevo.Nombre = txtNombre.Text;
-                nuevo.Apellido = txtApellido.Text;
-                nuevo.Domicilio = txtDireccion.Text;
-                nuevo.Documento = txtDNI.Text;
-                nuevo.FechaNacimiento = DateTime.Parse(txtNacimiento.Text);
-                nuevo.Telefono = txtTelefono.Text;
+                Page.Validate();
+                if(!Page.IsValid)
+                    return;
 
-                nuevo.Usuario = new Usuario();
-                nuevo.Usuario.Email = txtEmail.Text;
-                nuevo.Usuario.Contrasenia = txtPassword.Text;
-                nuevo.Usuario.Permiso = new Permiso() { IdPermiso = 4 };
+                DateTime fechaNacimiento;
 
-                nuevo.TipoDocumento = new TipoDocumento();
-                nuevo.TipoDocumento.IdTipoDocumento = int.Parse(ddlTipoDocumento.SelectedValue);
+                if (!DateTime.TryParse(txtNacimiento.Text, out fechaNacimiento))
+                {
+                    lblError.Text = "Por favor ingrese una fecha válida.";
+                    lblError.Visible = true;
+                    return;
+                }
 
-                nuevo.Cobertura = new Cobertura();
-                nuevo.Cobertura.IdCobertura = int.Parse(ddlCobertura.SelectedValue);
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+                if (fechaNacimiento > DateTime.Today.AddYears(-edad)) edad--;
 
-                nuevo.Imagen = new Imagen();
-                nuevo.Imagen.UrlImagen = txtFoto.Text;
+                if (edad < 18)
+                {
+                    lblError.Text = "Debe ser mayor de 18 años para registrarse.";
+                    lblError.Visible = true;
+                    return;
+                }
+                
+                    Paciente nuevo = new Paciente();
+                    nuevo.Nombre = txtNombre.Text;
+                    nuevo.Apellido = txtApellido.Text;
+                    nuevo.Domicilio = txtDireccion.Text;
+                    nuevo.Documento = txtDNI.Text;
+                    nuevo.FechaNacimiento = DateTime.Parse(txtNacimiento.Text);
+                    nuevo.Telefono = txtTelefono.Text;
 
-                PacienteNegocio negocio = new PacienteNegocio();
-                negocio.RegistrarPaciente(nuevo);
+                    nuevo.Usuario = new Usuario();
+                    nuevo.Usuario.Email = txtEmail.Text;
+                    nuevo.Usuario.Contrasenia = txtPassword.Text;
+                    nuevo.Usuario.Permiso = new Permiso() { IdPermiso = 4 };
 
-                Response.Redirect("Default.aspx", false);
+                    nuevo.TipoDocumento = new TipoDocumento();
+                    nuevo.TipoDocumento.IdTipoDocumento = int.Parse(ddlTipoDocumento.SelectedValue);
+
+                    nuevo.Cobertura = new Cobertura();
+                    nuevo.Cobertura.IdCobertura = int.Parse(ddlCobertura.SelectedValue);
+
+                    nuevo.Imagen = new Imagen();
+                    nuevo.Imagen.UrlImagen = txtFoto.Text;
+
+                    PacienteNegocio negocio = new PacienteNegocio();
+                    negocio.RegistrarPaciente(nuevo);
+
+                    Response.Redirect("Default.aspx", false);
+                
             }
             catch (Exception ex)
             {
