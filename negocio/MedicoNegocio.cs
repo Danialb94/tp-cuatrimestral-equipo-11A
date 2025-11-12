@@ -96,6 +96,110 @@ namespace negocio
             }
         }
 
+        public List<string> NombresProfesionales()
+        {
+            List<string> medicos = new List<string>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    select P.Nombre, P.Apellido
+                    from medicos M
+                    join personas P on M.IdPersona = P.IdPersona
+                ");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    string nombre, apellido, nombreCompleto;
+                    nombre = (string)datos.Lector["Nombre"];
+                    apellido = (string)datos.Lector["Apellido"];
+                    nombreCompleto = nombre + " " + apellido;
+                    medicos.Add(nombreCompleto);
+                }
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener profesionales.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public string NombresProfesionales(int idMedico)
+        {
+            string medico = "";
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+                    select P.Nombre, P.Apellido
+                    from medicos M
+                    join personas P on M.IdPersona = P.IdPersona
+                    where M.IdMedico = @IdMedico;
+                ");
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    string nombre, apellido, nombreCompleto;
+                    nombre = (string)datos.Lector["Nombre"];
+                    apellido = (string)datos.Lector["Apellido"];
+                    medico = nombre + " " + apellido;
+                }
+                return medico;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener profesionales.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public List<string> NombresProfesionales(string especialidad)
+        {
+            List<string> medicos = new List<string>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+                    select P.Nombre, P.Apellido
+                    from medicos M
+                    join personas P on M.IdPersona = P.IdPersona
+                    join MedicosHorariosEspecialidades MHE on M.IdMedico = MHE.IdMedico
+                    JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                    where E.Descripcion = @especialidad
+                ");
+                datos.setearParametro("@especialidad", especialidad);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    string nombre, apellido, nombreCompleto;
+                    nombre = (string)datos.Lector["Nombre"];
+                    apellido = (string)datos.Lector["Apellido"];
+                    nombreCompleto = nombre + " " + apellido;
+                    medicos.Add(nombreCompleto);
+                }
+                return medicos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener profesionales.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         private Horario HorariosPorEspecialidad(int idMedico, string especialidad)
         {
             Horario Hor = new Horario();

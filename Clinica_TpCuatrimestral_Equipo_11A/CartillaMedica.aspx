@@ -52,19 +52,27 @@
                                                             Dias += ", ";
                                                     } %>
                                                     <p class="card-text text-muted mb-1"><%:Dias%>
-                                                        <br />
-                                                        <%:medico.Horario[i].HoraEntrada%>hs a <%:medico.Horario[i].HoraSalida%>hs</p>
+                                                    <br />
+                                                    <%:medico.Horario[i].HoraEntrada%>hs a <%:medico.Horario[i].HoraSalida%>hs</p>
 
 
                                                     <%if (medico.Especialidades.Count() > 1)
-                                                      {%>
-                                                        <a class="btn btn-primary w-100 mt-auto" style="font-size: smaller;" href="SolicitarTurno.aspx">Solicitar Turno para <%:medico.Especialidades[i].Descripcion%></a>
+                                                        {%>
+                                                         <a href="SolicitarTurno.aspx?id=<%:medico.IdMedico%>&esp=<%:medico.Especialidades[i].Descripcion%>&i=<%:i%>" 
+                                                           class="btn btn-primary w-100 mt-auto">
+                                                            Solicitar Turno para <%:medico.Especialidades[i].Descripcion%>
+                                                        </a>
                                                         <%if (i != medico.Especialidades.Count() - 1) {
                                                           %>
                                                             <hr />
                                                         <%}
                                                       }
-                                                    else {%> <a class="btn btn-primary w-100 mt-auto" style="font-size: smaller;" href="SolicitarTurno.aspx">Solicitar Turno</a><%}%>
+                                                    else {%>
+                                                         <a href="SolicitarTurno.aspx?id=<%:medico.IdMedico%>&esp=<%:medico.Especialidades[i].Descripcion%>&i=<%:i%>" 
+                                                           class="btn btn-primary w-100 mt-auto">
+                                                            Solicitar Turno
+                                                        </a>
+                                                    <%}%>
                                                 </li>
                                             <%} %>
                                     </ul>
