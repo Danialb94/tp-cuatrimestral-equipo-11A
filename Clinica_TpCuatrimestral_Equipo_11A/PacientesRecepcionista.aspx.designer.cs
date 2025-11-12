@@ -15,12 +15,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
 
         /// <summary>
-        /// txtFiltro control.
+        /// txtFiltroPaciente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltro;
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroPaciente;
+
+        /// <summary>
+        /// dgvPacientesRecepcionista control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvPacientesRecepcionista;
     }
 }

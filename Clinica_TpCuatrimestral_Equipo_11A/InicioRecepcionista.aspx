@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="card shadow-sm border-0">
         <div class="card-body">
-            <h4 class="fw-bold mb-3">Turnos de la semana</h4>
+            <h4 class="fw-bold mb-3">Historial de turnos</h4>
 
             <div class="mb-4">
                 <asp:DropDownList

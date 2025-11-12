@@ -7,7 +7,7 @@
     <div class="container mt-4">
         <div class="card shadow-sm border-0">
             <div class="card-body">
-                <h4 class="fw-bold mb-4">Cancelar agenda</h4>
+                <h4 class="fw-bold mb-4">Cancelar turnos</h4>
 
                 <div class="row g-3 align-items-end mb-4">
                     <div class="col-md-3">

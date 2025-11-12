@@ -532,7 +532,45 @@ namespace negocio
             }
         }
 
+        public List<Paciente> listarPacientesRecepcionista()
+        {
+            List<Paciente> lista = new List<Paciente>();
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT P.IdPaciente, Pe.Nombre, Pe.Apellido, P.Documento, C.Descripcion AS Cobertura
+            FROM Pacientes P
+            INNER JOIN Personas Pe ON Pe.IdPersona = P.IdPersona
+            INNER JOIN Coberturas C ON C.IdCobertura = P.IdCobertura
+        ");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Paciente aux = new Paciente();
+                    aux.IdPaciente = (int)datos.Lector["IdPaciente"];
+                    aux.Nombre = datos.Lector["Nombre"].ToString();
+                    aux.Apellido = datos.Lector["Apellido"].ToString();
+                    aux.Documento = datos.Lector["Documento"].ToString();
+                    aux.Cobertura = new Cobertura();
+                    aux.Cobertura.Descripcion = datos.Lector["Cobertura"].ToString();
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 
