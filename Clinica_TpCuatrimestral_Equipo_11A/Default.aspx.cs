@@ -39,6 +39,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                         Paciente paciente = new Paciente();
 
                         paciente = pacienteNegocio.BuscarPorIdUsuario(usuarioPaciente.IdUsuario);
+                        paciente.IdUsuario = usuarioPaciente.IdUsuario;
 
                         // Guardamos el objeto médico completo para usar en MasterMedico y otras páginas
                         Session["Paciente"] = paciente;
