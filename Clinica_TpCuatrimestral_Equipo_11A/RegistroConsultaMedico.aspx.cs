@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using dominio;
 using negocio;
 
@@ -37,8 +35,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             lblEdad.Text = CalcularEdad(paciente.FechaNacimiento).ToString() + " años";
             lblDomicilio.Text = paciente.Domicilio;
             lblProfesional.Text = medico.Nombre + " " + medico.Apellido;
-            lblAlergias.Text = (paciente.Alergias != null && paciente.Alergias.Count > 0) ? string.Join(", ", paciente.Alergias): "Sin alergias";
-            lblCondiciones.Text = (paciente.CondicionBase != null && paciente.CondicionBase.Count > 0) ? string.Join(", ", paciente.CondicionBase): "Sin condiciones previas";
+
+            lblAlergias.Text = (paciente.Alergias != null && paciente.Alergias.Count > 0)
+                ? string.Join(", ", paciente.Alergias)
+                : "Sin alergias";
+
+            lblCondiciones.Text = (paciente.CondicionBase != null && paciente.CondicionBase.Count > 0)
+                ? string.Join(", ", paciente.CondicionBase)
+                : "Sin condiciones previas";
+
             TurnoNegocio negocio = new TurnoNegocio();
             DateTime? ultima = negocio.ObtenerUltimaConsulta(paciente.IdPaciente, medico.IdMedico);
             lblUltimaConsulta.Text = ultima.HasValue ? ultima.Value.ToString("dd/MM/yyyy") : "Sin registros";
@@ -60,7 +65,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnNuevaConsulta_Click(object sender, EventArgs e)
         {
-            // Por ahora no redirige, solo placeholder
+            Response.Redirect("NuevoRegistroMedico.aspx", false);
         }
     }
 }

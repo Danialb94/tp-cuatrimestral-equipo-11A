@@ -218,7 +218,7 @@ namespace negocio
             }
         }
 
-        // 🔹 Listar consultas por médico y paciente
+
         public List<Turno> ListarConsultasPorMedicoYPaciente(int idMedico, int idPaciente)
         {
             List<Turno> lista = new List<Turno>();
@@ -226,8 +226,15 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta(@"SELECT T.FechaTurno, T.Diagnostico,T.Observacion FROM Turnos T INNER JOIN Estados E ON T.IdEstado = E.IdEstado 
-                WHERE T.IdMedico = @idMedico AND T.IdPaciente = @idPaciente AND E.Descripcion NOT LIKE 'Cancelado%'ORDER BY T.FechaTurno DESC");
+                datos.setearConsulta(@"
+            SELECT T.FechaTurno, T.Diagnostico, T.Observacion
+            FROM Turnos T
+            INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+            WHERE T.IdMedico = @idMedico 
+              AND T.IdPaciente = @idPaciente
+              AND E.Descripcion = 'Atendido'
+            ORDER BY T.FechaTurno DESC
+        ");
 
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@idPaciente", idPaciente);
@@ -237,8 +244,12 @@ namespace negocio
                 {
                     Turno aux = new Turno();
                     aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
-                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())? datos.Lector["Diagnostico"].ToString(): "Sin diagnóstico registrado";
-                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())? datos.Lector["Observacion"].ToString(): "Sin observación registrada";
+                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())
+                        ? datos.Lector["Diagnostico"].ToString()
+                        : "Sin diagnóstico registrado";
+                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())
+                        ? datos.Lector["Observacion"].ToString()
+                        : "Sin observación registrada";
 
                     lista.Add(aux);
                 }
@@ -255,13 +266,22 @@ namespace negocio
             }
         }
 
-        // Obtener última consulta del paciente con el médico
+
+
         public DateTime? ObtenerUltimaConsulta(int idPaciente, int idMedico)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta(@" SELECT TOP 1 FechaTurno FROM Turnos WHERE IdPaciente = @idPaciente AND IdMedico = @idMedico ORDER BY FechaTurno DESC");
+                datos.setearConsulta(@"
+                SELECT TOP 1 FechaTurno
+                FROM Turnos T
+                INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+                WHERE T.IdPaciente = @idPaciente 
+                AND T.IdMedico = @idMedico
+                AND E.Descripcion = 'Atendido'
+                ORDER BY FechaTurno DESC
+                ");
 
                 datos.setearParametro("@idPaciente", idPaciente);
                 datos.setearParametro("@idMedico", idMedico);
@@ -278,6 +298,70 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public void AgregarConsulta(Turno turno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+            UPDATE Turnos
+            SET Diagnostico = @Diagnostico,
+                Observacion = @Observacion,
+                IdEstado = (SELECT IdEstado FROM Estados WHERE Descripcion = 'Atendido')
+            WHERE IdTurno = @IdTurno");
+
+                datos.setearParametro("@Diagnostico", (object)turno.Diagnostico ?? DBNull.Value);
+                datos.setearParametro("@Observacion", (object)turno.Observacion ?? DBNull.Value);
+                datos.setearParametro("@IdTurno", turno.IdTurno);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public int ObtenerTurnoDelDia(int idMedico, int idPaciente, DateTime fecha)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+                SELECT TOP 1 IdTurno
+                FROM Turnos
+                WHERE IdMedico = @idMedico
+                AND IdPaciente = @idPaciente
+                AND CONVERT(DATE, FechaTurno) = CONVERT(DATE, @fecha)
+        ");
+                datos.setearParametro("@idMedico", idMedico);
+                datos.setearParametro("@idPaciente", idPaciente);
+                datos.setearParametro("@fecha", fecha);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["IdTurno"];
+                else
+                    return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
 
 
 
