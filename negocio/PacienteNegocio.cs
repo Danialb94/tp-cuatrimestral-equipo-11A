@@ -70,7 +70,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("DECLARE @IDU int, @IDP int; INSERT INTO Usuarios (Email, Contrasenia, IdPermiso) VALUES (@Email, @Contrasenia, @IdPermiso); SET @IDU = SCOPE_IDENTITY(); INSERT INTO Personas (Nombre, Apellido, Telefono, IdUsuario)  VALUES (@Nombre, @Apellido, @Telefono, @IDU); SET @IDP = SCOPE_IDENTITY(); INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, IdPersona, IdCobertura)  VALUES (@IdTipoDocumento, @Documento, @Domicilio, @FechaNacimiento, @IDP, @IdCobertura);");
+                datos.setearConsulta("DECLARE @IDU int, @IDP int; INSERT INTO Usuarios (Email, Contrasenia, IdPermiso, Estado) VALUES (@Email, @Contrasenia, @IdPermiso, 1); SET @IDU = SCOPE_IDENTITY(); INSERT INTO Personas (Nombre, Apellido, Telefono, IdUsuario)  VALUES (@Nombre, @Apellido, @Telefono, @IDU); SET @IDP = SCOPE_IDENTITY(); INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, IdPersona, IdCobertura)  VALUES (@IdTipoDocumento, @Documento, @Domicilio, @FechaNacimiento, @IDP, @IdCobertura);");
                 //USUARIO
                 datos.setearParametro("@Email", nuevo.Usuario.Email);
                 datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
@@ -278,6 +278,73 @@ namespace negocio
 
             }
         }
+
+
+        public void RegistrarPaciente(Paciente nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+            DECLARE @IDU INT, @IDP INT, @IDPAC INT, @IDIMG INT;
+
+            INSERT INTO Usuarios (Email, Contrasenia, IdPermiso, Estado)
+            VALUES (@Email, @Contrasenia, @IdPermiso, 1);
+            SET @IDU = SCOPE_IDENTITY();
+
+            INSERT INTO Personas (Nombre, Apellido, Telefono, IdUsuario)
+            VALUES (@Nombre, @Apellido, @Telefono, @IDU);
+            SET @IDP = SCOPE_IDENTITY();
+
+           
+            INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, IdPersona, IdCobertura)
+            VALUES (@IdTipoDocumento, @Documento, @Domicilio, @FechaNacimiento, @IDP, @IdCobertura);
+            SET @IDPAC = SCOPE_IDENTITY();
+
+            IF (@UrlImagen IS NOT NULL AND LEN(@UrlImagen) > 0)
+            BEGIN
+                INSERT INTO Imagenes (UrlImagen) VALUES (@UrlImagen);
+                SET @IDIMG = SCOPE_IDENTITY();
+
+                UPDATE Personas SET IdImagen = @IDIMG WHERE IdPersona = @IDP;
+            END
+        ");
+
+                // USUARIO
+                datos.setearParametro("@Email", nuevo.Usuario.Email);
+                datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
+                datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
+
+                // PERSONA
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+
+                // PACIENTE
+                datos.setearParametro("@IdTipoDocumento", nuevo.TipoDocumento.IdTipoDocumento);
+                datos.setearParametro("@Documento", nuevo.Documento);
+                datos.setearParametro("@Domicilio", nuevo.Domicilio);
+                datos.setearParametro("@FechaNacimiento", nuevo.FechaNacimiento);
+                datos.setearParametro("@IdCobertura", nuevo.Cobertura.IdCobertura);
+
+                // IMAGEN
+                if (!string.IsNullOrEmpty(nuevo.Imagen?.UrlImagen))
+                    datos.setearParametro("@UrlImagen", nuevo.Imagen.UrlImagen);
+                else
+                    datos.setearParametro("@UrlImagen", DBNull.Value);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
     }
 }
