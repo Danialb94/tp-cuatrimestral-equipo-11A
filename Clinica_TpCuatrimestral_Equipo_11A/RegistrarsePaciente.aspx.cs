@@ -31,6 +31,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 if(!Page.IsValid)
                     return;
 
+                UsuarioNegocio usuarioNeg = new UsuarioNegocio();
+
+                if (usuarioNeg.ExisteEmail(txtEmail.Text))
+                {
+                    lblError.Text = "El email ya está registrado. Por favor, use otro.";
+                    lblError.Visible = true;
+                    return;
+                }
+
                 DateTime fechaNacimiento;
 
                 if (!DateTime.TryParse(txtNacimiento.Text, out fechaNacimiento))
