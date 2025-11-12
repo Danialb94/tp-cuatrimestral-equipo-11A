@@ -9,7 +9,7 @@
         <h3 class="fw-bold mb-3">Listado de Pacientes</h3>
         <p class="text-muted mb-4">Seleccione un paciente para ver su historial clínico.</p>
 
-        <!-- 🔹 Tarjeta + filtro en la misma fila -->
+        <!-- Tarjeta + filtro en la misma fila -->
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
             <div class="card border-0 shadow-sm p-3 mb-3 mb-md-0" style="width: 18rem;">
                 <div class="d-flex align-items-center">
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <!-- 🔹 Filtro rápido -->
+            <!-- Filtro rápido -->
             <div class="input-group w-auto">
                 <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control"
                     placeholder="Buscar paciente..." AutoPostBack="true"
@@ -35,7 +35,7 @@
 
         <hr class="my-3" />
 
-        <!-- 🔹 Tabla de pacientes -->
+        <!-- Tabla de pacientes -->
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <asp:GridView ID="gvPacientes" runat="server" AutoGenerateColumns="False"
@@ -54,10 +54,12 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:HyperLink ID="lnkHistorial" runat="server"
-                                    CssClass="btn btn-outline-primary btn-sm"
-                                    NavigateUrl='<%# "RegistroConsultaMedico.aspx?idPaciente=" + Eval("IdPaciente") %>'
-                                    Text="Ver historial" />
+                                <asp:LinkButton ID="btnVerHistorial" runat="server"
+                                    CommandArgument='<%# Eval("IdPaciente") %>'
+                                    OnClick="btnVerHistorial_Click"
+                                    CssClass="btn btn-outline-primary btn-sm">
+                                    Ver registro consultas
+                                </asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

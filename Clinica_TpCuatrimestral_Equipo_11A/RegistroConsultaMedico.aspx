@@ -1,55 +1,105 @@
-﻿<%@ Page Title="Registrar Consulta Médica" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="RegistroConsultaMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.RegistroConsultaMedico" %>
+﻿<%@ Page Title="Registro Clínico del Paciente" Language="C#" MasterPageFile="~/MasterMedico.Master" AutoEventWireup="true" CodeBehind="RegistroConsultaMedico.aspx.cs" Inherits="Clinica_TpCuatrimestral_Equipo_11A.RegistroConsultaMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
-        <h3 class="fw-bold mb-3">Registrar nueva consulta médica</h3>
-        <p class="text-muted mb-4">Complete la información correspondiente al paciente.</p>
 
-        <div class="card shadow-sm border-0">
+        <!-- Título y botón agregar nueva consulta -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold mb-0">Registro Clínico del Paciente</h3>
+            <asp:Button ID="btnNuevaConsulta" runat="server" CssClass="btn btn-primary" Text="Agregar nueva consulta médica" />
+        </div>
+
+        <p class="text-muted mb-4">Aquí puedes visualizar los antecedentes y registros médicos del paciente seleccionado.</p>
+
+        <!-- Datos del paciente -->
+        <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
-                <form>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Nombre del paciente</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el nombre del paciente" />
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Fecha de la consulta</label>
-                            <input type="date" class="form-control" />
-                        </div>
+                <h5 class="fw-bold mb-3">Datos del paciente</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>
+                            <strong>Nombre:</strong>
+                            <asp:Label ID="lblNombre" runat="server" />
+                        </p>
+                        <p>
+                            <strong>Apellido:</strong>
+                            <asp:Label ID="lblApellido" runat="server" />
+                        </p>
                     </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Motivo de la consulta</label>
-                            <input type="text" class="form-control" placeholder="Ej: Dolor de cabeza, control, revisión general..." />
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Diagnóstico</label>
-                            <input type="text" class="form-control" placeholder="Ej: Migraña, hipertensión, etc." />
-                        </div>
+                    <div class="col-md-4">
+                        <p>
+                            <strong>Fecha de nacimiento:</strong>
+                            <asp:Label ID="lblFechaNac" runat="server" />
+                        </p>
+                        <p>
+                            <strong>Edad:</strong>
+                            <asp:Label ID="lblEdad" runat="server" />
+                        </p>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Observaciones</label>
-                        <textarea class="form-control" rows="4" placeholder="Agregue comentarios adicionales sobre el paciente"></textarea>
+                    <div class="col-md-4">
+                        <p>
+                            <strong>Domicilio:</strong>
+                            <asp:Label ID="lblDomicilio" runat="server" />
+                        </p>
+                        <p>
+                            <strong>Profesional:</strong>
+                            <asp:Label ID="lblProfesional" runat="server" />
+                        </p>
+                        <p>
+                            <strong>Última consulta:</strong>
+                            <asp:Label ID="lblUltimaConsulta" runat="server" />
+                        </p>
                     </div>
-
-                    <div class="d-flex justify-content-start mt-4">
-                        <!-- Botón Guardar -->
-                        <asp:LinkButton ID="btnGuardarConsulta" runat="server" CssClass="btn btn-primary me-2" OnClick="btnGuardarConsulta_Click">
-                            <i class="bi bi-save me-1"></i>Guardar consulta
-                        </asp:LinkButton>
-
-                        <!-- Botón Cancelar -->
-                        <asp:Button ID="btnVolver" runat="server"
-                            Text="Cancelar" CssClass="btn btn-secondary"
-                            PostBackUrl="~/HistoriaClinicaMedico.aspx" />
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
+
+        <!-- Antecedentes -->
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Antecedentes de salud</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            <strong>Alergias:</strong>
+                            <asp:Label ID="lblAlergias" runat="server" />
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <strong>Condiciones previas:</strong>
+                            <asp:Label ID="lblCondiciones" runat="server" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultas registradas -->
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Consultas registradas</h5>
+                <asp:GridView ID="gvConsultas" runat="server" AutoGenerateColumns="False" CssClass="table table-hover align-middle">
+                    <Columns>
+                        <asp:BoundField DataField="FechaHora" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+                        <asp:BoundField DataField="Diagnostico" HeaderText="Diagnóstico" />
+                        <asp:BoundField DataField="Observacion" HeaderText="Observación" />
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <asp:Button ID="btnVer" runat="server" Text="Ver detalle" CssClass="btn btn-primary btn-sm" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+
+        <!-- Botón Volver -->
+        <div class="mt-4">
+            <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary" PostBackUrl="~/PacienteMedico.aspx" />
+        </div>
+
     </div>
 </asp:Content>

@@ -14,12 +14,12 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Nada que hacer al cargar, solo se muestra el formulario
+            
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            // Limpiar errores anteriores
+            // Limpia errores anteriores
             lblErrorActual.Text = lblErrorNueva.Text = lblErrorConfirmar.Text = "";
             lblMensajeGeneral.Text = "";
 
@@ -39,14 +39,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                 bool valido = true;
 
-                // Validar que la actual no esté vacía
+                // Valida que la actual no esté vacía
                 if (string.IsNullOrEmpty(actual))
                 {
                     lblErrorActual.Text = "Ingrese su contraseña actual.";
                     valido = false;
                 }
 
-                // Validar que la nueva cumpla reglas básicas
+                // Valida que la nueva cumpla reglas básicas
                 if (string.IsNullOrEmpty(nueva))
                 {
                     lblErrorNueva.Text = "Ingrese una nueva contraseña.";
@@ -70,7 +70,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                 if (!valido) return;
 
-                // Verificar la contraseña actual en la base de datos
+                // Verifica la contraseña actual en la base de datos
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 bool claveCorrecta = negocio.ValidarClave(medico.IdUsuario, actual);
 
@@ -80,14 +80,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     return;
                 }
 
-                // ⚠️ Nueva validación: que la nueva no sea igual a la actual
+                // Nueva validación: que la nueva no sea igual a la actual
                 if (nueva == actual)
                 {
                     lblErrorNueva.Text = "La nueva contraseña no puede ser igual a la actual.";
                     return;
                 }
 
-                // Actualizar la contraseña
+                // Actualiza la contraseña
                 negocio.ActualizarClave(medico.IdUsuario, nueva);
 
                 lblMensajeGeneral.Text = "Contraseña actualizada correctamente.";

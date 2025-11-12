@@ -54,5 +54,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             txtBuscar.Text = "";
             CargarPacientes();
         }
+
+        protected void btnVerHistorial_Click(object sender, EventArgs e)
+        {
+            int idPaciente = int.Parse(((LinkButton)sender).CommandArgument);
+
+            Paciente seleccionado = listaPacientes.FirstOrDefault(p => p.IdPaciente == idPaciente);
+
+            if (seleccionado != null)
+            {
+                Session["PacienteSeleccionado"] = seleccionado;
+
+                Response.Redirect("RegistroConsultaMedico.aspx", false);
+            }
+        }
     }
 }

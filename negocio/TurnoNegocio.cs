@@ -218,6 +218,69 @@ namespace negocio
             }
         }
 
+        // 🔹 Listar consultas por médico y paciente
+        public List<Turno> ListarConsultasPorMedicoYPaciente(int idMedico, int idPaciente)
+        {
+            List<Turno> lista = new List<Turno>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"SELECT T.FechaTurno, T.Diagnostico,T.Observacion FROM Turnos T INNER JOIN Estados E ON T.IdEstado = E.IdEstado 
+                WHERE T.IdMedico = @idMedico AND T.IdPaciente = @idPaciente AND E.Descripcion NOT LIKE 'Cancelado%'ORDER BY T.FechaTurno DESC");
+
+                datos.setearParametro("@idMedico", idMedico);
+                datos.setearParametro("@idPaciente", idPaciente);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())? datos.Lector["Diagnostico"].ToString(): "Sin diagnóstico registrado";
+                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())? datos.Lector["Observacion"].ToString(): "Sin observación registrada";
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        // Obtener última consulta del paciente con el médico
+        public DateTime? ObtenerUltimaConsulta(int idPaciente, int idMedico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@" SELECT TOP 1 FechaTurno FROM Turnos WHERE IdPaciente = @idPaciente AND IdMedico = @idMedico ORDER BY FechaTurno DESC");
+
+                datos.setearParametro("@idPaciente", idPaciente);
+                datos.setearParametro("@idMedico", idMedico);
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read() ? (DateTime?)datos.Lector["FechaTurno"] : null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
     }
 
 }

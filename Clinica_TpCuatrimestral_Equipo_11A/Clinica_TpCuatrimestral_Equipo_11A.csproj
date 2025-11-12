@@ -67,7 +67,7 @@
     <Content Include="AgendaMedico.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Imagenes\gatito_error.png" />
-    <Content Include="RegistroConsultaMedico.aspx" />
+    <Content Include="NuevoRegistroMedico.aspx" />
     <Content Include="AgregarMedico.aspx" />
     <Content Include="AltaPaciente.aspx" />
     <Content Include="CancelarTurnosRecepcionista.aspx" />
@@ -78,7 +78,7 @@
     <Content Include="DetalleTurnoMedico.aspx" />
     <Content Include="EditarPerfilPaciente.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="HistoriaClinicaMedico.aspx" />
+    <Content Include="RegistroConsultaMedico.aspx" />
     <Content Include="InicioMedico.aspx" />
     <Content Include="InicioPaciente.aspx" />
     <Content Include="InicioRecepcionista.aspx" />
@@ -111,12 +111,12 @@
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RegistroConsultaMedico.aspx.cs">
-      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
+    <Compile Include="NuevoRegistroMedico.aspx.cs">
+      <DependentUpon>NuevoRegistroMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RegistroConsultaMedico.aspx.designer.cs">
-      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
+    <Compile Include="NuevoRegistroMedico.aspx.designer.cs">
+      <DependentUpon>NuevoRegistroMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="AgregarMedico.aspx.cs">
       <DependentUpon>AgregarMedico.aspx</DependentUpon>
@@ -184,12 +184,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HistoriaClinicaMedico.aspx.cs">
-      <DependentUpon>HistoriaClinicaMedico.aspx</DependentUpon>
+    <Compile Include="RegistroConsultaMedico.aspx.cs">
+      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="HistoriaClinicaMedico.aspx.designer.cs">
-      <DependentUpon>HistoriaClinicaMedico.aspx</DependentUpon>
+    <Compile Include="RegistroConsultaMedico.aspx.designer.cs">
+      <DependentUpon>RegistroConsultaMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="InicioMedico.aspx.cs">
       <DependentUpon>InicioMedico.aspx</DependentUpon>
