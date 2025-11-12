@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="justify-content-between mb-3">
                             <h5 class="fw-bold mb-2">Especialidad</h5>
-                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100">
+                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100" AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                     </div>
