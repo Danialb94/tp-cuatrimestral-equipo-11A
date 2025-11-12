@@ -30,9 +30,9 @@
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Apellido</label>
                     <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" />
-                        <asp:RegularExpressionValidator ErrorMessage="Solo se permiten letras" ControlToValidate="txtApellido" ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" CssClass="text-danger" Display="Dynamic" runat="server" />
-                        <asp:RequiredFieldValidator ErrorMessage="El apellido es obligatorio" ControlToValidate="txtApellido" Display="Dynamic" CssClass="text-danger" runat="server" />
-                        <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtApellido" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="Solo se permiten letras" ControlToValidate="txtApellido" ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" CssClass="text-danger" Display="Dynamic" runat="server" />
+                    <asp:RequiredFieldValidator ErrorMessage="El apellido es obligatorio" ControlToValidate="txtApellido" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtApellido" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
             </div>
 
@@ -40,31 +40,27 @@
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Email</label>
                     <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" TextMode="Email" />
-                        <asp:RegularExpressionValidator ErrorMessage="Email inválido" ControlToValidate="txtEmail" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" CssClass="text-danger" Display="Dynamic" runat="server" />
-                        <asp:RequiredFieldValidator ErrorMessage="El email es obligatorio" ControlToValidate="txtEmail" Display="Dynamic" CssClass="text-danger" runat="server" />
-                        <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtEmail" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="Email inválido" ControlToValidate="txtEmail" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" CssClass="text-danger" Display="Dynamic" runat="server" />
+                    <asp:RequiredFieldValidator ErrorMessage="El email es obligatorio" ControlToValidate="txtEmail" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtEmail" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Teléfono</label>
                     <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" />
-                     <asp:RegularExpressionValidator ErrorMessage="Teléfono inválido" ControlToValidate="txtTelefono" ValidationExpression="^(?:(?:\+54|0)?(11|2[23]\d|3[3-8]\d|9[11]|9[2-3]\d))?\s?\d{4,5}\-?\d{4}$" CssClass="text-danger" Display="Dynamic" runat="server" />
-                     <asp:RequiredFieldValidator ErrorMessage="El telefono es obligatorio" ControlToValidate="txtTelefono" Display="Dynamic" CssClass="text-danger" runat="server" />
-                     <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtTelefono" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="Teléfono inválido" ControlToValidate="txtTelefono" ValidationExpression="^(?:(?:\+54|0)?(11|2[23]\d|3[3-8]\d|9[11]|9[2-3]\d))?\s?\d{4,5}\-?\d{4}$" CssClass="text-danger" Display="Dynamic" runat="server" />
+                    <asp:RequiredFieldValidator ErrorMessage="El telefono es obligatorio" ControlToValidate="txtTelefono" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtTelefono" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
             </div>
 
             <div class="row mb-3">
+                <asp:ListBox ID="lstEspecialidades" runat="server" SelectionMode="Multiple" CssClass="form-control" Height="150px"></asp:ListBox>
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Especialidad</label>
-                    <asp:DropDownList ID="ddlEspecialidades" runat="server" CssClass="form-select"></asp:DropDownList>
-
-                </div>
-                 <div class="col-md-6">
-                 <label class="form-label fw-semibold">Matrícula</label>
-                 <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" />
-                 <asp:RequiredFieldValidator ErrorMessage="La matricula es obligatoria" ControlToValidate="txtMatricula" Display="Dynamic" CssClass="text-danger" runat="server" />
-                 <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtMatricula" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
-                 <asp:RegularExpressionValidator ErrorMessage="No es un formato válido" ControlToValidate="txtMatricula" ValidationExpression="^((M\.?\s?(P|N)\.?\s?\d{4,6})|\d{4,6})$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <label class="form-label fw-semibold">Matrícula</label>
+                    <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" />
+                    <asp:RequiredFieldValidator ErrorMessage="La matricula es obligatoria" ControlToValidate="txtMatricula" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtMatricula" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No es un formato válido" ControlToValidate="txtMatricula" ValidationExpression="^((M\.?\s?(P|N)\.?\s?\d{4,6})|\d{4,6})$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
             </div>
 

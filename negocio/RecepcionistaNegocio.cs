@@ -235,23 +235,25 @@ namespace negocio
                     idMedico = Convert.ToInt32(datos.Lector["IdMedico"]);
 
                 datos.cerrarConexion();
-
                 foreach (string dia in diasSeleccionados)
                 {
                     int diaSemana = ObtenerNumeroDia(dia);
-
                     int idHorario = ObtenerIdHorario(diaSemana, franjaHoraria);
+
+                    foreach (Especialidad esp in nuevo.Especialidades)
                     {
                         datos = new AccesoDatos();
                         datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades (IdMedico, IdHorario, IdEspecialidad) VALUES (@idMedico, @idHorario, @idEspecialidad)");
 
                         datos.setearParametro("@IdMedico", idMedico);
                         datos.setearParametro("@IdHorario", idHorario);
-                        datos.setearParametro("@IdEspecialidad", nuevo.Especialidades.First().IdEspecialidad);
+                        datos.setearParametro("@IdEspecialidad", esp.IdEspecialidad);
+
                         datos.ejecutarAccion();
                         datos.cerrarConexion();
                     }
                 }
+
             }
             catch (Exception ex)
             {

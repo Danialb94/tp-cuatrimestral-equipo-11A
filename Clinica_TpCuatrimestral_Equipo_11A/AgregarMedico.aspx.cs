@@ -23,22 +23,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             try
             {
-                EspecialidadNegocio negocio = new EspecialidadNegocio(); 
-                List<Especialidad> lista = negocio.listar(); 
+                EspecialidadNegocio negocio = new EspecialidadNegocio();
+                List<Especialidad> lista = negocio.listar();
 
-                ddlEspecialidades.DataSource = lista;
-                ddlEspecialidades.DataTextField = "Descripcion";
-                ddlEspecialidades.DataValueField = "IdEspecialidad";
-                ddlEspecialidades.DataBind();
-
-                ddlEspecialidades.Items.Insert(0, new ListItem("Seleccione especialidad", "0"));
+                lstEspecialidades.DataSource = lista;
+                lstEspecialidades.DataTextField = "Descripcion";
+                lstEspecialidades.DataValueField = "IdEspecialidad";
+                lstEspecialidades.DataBind();
             }
             catch (Exception ex)
             {
-                Response.Redirect("Error.aspx", false);
                 Session.Add("Error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
+
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -54,7 +53,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             nuevo.Matricula = txtMatricula.Text;
             nuevo.Usuario = new Usuario { Email = txtEmail.Text, Contrasenia = txtNombre.Text, Permiso = new Permiso { IdPermiso = 2 } };
             nuevo.Especialidades = new List<Especialidad> {
-        new Especialidad { IdEspecialidad = int.Parse(ddlEspecialidades.SelectedValue) }
+        new Especialidad { IdEspecialidad = int.Parse(lstEspecialidades.SelectedValue) }
     };
 
             List<string> diasSeleccionados = new List<string>();
@@ -67,6 +66,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             string franjaHoraria = txtFranjaHoraria.Text;
 
             RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            nuevo.Especialidades = new List<Especialidad>();
+
+            foreach (ListItem item in lstEspecialidades.Items)
+            {
+                if (item.Selected)
+                {
+                    nuevo.Especialidades.Add(new Especialidad
+                    {
+                        IdEspecialidad = int.Parse(item.Value),
+                        Descripcion = item.Text
+                    });
+                }
+            }
             negocio.AgregarMedico(nuevo, diasSeleccionados, franjaHoraria);
 
             Response.Redirect("MedicosRecepcionista.aspx", false);
