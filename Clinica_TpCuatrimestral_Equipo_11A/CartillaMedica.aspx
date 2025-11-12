@@ -12,10 +12,12 @@
         <div class="d-flex">
             <div class="d-flex me-3 rounded-3" style="background-color: #d3d3d38f;">
                 <img src="<%= ResolveUrl("~/Imagenes/Lupa.png") %>" class="m-2" style="height: 20px;" />
-                <asp:TextBox ID="txtMedico" runat="server" class="border-dark-subtle form-control" Style="width: 300px;" placeholder="Dr. App" />
+                <asp:TextBox ID="txtMedico" runat="server" class="border-dark-subtle form-control" Style="width: 300px;" placeholder="Dr. App" AutoPostBack="true" OnTextChanged="txtMedico_TextChanged"/>
             </div>
             <div>
-                <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle h-100 rounded-2" Style="width: 210px;">
+                <asp:DropDownList ID="ddlEspecialidades" runat="server" 
+                    class="border-dark-subtle h-100 rounded-2" Style="width: 210px;"
+                    AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged">
                 </asp:DropDownList>
             </div>
         </div>
