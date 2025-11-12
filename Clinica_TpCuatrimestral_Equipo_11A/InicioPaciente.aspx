@@ -77,5 +77,5 @@
             var modal = new bootstrap.Modal(document.getElementById('modalCancelar'));
             modal.show();
         }
-</script>
+    </script>
 </asp:Content>

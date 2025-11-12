@@ -175,13 +175,14 @@ namespace negocio
             try
             {
                 // 🔹 Primero traemos los datos básicos del médico
-                datos.setearConsulta("select P.IdPaciente, PE.Nombre, PE.Apellido, PE.Telefono, TD.Descripcion AS TipoDocumento, P.IdTipoDocumento, P.Documento, P.Domicilio, P.FechaNacimiento, C.Descripcion AS Cobertura, P.IdCobertura, I.IdImagen, I.UrlImagen  from Pacientes P  join TiposDocumento TD ON TD.IdTipoDocumento = P.IdTipoDocumento  join Coberturas C ON C.IdCobertura = P.IdCobertura  join Personas PE ON PE.IdPersona = P.IdPersona  join Usuarios U ON U.IdUsuario = PE.IdUsuario  join Imagenes I ON I.IdImagen = PE.IdImagen Where 1=1 AND P.IdPersona = PE.IdPersona AND PE.IdUsuario = @IdUsuario");
+                datos.setearConsulta("select U.Email, P.IdPaciente, PE.Nombre, PE.Apellido, PE.Telefono, TD.Descripcion AS TipoDocumento, P.IdTipoDocumento, P.Documento, P.Domicilio, P.FechaNacimiento, C.Descripcion AS Cobertura, P.IdCobertura, I.IdImagen, I.UrlImagen  from Pacientes P  join TiposDocumento TD ON TD.IdTipoDocumento = P.IdTipoDocumento  join Coberturas C ON C.IdCobertura = P.IdCobertura  join Personas PE ON PE.IdPersona = P.IdPersona  join Usuarios U ON U.IdUsuario = PE.IdUsuario  left join Imagenes I ON I.IdImagen = PE.IdImagen Where 1=1 AND P.IdPersona = PE.IdPersona AND PE.IdUsuario = @IdUsuario");
 
                 datos.setearParametro("@IdUsuario", idUsuario);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
+                    paciente.Email = (string)datos.Lector["Email"];
                     paciente.IdPaciente = (int)datos.Lector["IdPaciente"];
                     paciente.Nombre = (string)datos.Lector["Nombre"];
                     paciente.Apellido = (string)datos.Lector["Apellido"];
