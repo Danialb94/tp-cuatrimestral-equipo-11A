@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
+    <Compile Include="CoberturaNegocio.cs" />
     <Compile Include="EspecialidadNegocio.cs" />
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="MedicoNegocio.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecepcionistaNegocio.cs" />
     <Compile Include="Seguridad.cs" />
+    <Compile Include="TipoDocumentoNegocio.cs" />
     <Compile Include="TurnoNegocio.cs" />
     <Compile Include="UsuarioNegocio.cs" />
   </ItemGroup>

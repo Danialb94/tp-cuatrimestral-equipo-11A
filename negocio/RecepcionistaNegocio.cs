@@ -1,6 +1,7 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,7 +84,7 @@ namespace negocio
                     aux.Horario.Add(horario);
 
                     aux.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
-                        
+
                     lista.Add(aux);
 
                 }
@@ -174,7 +175,7 @@ namespace negocio
 
                     aux.Horario.Add(horario);
 
-                   
+
 
                     lista.Add(aux);
 
@@ -198,7 +199,7 @@ namespace negocio
 
             try
             {
-                
+
                 datos.setearConsulta(@"
             DECLARE @IDU int, @IDP int;
 
@@ -218,7 +219,7 @@ namespace negocio
             SELECT SCOPE_IDENTITY() AS IdMedico;
         ");
 
-                
+
                 datos.setearParametro("@Email", nuevo.Usuario.Email);
                 datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
                 datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
@@ -229,7 +230,7 @@ namespace negocio
 
                 datos.ejecutarLectura();
 
-                
+
                 if (datos.Lector.Read())
                     idMedico = Convert.ToInt32(datos.Lector["IdMedico"]);
 
@@ -237,16 +238,16 @@ namespace negocio
 
                 foreach (string dia in diasSeleccionados)
                 {
-                    int diaSemana = ObtenerNumeroDia(dia); 
+                    int diaSemana = ObtenerNumeroDia(dia);
 
-                    int idHorario = ObtenerIdHorario(diaSemana, franjaHoraria); 
+                    int idHorario = ObtenerIdHorario(diaSemana, franjaHoraria);
                     {
                         datos = new AccesoDatos();
                         datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades (IdMedico, IdHorario, IdEspecialidad) VALUES (@idMedico, @idHorario, @idEspecialidad)");
 
                         datos.setearParametro("@IdMedico", idMedico);
                         datos.setearParametro("@IdHorario", idHorario);
-                        datos.setearParametro("@IdEspecialidad", nuevo.Especialidades.First().IdEspecialidad); 
+                        datos.setearParametro("@IdEspecialidad", nuevo.Especialidades.First().IdEspecialidad);
                         datos.ejecutarAccion();
                         datos.cerrarConexion();
                     }
@@ -280,7 +281,7 @@ namespace negocio
 
         private int ObtenerIdHorario(int diaSemana, string franja)
         {
-           
+
             string[] partes = franja.Split('-');
             string entrada = partes[0].Trim();
             string salida = partes[1].Trim();
@@ -483,6 +484,55 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void altaPacienteRecepcionista(Paciente nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            DECLARE @IDU INT, @IDP INT;
+
+            INSERT INTO Usuarios (Email, Contrasenia, IdPermiso, Estado)
+            VALUES (@Email, @Contrasenia, @IdPermiso, 1);
+
+            SET @IDU = SCOPE_IDENTITY();
+
+            INSERT INTO Personas (Nombre, Apellido, Telefono, IdUsuario)
+            VALUES (@Nombre, @Apellido, @Telefono, @IDU);
+
+            SET @IDP = SCOPE_IDENTITY();
+
+            INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, IdPersona, IdCobertura)
+            VALUES (@IdTipoDocumento, @Documento, @Domicilio, @FechaNacimiento, @IDP, @IdCobertura);
+        ");
+
+                datos.setearParametro("@Email", nuevo.Usuario.Email);
+                datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
+                datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+                datos.setearParametro("@IdTipoDocumento", nuevo.TipoDocumento.IdTipoDocumento);
+                datos.setearParametro("@Documento", nuevo.Documento);
+                datos.setearParametro("@Domicilio", nuevo.Domicilio);
+                datos.setearParametro("@FechaNacimiento", nuevo.FechaNacimiento);
+                datos.setearParametro("@IdCobertura", nuevo.Cobertura.IdCobertura);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
 
 
