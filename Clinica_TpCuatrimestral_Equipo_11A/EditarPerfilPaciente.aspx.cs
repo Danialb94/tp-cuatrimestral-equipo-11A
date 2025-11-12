@@ -47,6 +47,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         }
         public void btnEditar_Click(object sender, EventArgs e)
         {
+            UsuarioNegocio neg = new UsuarioNegocio();
             try
             {
                 Paciente paciente = (Paciente)Session["Paciente"];
@@ -54,6 +55,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 {
                     return;
                 }
+                if (neg.ExisteEmail(txtEmail.Text))
+                {
+                    return;
+                }
+
                 paciente.Domicilio = txtDireccion.Text;
                 paciente.Email = txtEmail.Text;
                 paciente.Telefono = txtTelefono.Text;
@@ -68,7 +74,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 throw ex;
             }
         }
-
 
 
     }
