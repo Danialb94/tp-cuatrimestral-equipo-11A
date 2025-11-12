@@ -227,14 +227,18 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"
-            SELECT T.FechaTurno, T.Diagnostico, T.Observacion
-            FROM Turnos T
-            INNER JOIN Estados E ON T.IdEstado = E.IdEstado
-            WHERE T.IdMedico = @idMedico 
-              AND T.IdPaciente = @idPaciente
-              AND E.Descripcion = 'Atendido'
-            ORDER BY T.FechaTurno DESC
-        ");
+                SELECT 
+                T.IdTurno,
+                T.FechaTurno,
+                T.Diagnostico,
+                T.Observacion
+                FROM Turnos T
+                INNER JOIN Estados E ON T.IdEstado = E.IdEstado
+                WHERE T.IdMedico = @idMedico 
+                AND T.IdPaciente = @idPaciente
+                AND E.Descripcion = 'Atendido'
+                ORDER BY T.FechaTurno DESC
+                ");
 
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@idPaciente", idPaciente);
@@ -243,11 +247,14 @@ namespace negocio
                 while (datos.Lector.Read())
                 {
                     Turno aux = new Turno();
+                    aux.IdTurno = (int)datos.Lector["IdTurno"]; // 🔹 ahora el GridView recibe el ID correcto
                     aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
-                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())
+                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value
+                        && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())
                         ? datos.Lector["Diagnostico"].ToString()
                         : "Sin diagnóstico registrado";
-                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())
+                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value
+                        && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())
                         ? datos.Lector["Observacion"].ToString()
                         : "Sin observación registrada";
 
@@ -306,11 +313,11 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"
-            UPDATE Turnos
-            SET Diagnostico = @Diagnostico,
+                UPDATE Turnos
+                SET Diagnostico = @Diagnostico,
                 Observacion = @Observacion,
                 IdEstado = (SELECT IdEstado FROM Estados WHERE Descripcion = 'Atendido')
-            WHERE IdTurno = @IdTurno");
+                WHERE IdTurno = @IdTurno");
 
                 datos.setearParametro("@Diagnostico", (object)turno.Diagnostico ?? DBNull.Value);
                 datos.setearParametro("@Observacion", (object)turno.Observacion ?? DBNull.Value);
@@ -359,6 +366,63 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public Turno ObtenerPorId(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                SELECT 
+                T.IdTurno,
+                T.FechaTurno,
+                T.Diagnostico,
+                T.Observacion,
+                P.Nombre AS NombrePaciente,
+                P.Apellido AS ApellidoPaciente
+                FROM Turnos T
+                INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+                INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+                WHERE T.IdTurno = @idTurno");
+
+                datos.setearParametro("@idTurno", idTurno);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Turno aux = new Turno();
+                    aux.IdTurno = (int)datos.Lector["IdTurno"];
+                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value
+                        ? datos.Lector["Diagnostico"].ToString()
+                        : "";
+                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value
+                        ? datos.Lector["Observacion"].ToString()
+                        : "";
+
+                    aux.Paciente = new Paciente
+                    {
+                        Nombre = datos.Lector["NombrePaciente"].ToString(),
+                        Apellido = datos.Lector["ApellidoPaciente"].ToString()
+                    };
+
+                    return aux;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using dominio;
-using negocio;
+using System.Web.UI.WebControls;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
@@ -66,6 +67,20 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected void btnNuevaConsulta_Click(object sender, EventArgs e)
         {
             Response.Redirect("NuevoRegistroMedico.aspx", false);
+        }
+
+        protected void gvConsultas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Ver")
+            {
+                string idTurno = e.CommandArgument.ToString();
+                Response.Redirect("DetalleRegistroMedico.aspx?id=" + idTurno, false);
+            }
+            else if (e.CommandName == "Editar")
+            {
+                string idTurno = e.CommandArgument.ToString();
+                Response.Redirect("DetalleRegistroMedico.aspx?id=" + idTurno + "&modo=editar", false);
+            }
         }
     }
 }

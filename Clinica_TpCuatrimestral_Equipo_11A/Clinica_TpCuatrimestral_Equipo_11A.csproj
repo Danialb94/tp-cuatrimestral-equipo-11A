@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AgendaMedico.aspx" />
+    <Content Include="DetalleRegistroMedico.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Imagenes\gatito_error.png" />
     <Content Include="NuevoRegistroMedico.aspx" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="AgendaMedico.aspx.designer.cs">
       <DependentUpon>AgendaMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleRegistroMedico.aspx.cs">
+      <DependentUpon>DetalleRegistroMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleRegistroMedico.aspx.designer.cs">
+      <DependentUpon>DetalleRegistroMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>

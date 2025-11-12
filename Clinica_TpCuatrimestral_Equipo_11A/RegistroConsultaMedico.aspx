@@ -53,20 +53,28 @@
             </div>
         </div>
 
-        <!-- Consultas -->
+         <!-- Consultas -->
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <h5 class="fw-bold mb-3">Consultas registradas</h5>
                 <asp:GridView ID="gvConsultas" runat="server" AutoGenerateColumns="False"
-                    CssClass="table table-hover align-middle">
+                    CssClass="table table-hover align-middle"
+                    OnRowCommand="gvConsultas_RowCommand">
                     <Columns>
+                        <asp:BoundField DataField="IdTurno" HeaderText="ID" Visible="false" />
                         <asp:BoundField DataField="FechaHora" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                         <asp:BoundField DataField="Diagnostico" HeaderText="Diagnóstico" />
                         <asp:BoundField DataField="Observacion" HeaderText="Observación" />
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <asp:Button ID="btnVer" runat="server" Text="Ver detalle"
-                                    CssClass="btn btn-primary btn-sm" />
+                                    CommandName="Ver"
+                                    CommandArgument='<%# Eval("IdTurno") %>'
+                                    CssClass="btn btn-outline-primary btn-sm me-2" />
+                                <asp:Button ID="btnEditar" runat="server" Text="✏️"
+                                    CommandName="Editar"
+                                    CommandArgument='<%# Eval("IdTurno") %>'
+                                    CssClass="btn btn-outline-secondary btn-sm" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
