@@ -260,6 +260,21 @@ INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, I
 (1, 35678901, 'San Martín 890', '1980-11-30', 10, 1),       -- Camila Vega - Accord Salud
 (1, 40789012, 'Belgrano 1122', '1988-05-18', 11, 5);       -- Fernando Castro - Medicus
 GO
+-- Tabla RegistroClinico
+CREATE TABLE RegistroClinico (
+    IdRegistro INT IDENTITY(1,1) PRIMARY KEY,
+    Diagnostico VARCHAR(200),
+    Observacion VARCHAR(1000),
+    Tratamiento VARCHAR(200)
+);
+GO
+INSERT INTO RegistroClinico (Diagnostico, Observacion, Tratamiento) VALUES
+('Migraña', 'El paciente llega al turno con un dolor de cabeza muy intenso', 'Se receta Migral 500 cada 8 horas'),
+('Brote psicótico con delirio místico', 'El paciente creyó que era el hijo de dios enviado para salvara la humanidad', 'Se receta antipsicóticos'),
+('Niño sano', 'Se presenta Diego con su hijo por chequeo mensual', ''),
+('', 'El paciente se presenta para controlar la medicación psiquiatrica', 'Se continúa con el tratamiento actual'),
+('Urticaria', 'Se presenta al turno con picazón', 'Se le receta crema sensicalm');
+GO
 -- Tabla Turnos
 CREATE TABLE Turnos (
     IdTurno INT IDENTITY(1,1) PRIMARY KEY,
@@ -268,41 +283,46 @@ CREATE TABLE Turnos (
     IdMedico INT NOT NULL,
     FOREIGN KEY (IdMedico) REFERENCES Medicos(IdMedico),
     FechaTurno DATETIME NOT NULL,
-    Diagnostico VARCHAR(200),
-    Observacion VARCHAR(1000),
+    Motivo VARCHAR(200) NOT NULL,
     IdEstado INT NOT NULL,
     FOREIGN KEY (IdEstado) REFERENCES Estados(IdEstado),
+    IdRegistro INT,
+    FOREIGN KEY (IdRegistro) REFERENCES RegistroClinico(IdRegistro),
     IdEspecialidad INT NOT NULL,
     FOREIGN KEY (IdEspecialidad) REFERENCES Especialidades(IdEspecialidad)
 );
 GO
-INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, IdEstado, Diagnostico, Observacion, IdEspecialidad) VALUES
-(1, 1, '20251029 08:00:00', 1, 'Control de hipertensión arterial', 'Paciente controlado, continuar con medicación actual', 1),
--- Valeria Torres, Dra. Ana Martinez
-(1, 1, '20251203 10:00:00', 2, NULL, NULL, 3),
--- Valeria Torres, Dra. Ana Martinez
-(1, 1, '20251128 09:00:00', 2, NULL, NULL, 1),
--- Valeria Torres, Dra. Ana Martinez
-(1, 1, '20251201 10:00:00', 2, NULL, NULL, 1),
--- Valeria Torres, Dra. Ana Martinez
-(2, 2, '20251030 15:00:00', 4, NULL, NULL, 2),
--- Diego Morales, Dra. Laura Fernández
-(2, 2, '20251125 15:00:00', 3, NULL, NULL, 2),
--- Diego Morales, Dra. Laura Fernández
-(2, 2, '20251127 15:00:00', 2, NULL, NULL, 2),
--- Diego Morales, Dra. Laura Fernández
-(3, 3, '20251201 17:00:00', 1, 'Dermatitis alérgica', 'Se prescribe tratamiento tópico', 4),
--- Camila Vega, Dr. Juan Pérez
-(3, 3, '20251201 14:00:00', 2, NULL, NULL, 4),
--- Camila Vega, Dr. Juan Pérez
-(3, 3, '20251201 15:00:00', 2, NULL, NULL, 4),
--- Camila Vega, Dr. Juan Pérez
-(4, 4, '20251128 15:00:00', 2, NULL, NULL, 6),
--- Fernando Castro, Dra. María López
-(4, 4, '20251128 16:00:00', 2, NULL, NULL, 6),
--- Fernando Castro, Dra. María López
-(4, 4, '20251025 09:00:00', 2, NULL, NULL, 6);
--- Fernando Castro, Dra. María López
+INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, Motivo, IdEstado, IdEspecialidad, IdRegistro) VALUES
+(1, 1, '20251029 08:00:00', 'Dolor de cabeza muy intenso' , 1, 1, 1),
+-- Valeria Torres, Dra. Ana Martinez, CLINICA
+(1, 1, '20251203 10:00:00', 'Chequeo de rutina cardiológico' , 2, 3, NULL),
+-- Valeria Torres, Dra. Ana Martinez, CARDIOLOGIA
+(1, 3, '20251112 15:00:00', 'Brote psicótico' , 2, 9, 2),
+-- Valeria Torres, Dr. Juan Perez, PSIQUIATRIA
+(1, 1, '20251128 09:00:00', 'Lele pancha' , 2, 1, NULL),
+-- Valeria Torres, Dra. Ana Martinez, CLINICA
+(1, 1, '20251201 10:00:00', 'Tengo brotada la piel, sospecho que es alergia' , 2, 1, NULL),
+-- Valeria Torres, Dra. Ana Martinez, CLINICA
+(2, 2, '20251030 15:00:00', 'Chequeo mensual' , 4, 2, 3),
+-- Diego Morales, Dra. Laura Fernández, PEDIATRIA
+(2, 3, '20251112 16:00:00', 'Control de medicación' , 2, 9, 4),
+-- Diego Morales, Dr. Juan Perez, PSIQUIATRIA
+(2, 2, '20251125 15:00:00', 'Chequeo mensual' , 3, 2, NULL),
+-- Diego Morales, Dra. Laura Fernández, PEDIATRIA
+(2, 2, '20251211 15:00:00', 'Chequeo mensual' , 2, 2, NULL),
+-- Diego Morales, Dra. Laura Fernández, PEDIATRIA
+(3, 3, '20251201 17:00:00', 'Revision del tratamiento por Urticaria' , 1, 4, NULL),
+-- Camila Vega, Dr. Juan Pérez, DERMATOLOGIA
+(3, 3, '20251117 14:00:00', 'Urticaria' , 2, 4, 5),
+-- Camila Vega, Dr. Juan Pérez, DERMATOLOGIA
+(1, 3, '20251201 15:00:00', 'Piel seca' , 2, 4, NULL),
+-- Valeria Torres, Dr. Juan Pérez, DERMATOLOGIA
+(3, 3, '20251126 17:00:00', 'Control de medicación' , 2, 9, NULL),
+-- Camila Vega, Dr. Juan Perez, PSIQUIATRIA
+(4, 4, '20251128 15:00:00', 'Dolor muy doloroso de espalda' , 2, 6, NULL),
+-- Fernando Castro, Dra. María López, TRAUMATOLOGÍA
+(2, 4, '20251128 16:00:00', 'Chequeo' , 2, 6, NULL)
+-- Diego Morales, Dra. María López, TRAUMATOLOGÍA
 GO
 -- Tabla CondicionesBase
 CREATE TABLE CondicionesBase (
@@ -358,6 +378,5 @@ INSERT INTO PacientesAlergias (IdPaciente, IdAlergia) VALUES
 (1, 1), -- Penicilina - Valeria Torres
 (1, 2), -- Latex - Valeria Torres
 (4,2); -- Latex - Fernando Castro
-
-
+GO
 
