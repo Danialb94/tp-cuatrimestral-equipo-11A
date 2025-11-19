@@ -9,8 +9,9 @@ namespace dominio
 {
     public class RegistroClinico
     {
-        public Turno Turno { get; set; }
+        public int IdRegistro { get; set; }
         public string Diagnostico { get; set; }
         public string Observaciones { get; set; }
+        public string Tratamiento { get; set; }
     }
 }
