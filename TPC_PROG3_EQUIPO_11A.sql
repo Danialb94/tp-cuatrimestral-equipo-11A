@@ -260,23 +260,6 @@ INSERT INTO Pacientes (IdTipoDocumento, Documento, Domicilio, FechaNacimiento, I
 (1, 35678901, 'San Martín 890', '1980-11-30', 10, 1),       -- Camila Vega - Accord Salud
 (1, 40789012, 'Belgrano 1122', '1988-05-18', 11, 5);       -- Fernando Castro - Medicus
 GO
--- Tabla RegistroClinico
-CREATE TABLE RegistroClinico (
-    IdRegistro INT IDENTITY(1,1) PRIMARY KEY,
-	IdTurno INT NOT NULL,
-    Diagnostico VARCHAR(200),
-    Observacion VARCHAR(1000),
-    Tratamiento VARCHAR(200)
-	FOREIGN KEY (IdTurno) REFERENCES Turnos(IdTurno)
-);
-GO
-INSERT INTO RegistroClinico (IdTurno, Diagnostico, Observacion, Tratamiento) VALUES
-(1,  'Migraña', 'El paciente llega al turno con un dolor de cabeza muy intenso', 'Se receta Migral 500 cada 8 horas'),
-(3,  'Brote psicótico con delirio místico', 'El paciente creyó que era el hijo de dios enviado para salvara la humanidad', 'Se receta antipsicóticos'),
-(6,  'Niño sano', 'Se presenta Diego con su hijo por chequeo mensual', ''),
-(7,  '', 'El paciente se presenta para controlar la medicación psiquiatrica', 'Se continúa con el tratamiento actual'),
-(11, 'Urticaria', 'Se presenta al turno con picazón', 'Se le receta crema sensicalm');
-GO
 -- Tabla Turnos
 CREATE TABLE Turnos (
     IdTurno INT IDENTITY(1,1) PRIMARY KEY,
@@ -324,7 +307,23 @@ INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, Motivo, IdEstado, IdEspeci
 (2, 4, '20251128 16:00:00', 'Chequeo' , 2, 6);
 -- Diego Morales, Dra. María López, TRAUMATOLOGÍA
 GO
-
+-- Tabla RegistroClinico
+CREATE TABLE RegistroClinico (
+    IdRegistro INT IDENTITY(1,1) PRIMARY KEY,
+	IdTurno INT NOT NULL,
+    Diagnostico VARCHAR(200),
+    Observacion VARCHAR(1000),
+    Tratamiento VARCHAR(200)
+	FOREIGN KEY (IdTurno) REFERENCES Turnos(IdTurno)
+);
+GO
+INSERT INTO RegistroClinico (IdTurno, Diagnostico, Observacion, Tratamiento) VALUES
+(1,  'Migraña', 'El paciente llega al turno con un dolor de cabeza muy intenso', 'Se receta Migral 500 cada 8 horas'),
+(3,  'Brote psicótico con delirio místico', 'El paciente creyó que era el hijo de dios enviado para salvara la humanidad', 'Se receta antipsicóticos'),
+(6,  'Niño sano', 'Se presenta Diego con su hijo por chequeo mensual', ''),
+(7,  '', 'El paciente se presenta para controlar la medicación psiquiatrica', 'Se continúa con el tratamiento actual'),
+(11, 'Urticaria', 'Se presenta al turno con picazón', 'Se le receta crema sensicalm');
+GO
 -- Tabla CondicionesBase
 CREATE TABLE CondicionesBase (
     IdCondicion INT IDENTITY(1,1) PRIMARY KEY,
