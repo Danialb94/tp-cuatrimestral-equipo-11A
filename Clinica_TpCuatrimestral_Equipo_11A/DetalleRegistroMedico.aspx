@@ -18,7 +18,12 @@
                         <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control" ReadOnly="true" />
                     </div>
                 </div>
-
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Motivo de la consulta</label>
+                        <asp:TextBox ID="txtMotivo" runat="server" CssClass="form-control" ReadOnly="true" />
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Diagnóstico</label>
@@ -29,6 +34,14 @@
                         <asp:TextBox ID="txtObservacion" runat="server" CssClass="form-control"
                             TextMode="MultiLine" Rows="3" ReadOnly="true" />
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Tratamiento</label>
+                            <asp:TextBox ID="txtTratamiento" runat="server" CssClass="form-control"
+                                TextMode="MultiLine" Rows="3" ReadOnly="true" />
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="mt-4 d-flex gap-2">

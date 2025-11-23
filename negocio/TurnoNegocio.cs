@@ -219,6 +219,8 @@ namespace negocio
         }
 
 
+        //  MÉDICO – CONSULTAS Y REGISTRO CLÍNICO
+
         public List<Turno> ListarConsultasPorMedicoYPaciente(int idMedico, int idPaciente)
         {
             List<Turno> lista = new List<Turno>();
@@ -230,15 +232,18 @@ namespace negocio
                 SELECT 
                 T.IdTurno,
                 T.FechaTurno,
-                T.Diagnostico,
-                T.Observacion
-                FROM Turnos T
+                T.Motivo,
+                RC.IdRegistro,
+                RC.Diagnostico,
+                RC.Observacion,
+                RC.Tratamiento
+                FROM RegistroClinico RC
+                INNER JOIN Turnos T ON RC.IdTurno = T.IdTurno
                 INNER JOIN Estados E ON T.IdEstado = E.IdEstado
                 WHERE T.IdMedico = @idMedico 
                 AND T.IdPaciente = @idPaciente
                 AND E.Descripcion = 'Atendido'
-                ORDER BY T.FechaTurno DESC
-                ");
+                ORDER BY T.FechaTurno DESC");
 
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@idPaciente", idPaciente);
@@ -246,31 +251,28 @@ namespace negocio
 
                 while (datos.Lector.Read())
                 {
-                    Turno aux = new Turno();
-                    aux.IdTurno = (int)datos.Lector["IdTurno"]; // 🔹 ahora el GridView recibe el ID correcto
-                    aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
-                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value
-                        && !string.IsNullOrWhiteSpace(datos.Lector["Diagnostico"].ToString())
-                        ? datos.Lector["Diagnostico"].ToString()
-                        : "Sin diagnóstico registrado";
-                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value
-                        && !string.IsNullOrWhiteSpace(datos.Lector["Observacion"].ToString())
-                        ? datos.Lector["Observacion"].ToString()
-                        : "Sin observación registrada";
+                    Turno turno = new Turno();
+                    turno.IdTurno = (int)datos.Lector["IdTurno"];
+                    turno.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+                    turno.Motivo = datos.Lector["Motivo"].ToString();
 
-                    lista.Add(aux);
+                    turno.Registros = new List<RegistroClinico>();
+
+                    RegistroClinico reg = new RegistroClinico();
+                    reg.IdRegistro = (int)datos.Lector["IdRegistro"];
+                    reg.IdTurno = turno.IdTurno;
+                    reg.Diagnostico = datos.Lector["Diagnostico"]?.ToString();
+                    reg.Observacion = datos.Lector["Observacion"]?.ToString();
+                    reg.Tratamiento = datos.Lector["Tratamiento"]?.ToString();
+
+                    turno.Registros.Add(reg);
+
+                    lista.Add(turno);
                 }
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            finally { datos.cerrarConexion(); }
         }
 
 
@@ -278,62 +280,58 @@ namespace negocio
         public DateTime? ObtenerUltimaConsulta(int idPaciente, int idMedico)
         {
             AccesoDatos datos = new AccesoDatos();
+
             try
             {
                 datos.setearConsulta(@"
-                SELECT TOP 1 FechaTurno
-                FROM Turnos T
-                INNER JOIN Estados E ON T.IdEstado = E.IdEstado
-                WHERE T.IdPaciente = @idPaciente 
+                SELECT TOP 1 T.FechaTurno
+                FROM RegistroClinico RC
+                INNER JOIN Turnos T ON RC.IdTurno = T.IdTurno
+                WHERE T.IdPaciente = @idPaciente
                 AND T.IdMedico = @idMedico
-                AND E.Descripcion = 'Atendido'
-                ORDER BY FechaTurno DESC
-                ");
+                ORDER BY RC.IdRegistro DESC");
 
                 datos.setearParametro("@idPaciente", idPaciente);
                 datos.setearParametro("@idMedico", idMedico);
+
                 datos.ejecutarLectura();
 
-                return datos.Lector.Read() ? (DateTime?)datos.Lector["FechaTurno"] : null;
+                if (datos.Lector.Read())
+                {
+                    // Si querés usar la fecha del turno
+                    return (DateTime)datos.Lector["FechaTurno"];
+                }
+
+                return null;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            finally { datos.cerrarConexion(); }
         }
 
 
-        public void AgregarConsulta(Turno turno)
+
+        public void AgregarConsulta(int idTurno, RegistroClinico registro)
         {
             AccesoDatos datos = new AccesoDatos();
+
             try
             {
                 datos.setearConsulta(@"
-                UPDATE Turnos
-                SET Diagnostico = @Diagnostico,
-                Observacion = @Observacion,
-                IdEstado = (SELECT IdEstado FROM Estados WHERE Descripcion = 'Atendido')
-                WHERE IdTurno = @IdTurno");
+                INSERT INTO RegistroClinico (IdTurno, Diagnostico, Observacion, Tratamiento)
+                VALUES (@IdTurno, @Diagnostico, @Observacion, @Tratamiento);
+                UPDATE Turnos 
+                SET IdEstado = (SELECT IdEstado FROM Estados WHERE Descripcion = 'Atendido')
+                WHERE IdTurno = @IdTurno;");
 
-                datos.setearParametro("@Diagnostico", (object)turno.Diagnostico ?? DBNull.Value);
-                datos.setearParametro("@Observacion", (object)turno.Observacion ?? DBNull.Value);
-                datos.setearParametro("@IdTurno", turno.IdTurno);
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.setearParametro("@Diagnostico", (object)registro.Diagnostico ?? DBNull.Value);
+                datos.setearParametro("@Observacion", (object)registro.Observacion ?? DBNull.Value);
+                datos.setearParametro("@Tratamiento", (object)registro.Tratamiento ?? DBNull.Value);
 
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            finally { datos.cerrarConexion(); }
         }
+
 
         public int ObtenerTurnoDelDia(int idMedico, int idPaciente, DateTime fecha)
         {
@@ -345,26 +343,17 @@ namespace negocio
                 FROM Turnos
                 WHERE IdMedico = @idMedico
                 AND IdPaciente = @idPaciente
-                AND CONVERT(DATE, FechaTurno) = CONVERT(DATE, @fecha)
-        ");
+                AND CONVERT(DATE, FechaTurno) = CONVERT(DATE, @fecha)");
+
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@idPaciente", idPaciente);
                 datos.setearParametro("@fecha", fecha);
+
                 datos.ejecutarLectura();
 
-                if (datos.Lector.Read())
-                    return (int)datos.Lector["IdTurno"];
-                else
-                    return 0;
+                return datos.Lector.Read() ? (int)datos.Lector["IdTurno"] : 0;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            finally { datos.cerrarConexion(); }
         }
 
 
@@ -378,8 +367,7 @@ namespace negocio
                 SELECT 
                 T.IdTurno,
                 T.FechaTurno,
-                T.Diagnostico,
-                T.Observacion,
+                T.Motivo,
                 P.Nombre AS NombrePaciente,
                 P.Apellido AS ApellidoPaciente
                 FROM Turnos T
@@ -393,14 +381,10 @@ namespace negocio
                 if (datos.Lector.Read())
                 {
                     Turno aux = new Turno();
+
                     aux.IdTurno = (int)datos.Lector["IdTurno"];
                     aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
-                    aux.Diagnostico = datos.Lector["Diagnostico"] != DBNull.Value
-                        ? datos.Lector["Diagnostico"].ToString()
-                        : "";
-                    aux.Observacion = datos.Lector["Observacion"] != DBNull.Value
-                        ? datos.Lector["Observacion"].ToString()
-                        : "";
+                    aux.Motivo = datos.Lector["Motivo"].ToString();
 
                     aux.Paciente = new Paciente
                     {
@@ -413,19 +397,44 @@ namespace negocio
 
                 return null;
             }
-            catch (Exception ex)
+            finally { datos.cerrarConexion(); }
+        }
+
+        public RegistroClinico ObtenerRegistroPorTurno(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
             {
-                throw ex;
+                datos.setearConsulta(@"
+                SELECT TOP 1 *
+                FROM RegistroClinico
+                WHERE IdTurno = @IdTurno
+                ORDER BY IdRegistro DESC
+                ");
+
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return new RegistroClinico
+                    {
+                        IdRegistro = (int)datos.Lector["IdRegistro"],
+                        IdTurno = (int)datos.Lector["IdTurno"],
+                        Diagnostico = datos.Lector["Diagnostico"]?.ToString(),
+                        Observacion = datos.Lector["Observacion"]?.ToString(),
+                        Tratamiento = datos.Lector["Tratamiento"]?.ToString()
+                    };
+                }
+
+                return null;
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
-
-
-
-
 
 
 

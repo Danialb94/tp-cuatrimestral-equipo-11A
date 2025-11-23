@@ -60,7 +60,17 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         private void CargarConsultas(int idPaciente, int idMedico)
         {
             TurnoNegocio negocio = new TurnoNegocio();
-            gvConsultas.DataSource = negocio.ListarConsultasPorMedicoYPaciente(idMedico, idPaciente);
+            var consultas = negocio.ListarConsultasPorMedicoYPaciente(idMedico, idPaciente)
+                .Select(t => new {
+                    IdTurno = t.IdTurno,
+                    Fecha = t.FechaHora.ToString("dd/MM/yyyy"),
+                    Motivo = t.Motivo,
+                    Diagnostico = t.Registros.FirstOrDefault()?.Diagnostico,
+                    Observacion = t.Registros.FirstOrDefault()?.Observacion,
+                    Tratamiento = t.Registros.FirstOrDefault()?.Tratamiento
+                }).ToList();
+
+            gvConsultas.DataSource = consultas;
             gvConsultas.DataBind();
         }
 

@@ -10,8 +10,10 @@ namespace dominio
     public class RegistroClinico
     {
         public int IdRegistro { get; set; }
+        public int IdTurno { get; set; }
+
         public string Diagnostico { get; set; }
-        public string Observaciones { get; set; }
+        public string Observacion { get; set; }
         public string Tratamiento { get; set; }
     }
 }

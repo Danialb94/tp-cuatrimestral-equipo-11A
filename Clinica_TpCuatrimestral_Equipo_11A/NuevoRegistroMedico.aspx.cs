@@ -43,17 +43,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     return;
                 }
 
-                Turno turno = new Turno
+                RegistroClinico registro = new RegistroClinico
                 {
-                    IdTurno = idTurno,
-                    Medico = medico,
-                    Paciente = paciente,
-                    FechaHora = fecha,
                     Diagnostico = txtDiagnostico.Text,
-                    Observacion = txtObservacion.Text
+                    Observacion = txtObservacion.Text,
+                    Tratamiento = null 
                 };
 
-                negocio.AgregarConsulta(turno);
+                negocio.AgregarConsulta(idTurno, registro);
 
                 Response.Redirect("RegistroConsultaMedico.aspx", false);
             }

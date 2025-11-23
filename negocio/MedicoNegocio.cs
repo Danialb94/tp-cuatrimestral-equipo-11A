@@ -335,24 +335,32 @@ namespace negocio
         // ===================================================
         // Registrar diagnóstico y observación de un turno
         // ===================================================
-        public void RegistrarAtencion(int idTurno, string diagnostico, string observacion)
+        // ===============================================
+        // Registrar un nuevo registro clínico para un turno
+        // (Siempre INSERTA - nunca actualiza)
+        // ===============================================
+        public void RegistrarAtencion(int idTurno, string diagnostico, string observacion, string tratamiento)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta(@"
-                    UPDATE Turnos 
-                    SET Diagnostico = @Diagnostico,
-                        Observacion = @Observacion,
-                        IdEstado = 1  -- 1 = Atendido
-                    WHERE IdTurno = @IdTurno
-                ");
+                // Cree un nuevo registro clínico
+                datos.setearConsulta(@"INSERT INTO RegistroClinico (IdTurno, Diagnostico, Observacion, Tratamiento)
+                VALUES (@IdTurno, @Diagnostico, @Observacion, @Tratamiento)");
 
+                datos.setearParametro("@IdTurno", idTurno);
                 datos.setearParametro("@Diagnostico", diagnostico);
                 datos.setearParametro("@Observacion", observacion);
-                datos.setearParametro("@IdTurno", idTurno);
+                datos.setearParametro("@Tratamiento", tratamiento);
 
+                datos.ejecutarAccion();
+
+
+                // Actualizo el estado del turno a "Atendido"
+                datos = new AccesoDatos();
+                datos.setearConsulta(@" UPDATE Turnos SET IdEstado = 1  -- Atendido WHERE IdTurno = @IdTurno");
+                datos.setearParametro("@IdTurno", idTurno);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -364,6 +372,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
 
         // ===================================================
         // Buscar un médico por IdUsuario (para login)

@@ -51,10 +51,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
             txtPaciente.Text = turno.Paciente.Nombre + " " + turno.Paciente.Apellido;
             txtFecha.Text = turno.FechaHora.ToString("yyyy-MM-dd");
-            txtDiagnostico.Text = turno.Diagnostico;
-            txtObservacion.Text = turno.Observacion;
-        }
+            RegistroClinico registro = negocio.ObtenerRegistroPorTurno(idTurno);
 
+            if (registro != null)
+            {
+                txtDiagnostico.Text = registro.Diagnostico;
+                txtObservacion.Text = registro.Observacion;
+                txtTratamiento.Text = registro.Tratamiento;
+            }
+        }
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             HabilitarEdicion(true);
@@ -65,14 +70,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             try
             {
                 TurnoNegocio negocio = new TurnoNegocio();
-                Turno turno = new Turno
+                int idTurno = int.Parse(Request.QueryString["id"]);
+                RegistroClinico registro = new RegistroClinico
                 {
-                    IdTurno = int.Parse(Request.QueryString["id"]),
                     Diagnostico = txtDiagnostico.Text,
-                    Observacion = txtObservacion.Text
+                    Observacion = txtObservacion.Text,
+                    Tratamiento = txtTratamiento.Text
                 };
 
-                negocio.AgregarConsulta(turno); 
+                negocio.AgregarConsulta(idTurno, registro);
+
                 Response.Redirect("RegistroConsultaMedico.aspx", false);
             }
             catch
