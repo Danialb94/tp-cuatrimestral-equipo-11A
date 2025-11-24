@@ -48,6 +48,8 @@
                                 CssClass="table table-striped"
                                 OnRowCommand="dgvFechas_RowCommand">
                                 <Columns>
+                                    <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
+                                    <asp:BoundField HeaderText="Profesional" DataField="Medico" />
                                     <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
                                     <asp:BoundField HeaderText="Día de la Semana" DataField="DiaSemana" />
                                     <asp:BoundField HeaderText="Hora" DataField="Hora" />

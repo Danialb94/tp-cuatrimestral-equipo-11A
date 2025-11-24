@@ -9,7 +9,6 @@ namespace negocio
 {
     public class TurnoNegocio
     {
-
         public List<Turno> listarTurnos()
         {
             List<Turno> lista = new List<Turno>();
@@ -139,84 +138,6 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
-
-
-        /// PREUBAAAA
-
-        public List<Medico> listarMedicos()
-        {
-            List<Medico> lista = new List<Medico>();
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta(@"
-                     SELECT 
-                         M.IdMedico,
-                         P.Nombre,
-                         P.Apellido,
-                         P.Telefono,
-                         M.Matricula,
-                         E.Descripcion AS Especialidad,
-                         H.IdHorario,
-                         H.HorarioEntrada,
-                         H.HorarioSalida,
-                         H.DiaSemana
-                     FROM Medicos M
-                     INNER JOIN Personas P ON M.IdPersona = P.IdPersona
-                     INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
-                     INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
-                     INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
-                 ");
-
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    Medico aux = new Medico();
-                    aux.IdMedico = (int)datos.Lector["IdMedico"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Telefono = datos.Lector["Telefono"].ToString();
-                    aux.Matricula = (string)datos.Lector["Matricula"];
-
-
-                    Especialidad esp = new Especialidad();
-                    esp.Descripcion = (string)datos.Lector["Especialidad"];
-                    aux.Especialidades.Add(esp);
-
-                    Horario horario = new Horario();
-                    horario.IdHorario = (int)datos.Lector["IdHorario"];
-
-
-                    TimeSpan entrada = (TimeSpan)datos.Lector["HorarioEntrada"];
-                    TimeSpan salida = (TimeSpan)datos.Lector["HorarioSalida"];
-                    horario.HoraEntrada = entrada.Hours;
-                    horario.HoraSalida = salida.Hours;
-
-
-                    int dia = int.Parse(datos.Lector["DiaSemana"].ToString());
-                    string[] nombresDias = { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
-                    horario.DiasSemana.Add(nombresDias[dia % 7]);
-
-
-                    aux.Horario.Add(horario);
-                    lista.Add(aux);
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
 
         //  MÉDICO – CONSULTAS Y REGISTRO CLÍNICO
         public List<Turno> ListarConsultasPorMedicoYPaciente(int idMedico, int idPaciente)
@@ -440,7 +361,8 @@ namespace negocio
                 FROM Turnos
                 WHERE IdMedico = @idMedico
                 AND FechaTurno >= @fechaDesde
-                AND FechaTurno <= @fechaHasta");
+                AND FechaTurno <= @fechaHasta
+                AND IdEstado = '2'");
 
                 DateTime fechaDesde = fitlroFecha;
                 DateTime fechaHasta = fitlroFecha.AddDays(7);
@@ -502,6 +424,35 @@ namespace negocio
                 }
             }
             return turnosPosibles;
+        }
+
+        public void AgregarTurno(Turno turno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, Motivo, IdEstado, IdEspecialidad) 
+                VALUES (@IdPaciente, @IdMedico, @FechaTurno, @Motivo, @IdEstado, @IdEspecialidad)");
+
+                datos.setearParametro("@IdPaciente", turno.Paciente.IdPaciente);
+                datos.setearParametro("@IdMedico", turno.Medico.IdMedico);
+                datos.setearParametro("@FechaTurno", turno.FechaHora);
+                datos.setearParametro("@Motivo", (object)turno.Motivo ?? DBNull.Value);
+                datos.setearParametro("@IdEstado", 2);
+                datos.setearParametro("@IdEspecialidad", turno.Especialidad.IdEspecialidad);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al registrar el turno", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

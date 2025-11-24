@@ -19,6 +19,10 @@ namespace dominio
         public Turno()
         {
             Registros = new List<RegistroClinico>();
+            Especialidad = new Especialidad();
+            FechaHora = new DateTime();
+            Medico = new Medico();
+            Paciente = new Paciente();
         }
     }
 }

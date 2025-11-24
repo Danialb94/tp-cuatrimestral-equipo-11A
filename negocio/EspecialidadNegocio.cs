@@ -63,6 +63,32 @@ public class EspecialidadNegocio
             datos.cerrarConexion();
         }
     }
+    public int recuperarId(string especialidad)
+    {
+        AccesoDatos datos = new AccesoDatos();
+
+        try
+        {
+            datos.setearConsulta("SELECT IdEspecialidad FROM Especialidades WHERE Descripcion = @especialidad");
+            datos.setearParametro("@especialidad", especialidad);
+            datos.ejecutarLectura();
+
+            if (datos.Lector.Read())
+            {
+                return((int)datos.Lector["IdEspecialidad"]);
+            }
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            datos.cerrarConexion();
+        }
+    }
+
     public int duracionConsulta(string especialidad)
     {
         AccesoDatos datos = new AccesoDatos();

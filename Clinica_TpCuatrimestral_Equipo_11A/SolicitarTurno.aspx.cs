@@ -48,7 +48,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     {
                         int indice = listaEspecialidades.FindIndex(x => x == esp);
                         ddlEspecialidades.ClearSelection();
-                        ddlEspecialidades.Items[indice+1].Selected = true;
+                        ddlEspecialidades.Items[indice + 1].Selected = true;
+                        cargaProfesionales();
                     }
                     //CARGA DDL MEDICO
                     int idMedico = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
@@ -63,11 +64,12 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     }
 
                     if (esp == "" && idMedico == 0) visualInicio();
-                    else {
+                    else
+                    {
                         visualCambioProf();
                         cargarTurnosLibres();
                     }
-                    
+
                 }
                 else
                 {
@@ -104,6 +106,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         }
 
         protected void ddlEspecialidades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cargaProfesionales();
+        }
+
+        private void cargaProfesionales()
         {
             List<Medico> listaFiltrada = (List<Medico>)Session["ListaMedicosCompleta"];
             string especialidadSeleccionada = ddlEspecialidades.SelectedValue;
@@ -150,7 +157,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     Fecha = t.ToString("dd/MM/yyyy"),
                     DiaSemana = t.ToString("dddd", new System.Globalization.CultureInfo("es-ES")),
                     Hora = t.ToString("HH:mm"),
-                    FechaCompleta = t // Por si necesitas el DateTime completo después
+                    Especialidad = ddlEspecialidades.SelectedValue,
+                    Medico = ddlProfesionales.SelectedItem.Text,
+                    FechaCompleta = t
                 }).ToList();
 
                 dgvFechas.DataSource = turnosFormateados;
@@ -170,7 +179,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
 
         /// VISUALES
-
         public void visualInicio()
         {
             CampoProfesional.Visible = false;
@@ -190,8 +198,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             CampoMotivo.Visible = true;
             CampoDias.Visible = true;
         }
-
         ///---------------------------------///
+        ///
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             try
@@ -231,7 +239,37 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
-            //ALTA TURNO
+            try
+            {
+                Turno turno = new Turno();
+                EspecialidadNegocio neg = new EspecialidadNegocio();
+
+                Paciente paciente = (Paciente)Session["paciente"];
+                turno.Paciente = paciente;
+                turno.Especialidad.IdEspecialidad = neg.recuperarId(ddlEspecialidades.SelectedValue);
+                turno.Medico.IdMedico = int.Parse(ddlProfesionales.SelectedValue);
+                string[] partesFecha = FechaSeleccionada.Split('/');
+                string[] partesHora = HoraSeleccionada.Split(':');
+                DateTime fechaHora = new DateTime(
+                    int.Parse(partesFecha[2]), // año
+                    int.Parse(partesFecha[1]), // mes
+                    int.Parse(partesFecha[0]), // día
+                    int.Parse(partesHora[0]),  // hora
+                    int.Parse(partesHora[1]),  // minuto
+                    0                          // segundo
+                );
+                turno.FechaHora = fechaHora;
+                turno.Motivo = txtMotivoConsulta.Text;
+
+                TurnoNegocio negocio = new TurnoNegocio();
+                negocio.AgregarTurno(turno);
+                Response.Redirect("InicioPaciente.aspx");
+            }
+            catch
+            {
+                return;
+            }
+            
         }
     }
 }
