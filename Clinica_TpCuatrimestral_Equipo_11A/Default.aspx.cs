@@ -32,7 +32,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     {
                         usuario.IdUsuario = logueo;
                         Session["UsuarioTemporal"] = usuario;
-                      
+                        Session["emailRecuperar"] = usuario.Email;
+
+
                         Response.Redirect("ReestablecerPass.aspx", false);
                         return; 
                     }

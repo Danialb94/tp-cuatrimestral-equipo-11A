@@ -22,31 +22,44 @@
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo1" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo1" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
+
 
                 <asp:TextBox ID="txtCodigo2" runat="server" MaxLength="1"
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo2" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo2" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
                 <asp:TextBox ID="txtCodigo3" runat="server" MaxLength="1"
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo3" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo3" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
                 <asp:TextBox ID="txtCodigo4" runat="server" MaxLength="1"
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo4" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo4" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
                 <asp:TextBox ID="txtCodigo5" runat="server" MaxLength="1"
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo5" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo5" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
                 <asp:TextBox ID="txtCodigo6" runat="server" MaxLength="1"
                     CssClass="form-control text-center shadow-sm"
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtCodigo6" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="Debe ingresar un número del 0 al 9" ControlToValidate="txtCodigo6" ValidationExpression="^\d$" Display="Dynamic" CssClass="text-danger" runat="server" />
             </div>
             <asp:Label ID="lblError" runat="server"
                 CssClass="text-danger text-center d-block mb-2"
