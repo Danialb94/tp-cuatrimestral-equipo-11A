@@ -31,8 +31,22 @@
                 <div class="card shadow-sm border-0 mt-2" id="CampoDias" runat="server">
                     <div class="card-body">
                         <div class="col">
-                            <h5 class="fw-bold mb-2">Dias disponibles</h5>
-                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false" CssClass="table table-striped">
+                            <div>
+                                <h5 class="fw-bold mb-2">Dias disponibles</h5>
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold me-3">Seleccionar fecha:</span>
+                                    <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control w-auto" />
+                                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary ms-3" OnClick="btnBuscar_Click" />
+
+                                </div>
+                                <div class="mb-3">
+                                    <asp:Label Text="" runat="server" ID="aviso" class="text-danger"/>
+
+                                </div>
+                            </div>
+                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false"
+                                CssClass="table table-striped"
+                                OnRowCommand="dgvFechas_RowCommand">
                                 <Columns>
                                     <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
                                     <asp:BoundField HeaderText="Día de la Semana" DataField="DiaSemana" />
@@ -40,14 +54,11 @@
 
                                     <asp:TemplateField HeaderText="Acción">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="btnSeleccionar"
-                                                runat="server"
+                                            <asp:LinkButton ID="btnSeleccionar" runat="server"
                                                 CssClass="btn btn-sm btn-primary"
                                                 Text="Seleccionar"
                                                 CommandName="SeleccionarTurno"
-                                                CommandArgument='<%# Eval("FechaCompleta") %>'
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
+                                                CommandArgument='<%# Eval("FechaCompleta") %>'>
                                             </asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -60,19 +71,34 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Turno</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar el Turno</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                El turno se asignó con éxito!
+                                <p><strong>Especialidad:</strong> <%: ddlEspecialidades.SelectedItem != null ? ddlEspecialidades.SelectedItem.Text : "" %></p>
+                                <p><strong>Profesional:</strong> <%: ddlProfesionales.SelectedItem != null ? ddlProfesionales.SelectedItem.Text : "" %></p>
+                                <p><strong>Fecha:</strong> <%: FechaSeleccionada ?? "" %></p>
+                                <p><strong>Día:</strong> <%: DiaSeleccionado ?? "" %></p>
+                                <p><strong>Hora:</strong> <%: HoraSeleccionada ?? "" %></p>
+                                <p><strong>Motivo:</strong> <%: txtMotivoConsulta.Text %></p>
                             </div>
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-primary" href="InicioPaciente.aspx">OK</a>
+                                <button type="button" class="border-dark-subtle btn" data-bs-dismiss="modal">Cancelar</button>
+                                <asp:Button ID="btnConfirmarTurno" runat="server"
+                                    Text="Confirmar Turno"
+                                    CssClass="btn btn-primary"
+                                    OnClick="btnConfirmarTurno_Click" />
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+        <script>
+            function abrirModal() {
+                var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                modal.show();
+                return false;
+            }
+        </script>
 </asp:Content>

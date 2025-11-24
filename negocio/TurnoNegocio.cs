@@ -428,7 +428,7 @@ namespace negocio
             }
         }
 
-        public List<DateTime> ConsultarTurnosLibres(int idMedico, string especialidad)
+        public List<DateTime> ConsultarTurnosLibres(int idMedico, string especialidad, DateTime fitlroFecha)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -442,8 +442,8 @@ namespace negocio
                 AND FechaTurno >= @fechaDesde
                 AND FechaTurno <= @fechaHasta");
 
-                DateTime fechaDesde = DateTime.Now;
-                DateTime fechaHasta = DateTime.Now.AddDays(7);
+                DateTime fechaDesde = fitlroFecha;
+                DateTime fechaHasta = fitlroFecha.AddDays(7);
 
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@fechaDesde", fechaDesde);

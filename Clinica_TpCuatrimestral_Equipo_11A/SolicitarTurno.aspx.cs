@@ -13,6 +13,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
         List<string> listaEspecialidades { get; set; }
         List<Medico> listaMedicos;
+        public string FechaSeleccionada { get; set; }
+        public string HoraSeleccionada { get; set; }
+        public string DiaSeleccionado { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             EspecialidadNegocio negocioEsp = new EspecialidadNegocio();
@@ -36,6 +39,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                     ItemsporDefectoEsp();
                     ItemsporDefectoProf();
+                    txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
                     //CARGA SI VIENE DESDE CARTILLA
                     //CARGA DDL ESPECIALIDADES
@@ -63,7 +67,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                         visualCambioProf();
                         cargarTurnosLibres();
                     }
-                    ;
+                    
+                }
+                else
+                {
+                    if (ViewState["FechaSeleccionada"] != null)
+                    {
+                        FechaSeleccionada = ViewState["FechaSeleccionada"].ToString();
+                        HoraSeleccionada = ViewState["HoraSeleccionada"].ToString();
+                        DiaSeleccionado = ViewState["DiaSeleccionado"].ToString();
+                    }
                 }
             }
             catch (Exception ex)
@@ -126,7 +139,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             List<Medico> listaMedicos = (List<Medico>)Session["ListaMedicosCompleta"];
             Medico medicoSeleccionado = listaMedicos.Find(x => x.IdMedico == idMedicoSeleccionado);
             TurnoNegocio negocio = new TurnoNegocio();
-            List<DateTime> turnosLibres = negocio.ConsultarTurnosLibres(idMedicoSeleccionado, ddlEspecialidades.SelectedValue);
+            List<DateTime> turnosLibres = negocio.ConsultarTurnosLibres(idMedicoSeleccionado, ddlEspecialidades.SelectedValue, DateTime.Parse(txtFecha.Text));
 
 
             if (turnosLibres != null && turnosLibres.Count > 0)
@@ -169,6 +182,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             CampoProfesional.Visible = true;
             CampoMotivo.Visible = false;
             CampoDias.Visible = false;
+            txtMotivoConsulta.Text = "";
         }
         public void visualCambioProf()
         {
@@ -177,5 +191,47 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             CampoDias.Visible = true;
         }
 
+        ///---------------------------------///
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                aviso.Text = "";
+                if (DateTime.Parse(txtFecha.Text) < DateTime.Now)
+                {
+                    txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                }
+                cargarTurnosLibres();
+            }
+            catch
+            {
+                aviso.Text = "* No se pudo leer la fecha ingresada";
+                return;
+            }
+        }
+
+        protected void dgvFechas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            // Obtener la fecha completa del CommandArgument
+            DateTime fechaCompleta = DateTime.Parse(e.CommandArgument.ToString());
+
+            // Guardar en ViewState para mantener los valores
+            FechaSeleccionada = fechaCompleta.ToString("dd/MM/yyyy");
+            HoraSeleccionada = fechaCompleta.ToString("HH:mm");
+            DiaSeleccionado = fechaCompleta.ToString("dddd", new System.Globalization.CultureInfo("es-ES"));
+
+            ViewState["FechaSeleccionada"] = FechaSeleccionada;
+            ViewState["HoraSeleccionada"] = HoraSeleccionada;
+            ViewState["DiaSeleccionado"] = DiaSeleccionado;
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "abrirModal",
+            "var modal = new bootstrap.Modal(document.getElementById('exampleModal')); modal.show();",
+            true);
+        }
+
+        protected void btnConfirmarTurno_Click(object sender, EventArgs e)
+        {
+            //ALTA TURNO
+        }
     }
 }
