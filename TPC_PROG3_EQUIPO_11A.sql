@@ -380,3 +380,13 @@ INSERT INTO PacientesAlergias (IdPaciente, IdAlergia) VALUES
 (4,2); -- Latex - Fernando Castro
 GO
 
+SELECT FechaTurno
+FROM Turnos
+WHERE IdMedico = 3
+AND FechaTurno >= '2025-11-24'
+AND FechaTurno <= '2025-12-30'
+GO
+SELECT *
+FROM Turnos
+WHERE IdMedico = 3
+

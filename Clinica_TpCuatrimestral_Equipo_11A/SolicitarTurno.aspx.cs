@@ -59,7 +59,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     }
 
                     if (esp == "" && idMedico == 0) visualInicio();
-                    else visualCambioProf();
+                    else {
+                        visualCambioProf();
+                        cargarTurnosLibres();
+                    }
+                    ;
                 }
             }
             catch (Exception ex)
@@ -112,6 +116,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void ddlProfesionales_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cargarTurnosLibres();
+        }
+
+        private void cargarTurnosLibres()
+        {
             if (ddlProfesionales.SelectedValue == "0" || string.IsNullOrEmpty(ddlProfesionales.SelectedValue)) return;
             int idMedicoSeleccionado = int.Parse(ddlProfesionales.SelectedValue);
             List<Medico> listaMedicos = (List<Medico>)Session["ListaMedicosCompleta"];
@@ -147,7 +156,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         }
 
 
-
         /// VISUALES
 
         public void visualInicio()
@@ -155,24 +163,18 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             CampoProfesional.Visible = false;
             CampoMotivo.Visible = false;
             CampoDias.Visible = false;
-            CampoHorarios.Visible = false;
-            Botones.Visible = false;
         }
         public void visualCambioEsp()
         {
             CampoProfesional.Visible = true;
             CampoMotivo.Visible = false;
             CampoDias.Visible = false;
-            CampoHorarios.Visible = false;
-            Botones.Visible = false;
         }
         public void visualCambioProf()
         {
             CampoProfesional.Visible = true;
             CampoMotivo.Visible = true;
             CampoDias.Visible = true;
-            CampoHorarios.Visible = false;
-            Botones.Visible = false;
         }
 
     }
