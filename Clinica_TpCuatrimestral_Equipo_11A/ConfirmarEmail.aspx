@@ -48,11 +48,24 @@
                     Style="width: 45px; height: 50px; border-radius: 8px; border: 1px solid #dee2e6; font-size: 1.25rem;">
                 </asp:TextBox>
             </div>
+            <asp:Label ID="lblError" runat="server"
+                CssClass="text-danger text-center d-block mb-2"
+                Visible="false">
+            </asp:Label>
+
             <asp:Button ID="btnSubmit" Text="Confirmar correo electrónico" CssClass="btn btn-primary w-100" runat="server" OnClick="btnSubmit_Click" />
+            <asp:Label ID="LabelError2" runat="server"
+                Text=""
+                CssClass="text-danger text-center d-block mt-2"
+                Visible="false"></asp:Label>
 
             <div class="text-center mt-3">
                 <span class="text-muted">¿No recibiste el código?</span>
-                <a href="#" class="text-decoration-none fw-bold">Reenviar</a>
+                <asp:LinkButton ID="lnkReenviar" runat="server"
+                    CssClass="text-decoration-none fw-bold"
+                    OnClick="lnkReenviar_Click">
+                    Reenviar
+                </asp:LinkButton>
             </div>
             <div class="text-center mt-3">
                 <a href="Default.aspx" class="text-decoration-none">Volver al inicio</a>

@@ -17,17 +17,24 @@
             <div class="mb-3">
                 <div class="form-text">Por razones de seguridad, debés establecer una nueva contraseña para tu cuenta.</div>
                 <label for="txtPassword" class="form-label">Nueva contraseña</label>
-                <asp:TextBox ID="txtNewPassword" CssClass="form-control" placeholder="Ingresa la nueva contraseña" TextMode="Password" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtNewPassword" CssClass="form-control" placeholder="Ingresa la nueva contraseña" TextMode="Password" runat="server" oninput="verificarPasswordNueva()"></asp:TextBox>
+                <asp:RequiredFieldValidator ErrorMessage="La contraseña es obligatoria" ControlToValidate="txtNewPassword" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtNewPassword" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="No cumple con los requisitos" ControlToValidate="txtNewPassword" ValidationExpression="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
             </div>
 
             <div class="mb-3">
                 <label for="txtPassword" class="form-label">Nueva contraseña</label>
-                <asp:TextBox ID="txtPassword" CssClass="form-control" placeholder="Ingresa la nueva contraseña" TextMode="Password" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtConfirmPassword" CssClass="form-control" placeholder="Ingresa la nueva contraseña" TextMode="Password" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ErrorMessage="La contraseña es obligatoria" ControlToValidate="txtConfirmPassword" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtConfirmPassword" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                <asp:RegularExpressionValidator ErrorMessage="No cumple con los requisitos" ControlToValidate="txtConfirmPassword" ValidationExpression="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
             </div>
-            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+            <asp:Label ID="lblError" CssClass="text-danger mt-2" Visible="false" runat="server"></asp:Label>
+            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%"></div>
             </div>
             <div class="row mt-3">
                 <div class="col-6">
@@ -63,4 +70,24 @@
             <div class="text-center mt-3">
                 <a href="Default.aspx" class="text-decoration-none">Volver al inicio</a>
             </div>
+
+            <script>
+                function verificarPasswordNueva() {
+                    const pass = document.getElementById("<%= txtNewPassword.ClientID %>").value;
+                    const chk8 = document.getElementById("inlineCheckbox1");
+                    const chkNum = document.getElementById("inlineCheckbox2");
+                    const chkMayus = document.getElementById("inlineCheckbox3");
+                    const chkEspecial = document.getElementById("inlineCheckbox4");
+                    const bar = document.querySelector(".progress-bar");
+
+                    let score = 0;
+
+                    if (pass.length >= 8) { chk8.checked = true; score++; } else chk8.checked = false;
+                    if (/\d/.test(pass)) { chkNum.checked = true; score++; } else chkNum.checked = false;
+                    if (/[A-Z]/.test(pass)) { chkMayus.checked = true; score++; } else chkMayus.checked = false;
+                    if (/[^A-Za-z0-9]/.test(pass)) { chkEspecial.checked = true; score++; } else chkEspecial.checked = false;
+
+                    bar.style.width = (score / 4) * 100 + "%";
+                }
+            </script>
 </asp:Content>

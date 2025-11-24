@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AccesoDatos.cs" />
     <Compile Include="CoberturaNegocio.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="EspecialidadNegocio.cs" />
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="MedicoNegocio.cs" />

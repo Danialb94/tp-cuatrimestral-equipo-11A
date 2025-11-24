@@ -27,6 +27,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 //-3 - el usuario fue dado de baja
                 if (logueo != -1)
                 {
+                    UsuarioNegocio negTemp = new UsuarioNegocio();
+                    if (negTemp.EsClaveTemporal(usuario.Contrasenia))
+                    {
+                        usuario.IdUsuario = logueo;
+                        Session["UsuarioTemporal"] = usuario;
+                      
+                        Response.Redirect("ReestablecerPass.aspx", false);
+                        return; 
+                    }
+
                     //cargamos el id usuario en la sesion
                     usuario.IdUsuario = logueo;
                     Session.Add("usuario", usuario);

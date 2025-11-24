@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -143,6 +144,89 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool EsClaveTemporal(string clave)
+        {
+            return clave.Length == 6 && clave.All(char.IsDigit);
+        }
+
+        private void EnviarClaveTemporal(string emailDestino, string clave)
+        {
+            EmailService email = new EmailService("programacionpruebamail@gmail.com", "wnzlnohczkdzlbas");
+
+            email.ArmarCorreoPassTemporal(emailDestino, clave);
+            email.EnviarCorreo();
+        }
+
+
+
+
+        public string GenerarClaveTemporal()
+        {
+            Random rnd = new Random();
+            return rnd.Next(100000, 999999).ToString();
+        }
+
+        public void AsignarClaveTemporal(string email)
+        {
+            string claveTemp = GenerarClaveTemporal();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Contrasenia = @clave WHERE Email = @mail");
+                datos.setearParametro("@clave", claveTemp);
+                datos.setearParametro("@mail", email);
+                datos.ejecutarAccion();
+
+                EnviarClaveTemporal(email, claveTemp);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public string ObtenerContrasenia(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT Contrasenia FROM Usuarios WHERE Email = @mail");
+                datos.setearParametro("@mail", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return datos.Lector["Contrasenia"].ToString();
+
+                return null;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void CambiarContrasenia(string email, string nuevaPass)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET Contrasenia = @pass WHERE Email = @mail");
+                datos.setearParametro("@pass", nuevaPass);
+                datos.setearParametro("@mail", email);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
     }
 }
