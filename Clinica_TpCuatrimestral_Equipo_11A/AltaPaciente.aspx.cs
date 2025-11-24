@@ -67,9 +67,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 nuevo.FechaNacimiento = DateTime.Parse(txtNacimiento.Text);
                 nuevo.Telefono = txtTelefono.Text;
 
+                string claveTemporal = usuarioNeg.GenerarClaveTemporal();
+
                 nuevo.Usuario = new Usuario();
                 nuevo.Usuario.Email = txtEmail.Text;
-                nuevo.Usuario.Contrasenia = "1234";
+                nuevo.Usuario.Contrasenia = claveTemporal;
                 nuevo.Usuario.Permiso = new Permiso() { IdPermiso = 4 };
 
                 nuevo.TipoDocumento = new TipoDocumento();
@@ -80,6 +82,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                 RecepcionistaNegocio negocio = new RecepcionistaNegocio();
                 negocio.altaPacienteRecepcionista(nuevo);
+
+                EmailService emailService = new EmailService("programacionpruebamail@gmail.com", "wnzlnohczkdzlbas");
+                emailService.EnviarClaveBienvenida(nuevo.Usuario.Email, nuevo.Nombre, nuevo.Apellido, claveTemporal);
 
                 Response.Redirect("PacientesRecepcionista.aspx", false);
             }

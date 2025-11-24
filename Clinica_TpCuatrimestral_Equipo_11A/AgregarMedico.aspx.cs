@@ -46,12 +46,20 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             if (!Page.IsValid)
                 return;
 
+            UsuarioNegocio usuarioNeg = new UsuarioNegocio();
+
             Medico nuevo = new Medico();
             nuevo.Nombre = txtNombre.Text;
             nuevo.Apellido = txtApellido.Text;
             nuevo.Telefono = txtTelefono.Text;
             nuevo.Matricula = txtMatricula.Text;
-            nuevo.Usuario = new Usuario { Email = txtEmail.Text, Contrasenia = txtNombre.Text, Permiso = new Permiso { IdPermiso = 2 } };
+
+            string claveTemporal = usuarioNeg.GenerarClaveTemporal();
+
+            nuevo.Usuario = new Usuario();
+            nuevo.Usuario.Email = txtEmail.Text;
+            nuevo.Usuario.Contrasenia = claveTemporal;
+            nuevo.Usuario.Permiso = new Permiso() { IdPermiso = 2 };
             nuevo.Especialidades = new List<Especialidad> {
         new Especialidad { IdEspecialidad = int.Parse(lstEspecialidades.SelectedValue) }
     };
@@ -80,6 +88,10 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 }
             }
             negocio.AgregarMedico(nuevo, diasSeleccionados, franjaHoraria);
+
+
+            EmailService emailService = new EmailService("programacionpruebamail@gmail.com", "wnzlnohczkdzlbas");
+            emailService.EnviarClaveBienvenidaMedico(nuevo.Usuario.Email, nuevo.Nombre, nuevo.Apellido, claveTemporal);
 
             Response.Redirect("MedicosRecepcionista.aspx", false);
         }

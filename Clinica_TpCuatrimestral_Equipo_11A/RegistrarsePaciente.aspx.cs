@@ -83,8 +83,10 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                     PacienteNegocio negocio = new PacienteNegocio();
                     negocio.RegistrarPaciente(nuevo);
+                EmailService emailService = new EmailService("programacionpruebamail@gmail.com", "wnzlnohczkdzlbas");
+                emailService.EnviarCorreoBienvenida(nuevo.Usuario.Email, nuevo.Nombre, nuevo.Apellido);
 
-                    Response.Redirect("Default.aspx", false);
+                Response.Redirect("Default.aspx", false);
                 
             }
             catch (Exception ex)
