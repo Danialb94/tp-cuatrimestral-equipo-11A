@@ -23,15 +23,6 @@
                         <asp:BoundField DataField="Medico" HeaderText="Medico" />
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <%--<button type="button" 
-                                    ID="BotonCancelar"
-                                    class="btn btn-primary" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#exampleModal"
-                                    OnClick="btnCancelar_Click"
-                                    CommandArgument='<%# Eval("Id") %>'>
-                                    Cancelar Turno
-                                </button>--%>
                                 <button type="button"
                                     class="btn btn-primary"
                                     onclick="abrirModal(<%# Eval("Id") %>)">

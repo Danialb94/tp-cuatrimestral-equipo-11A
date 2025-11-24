@@ -90,8 +90,10 @@ namespace negocio
                 INNER JOIN Especialidades ESP ON T.IdEspecialidad = ESP.IdEspecialidad
                 WHERE PA.IdPaciente = @IdPaciente
                 AND E.Descripcion = 'Pendiente'
+                AND FechaTurno >= @fechaDesde
                 ORDER BY t.FechaTurno ASC");
                 datos.setearParametro("@IdPaciente", IdPaciente);
+                datos.setearParametro("@fechaDesde", DateTime.Now);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
