@@ -19,5 +19,10 @@ namespace dominio
             Horario = new List<Horario>();
             Imagen = new Imagen();
         }
+
+        public string NombreCompleto
+        {
+            get { return Nombre + ", " + Apellido; }
+        }
     }
 }

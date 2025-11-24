@@ -12,23 +12,23 @@
                     <div class="card-body">
                         <div class="justify-content-between mb-3">
                             <h5 class="fw-bold mb-2">Especialidad</h5>
-                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100">
+                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm border-0 mt-2">
+                <div class="card shadow-sm border-0 mt-2" id="CampoProfesional" runat="server">
                     <div class="card-body">
                         <div class="justify-content-between mb-3">
                             <h5 class="fw-bold mb-2">Profesional</h5>
-                            <asp:DropDownList ID="ddlProfesionales" runat="server" class="border-dark-subtle rounded-3 w-100">
+                            <asp:DropDownList ID="ddlProfesionales" runat="server" class="border-dark-subtle rounded-3 w-100" OnSelectedIndexChanged="ddlProfesionales_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
                         </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm border-0 mt-2">
+                <div class="card shadow-sm border-0 mt-2" id="CampoMotivo" runat="server">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Motivo de la consulta:</label>
@@ -38,11 +38,11 @@
                 </div>
 
 
-                <div class="card shadow-sm border-0 mt-2">
+                <div class="card shadow-sm border-0 mt-2" id="CampoDias" runat="server">
                     <div class="card-body">
                         <div class="col">
                             <h5 class="fw-bold mb-2">Dias disponibles</h5>
-                            <table class="table align-middle table-hover">
+                            <%--<table class="table align-middle table-hover">
                                 <thead class="table-light">
                                     <tr>
                                         <th>Fecha</th>
@@ -78,8 +78,8 @@
                                     </tr>
 
                                 </tbody>
-                            </table>
-                            <%--<asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false">
+                            </table>--%>
+                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false">
                                 <Columns>
                                     <asp:BoundField headertext="Fecha" DataField="FechaHora.Date"/>
                                     
@@ -87,12 +87,11 @@
                                     
                                     <asp:BoundField headertext="Fecha" DataField="Medico"/>
                                 </Columns>
-                            </asp:GridView>--%>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card shadow-sm border-0 mt-2 col">
+            <div class="card shadow-sm border-0 mt-2 col" id="CampoHorarios" runat="server">
                 <div class="card-body">
                     <div class="justify-content-between mb-3">
                         <h5 class="fw-bold mb-2">Horarios Disponibles</h5>
@@ -128,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end mt-3">
+            <div class="d-flex justify-content-end mt-3" id="Botones" runat="server">
                 <a href="InicioPaciente.aspx" class="btn btn-secondery border-black me-2" style="width: 100px;">Volver</a>
                 <button type="button" class="btn btn-primary" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Turno</button>
             </div>

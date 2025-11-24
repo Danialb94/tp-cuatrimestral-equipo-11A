@@ -119,7 +119,6 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
         public void CancelarxPaciente(int idTurno)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -220,7 +219,6 @@ namespace negocio
 
 
         //  MÉDICO – CONSULTAS Y REGISTRO CLÍNICO
-
         public List<Turno> ListarConsultasPorMedicoYPaciente(int idMedico, int idPaciente)
         {
             List<Turno> lista = new List<Turno>();
@@ -275,8 +273,6 @@ namespace negocio
             finally { datos.cerrarConexion(); }
         }
 
-
-
         public DateTime? ObtenerUltimaConsulta(int idPaciente, int idMedico)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -307,8 +303,6 @@ namespace negocio
             finally { datos.cerrarConexion(); }
         }
 
-
-
         public void AgregarConsulta(int idTurno, RegistroClinico registro)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -332,7 +326,6 @@ namespace negocio
             finally { datos.cerrarConexion(); }
         }
 
-
         public int ObtenerTurnoDelDia(int idMedico, int idPaciente, DateTime fecha)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -355,7 +348,6 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
-
 
         public Turno ObtenerPorId(int idTurno)
         {
