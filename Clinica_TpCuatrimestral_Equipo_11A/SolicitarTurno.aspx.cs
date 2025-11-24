@@ -12,7 +12,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     public partial class SolicitarTurno : System.Web.UI.Page
     {
         List<string> listaEspecialidades { get; set; }
-        List<Medico> listaMedicos { get; set; }
+        List<Medico> listaMedicos;
         protected void Page_Load(object sender, EventArgs e)
         {
             EspecialidadNegocio negocioEsp = new EspecialidadNegocio();
@@ -110,16 +110,46 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             visualCambioEsp();
         }
 
-        //protected void ddlProfesionales_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    dgvFechas.DataSource = listaMedicos = listaMedicos.FindAll(x =>
-        //            x.IdMedico.Any(int => int == especialidadSeleccionada));
-        //}
+        protected void ddlProfesionales_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlProfesionales.SelectedValue == "0" || string.IsNullOrEmpty(ddlProfesionales.SelectedValue)) return;
+            int idMedicoSeleccionado = int.Parse(ddlProfesionales.SelectedValue);
+            List<Medico> listaMedicos = (List<Medico>)Session["ListaMedicosCompleta"];
+            Medico medicoSeleccionado = listaMedicos.Find(x => x.IdMedico == idMedicoSeleccionado);
+            TurnoNegocio negocio = new TurnoNegocio();
+            List<DateTime> turnosLibres = negocio.ConsultarTurnosLibres(idMedicoSeleccionado, ddlEspecialidades.SelectedValue);
+
+
+            if (turnosLibres != null && turnosLibres.Count > 0)
+            {
+                // Formatear los turnos para el GridView
+                var turnosFormateados = turnosLibres.Select(t => new
+                {
+                    Fecha = t.ToString("dd/MM/yyyy"),
+                    DiaSemana = t.ToString("dddd", new System.Globalization.CultureInfo("es-ES")),
+                    Hora = t.ToString("HH:mm"),
+                    FechaCompleta = t // Por si necesitas el DateTime completo después
+                }).ToList();
+
+                dgvFechas.DataSource = turnosFormateados;
+                dgvFechas.DataBind();
+            }
+            else
+            {
+                // No hay turnos disponibles
+                dgvFechas.DataSource = null;
+                dgvFechas.DataBind();
+                // Opcional: mostrar mensaje
+                // lblMensaje.Text = "No hay turnos disponibles";
+            }
+
+            visualCambioProf();
+        }
 
 
 
         /// VISUALES
-        
+
         public void visualInicio()
         {
             CampoProfesional.Visible = false;

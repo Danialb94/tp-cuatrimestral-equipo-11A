@@ -428,9 +428,81 @@ namespace negocio
             }
         }
 
+        public List<DateTime> ConsultarTurnosLibres(int idMedico, string especialidad)
+        {
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                ///TURNOS OCUPADOS en los proximos 7 días
+                datos.setearConsulta(@"
+                SELECT FechaTurno
+                FROM Turnos
+                WHERE IdMedico = @idMedico
+                AND FechaTurno >= @fechaDesde
+                AND FechaTurno <= @fechaHasta");
 
+                DateTime fechaDesde = DateTime.Now;
+                DateTime fechaHasta = DateTime.Now.AddDays(7);
+
+                datos.setearParametro("@idMedico", idMedico);
+                datos.setearParametro("@fechaDesde", fechaDesde);
+                datos.setearParametro("@fechaHasta", fechaHasta);
+                datos.ejecutarLectura();
+
+                List<DateTime> turnosTomados = new List<DateTime>();
+                while (datos.Lector.Read())
+                {
+                    turnosTomados.Add((DateTime)datos.Lector["FechaTurno"]);
+                }
+
+                //GENERA TODOS LOS TURNOS POSIBLES
+                List<DateTime> turnosPosibles = GenerarTurnosPosibles(fechaDesde, fechaHasta, idMedico, especialidad);
+
+                //FILTRA TURNOS OCUPADOS
+                List<DateTime> turnosLibres = turnosPosibles
+                .Where(turno => !turnosTomados.Any(tomado =>
+                    tomado.Year == turno.Year &&
+                    tomado.Month == turno.Month &&
+                    tomado.Day == turno.Day &&
+                    tomado.Hour == turno.Hour &&
+                    tomado.Minute == turno.Minute))
+                .ToList();
+                return turnosLibres;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener turnos libres", ex);
+            }
+            finally { datos.cerrarConexion(); }
+        }
+
+        private List<DateTime> GenerarTurnosPosibles(DateTime fechaDesde, DateTime fechaHasta, int idMedico, string especialidad)
+        {
+            List<DateTime> turnosPosibles = new List<DateTime>();
+            MedicoNegocio negocio = new MedicoNegocio();
+            Horario horario = negocio.HorariosPorEspecialidadNúmero(idMedico, especialidad);
+            for (DateTime fecha = fechaDesde.Date; fecha <= fechaHasta.Date; fecha = fecha.AddDays(1))
+            {
+                for (int i = 0; i < horario.DiasSemana.Count(); i++)
+                {
+                    if (fecha.DayOfWeek == (DayOfWeek)int.Parse(horario.DiasSemana[i]))
+                    {
+                        EspecialidadNegocio negocioEsp = new EspecialidadNegocio();
+                        Medico medico = negocio.ListarMedico(idMedico);
+                        TimeSpan horarioPosible = TimeSpan.FromHours(medico.Horario[0].HoraEntrada);
+
+                        while (horarioPosible < TimeSpan.FromHours(medico.Horario[0].HoraSalida))
+                        {
+                            DateTime turno = new DateTime(fecha.Year, fecha.Month, fecha.Day, horarioPosible.Hours, horarioPosible.Minutes, 0);
+                            turnosPosibles.Add(turno);
+                            horarioPosible = horarioPosible.Add(TimeSpan.FromMinutes(negocioEsp.duracionConsulta(especialidad))); 
+                        }
+                    }
+                }
+            }
+            return turnosPosibles;
+        }
     }
-
 }
 

@@ -42,50 +42,25 @@
                     <div class="card-body">
                         <div class="col">
                             <h5 class="fw-bold mb-2">Dias disponibles</h5>
-                            <%--<table class="table align-middle table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Dia de la Semana</th>
-                                        <th>Profesional</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>3/11</td>
-                                        <td>Lunes</td>
-                                        <td>Dr. Carlos Gomez</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5/11</td>
-                                        <td>Miercoles</td>
-                                        <td>Dr. Juan Perez</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7/11</td>
-                                        <td>Viernes</td>
-                                        <td>Dr. José García</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>--%>
-                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false">
+                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false" CssClass="table table-striped">
                                 <Columns>
-                                    <asp:BoundField headertext="Fecha" DataField="FechaHora.Date"/>
-                                    
-                                    <asp:BoundField headertext="Dia de la Semana" DataField="FechaHora.DayofWeek"/>
-                                    
-                                    <asp:BoundField headertext="Fecha" DataField="Medico"/>
+                                    <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
+                                    <asp:BoundField HeaderText="Día de la Semana" DataField="DiaSemana" />
+                                    <asp:BoundField HeaderText="Hora" DataField="Hora" />
+       
+                                    <asp:TemplateField HeaderText="Acción">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btnSeleccionar" 
+                                                runat="server"
+                                                CssClass="btn btn-sm btn-primary"
+                                                Text="Seleccionar"
+                                                CommandName="SeleccionarTurno"
+                                                CommandArgument='<%# Eval("FechaCompleta") %>'
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                            </asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -129,7 +104,7 @@
             </div>
             <div class="d-flex justify-content-end mt-3" id="Botones" runat="server">
                 <a href="InicioPaciente.aspx" class="btn btn-secondery border-black me-2" style="width: 100px;">Volver</a>
-                <button type="button" class="btn btn-primary" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Turno</button>
+                <button >Seleccionar Turno</button>
             </div>
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

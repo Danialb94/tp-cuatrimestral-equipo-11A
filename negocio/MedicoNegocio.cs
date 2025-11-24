@@ -57,6 +57,51 @@ namespace negocio
             }
         }
 
+        public Medico ListarMedico(int idMedico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Medico medico = new Medico();
+
+            try
+            {
+                datos.setearConsulta(@"
+                    SELECT M.IdMedico, M.Matricula, P.Nombre, P.Apellido, I.UrlImagen
+                    FROM MEDICOS M
+                    JOIN PERSONAS P ON M.IdPersona = P.IdPersona
+                    JOIN IMAGENES I ON P.IdImagen = I.IdImagen
+                    WHERE IdMedico = @IdMedico
+                ");
+                datos.setearParametro("@idMedico", idMedico);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    medico.IdMedico = (int)datos.Lector["IdMedico"];
+                    medico.Matricula = (string)datos.Lector["Matricula"];
+                    medico.Nombre = (string)datos.Lector["Nombre"];
+                    medico.Apellido = (string)datos.Lector["Apellido"];
+                    medico.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+
+                    // Cargar especialidades y horarios del médico
+                    medico.Especialidades = EspecialidadesPorMedico(medico.IdMedico);
+                    for (int i = 0; i < medico.Especialidades.Count(); i++)
+                    {
+                        medico.Horario.Add(HorariosPorEspecialidad(medico.IdMedico, medico.Especialidades[i].Descripcion));
+                    }
+                }
+
+                return medico;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar los médicos.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         // MÉTODOS AUXILIARES
         private List<Especialidad> EspecialidadesPorMedico(int idMedico)
         {
@@ -244,6 +289,60 @@ namespace negocio
                             WHERE M.IdMedico = @IdMedico
                             AND E.Descripcion = @Descripcion
                             ORDER BY E.Descripcion
+                        ");
+                datosH.setearParametro("@IdMedico", idMedico);
+                datosH.setearParametro("@Descripcion", especialidad);
+                datosH.ejecutarLectura();
+                datosH.Lector.Read();
+                TimeSpan entrada = (TimeSpan)datosH.Lector["HorarioEntrada"];
+                TimeSpan salida = (TimeSpan)datosH.Lector["HorarioSalida"];
+                Hor.HoraEntrada = entrada.Hours;
+                Hor.HoraSalida = salida.Hours;
+
+                return Hor;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener días del médico {idMedico} para {especialidad}.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public Horario HorariosPorEspecialidadNúmero(int idMedico, string especialidad)
+        {
+            Horario Hor = new Horario();
+            AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datosH = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+                            SELECT DISTINCT
+                            H.DiaSemana
+                            FROM Medicos M
+                            INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                            INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                            INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                            WHERE M.IdMedico = @IdMedico
+                            AND E.Descripcion = @Descripcion
+                        ");
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.setearParametro("@Descripcion", especialidad);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    //CONSULTA DE HORARIOS POR ESPECIALIDAD
+                    Hor.DiasSemana.Add(datos.Lector["DiaSemana"].ToString());
+                }
+                datosH.setearConsulta(@"
+                            SELECT DISTINCT H.HorarioEntrada, h.HorarioSalida
+                            FROM Medicos M
+                            INNER JOIN MedicosHorariosEspecialidades MHE ON M.IdMedico = MHE.IdMedico
+                            INNER JOIN Especialidades E ON MHE.IdEspecialidad = E.IdEspecialidad
+                            INNER JOIN Horarios H ON MHE.IdHorario = H.IdHorario
+                            WHERE M.IdMedico = @IdMedico
+                            AND E.Descripcion = @Descripcion
                         ");
                 datosH.setearParametro("@IdMedico", idMedico);
                 datosH.setearParametro("@Descripcion", especialidad);
@@ -532,5 +631,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
     }
 }
