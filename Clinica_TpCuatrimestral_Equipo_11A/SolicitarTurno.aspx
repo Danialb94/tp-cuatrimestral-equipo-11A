@@ -96,6 +96,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script>
             function abrirModal() {
                 var modal = new bootstrap.Modal(document.getElementById('exampleModal'));

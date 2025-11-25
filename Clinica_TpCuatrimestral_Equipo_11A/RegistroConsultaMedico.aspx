@@ -18,18 +18,18 @@
     <div class="container mt-4">
 
         <!-- Título y botón -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="fw-bold mb-0">Registro Clínico del Paciente</h3>
-            <asp:Button ID="btnNuevaConsulta" runat="server" CssClass="btn btn-primary"
-                Text="Agregar nueva consulta médica" OnClick="btnNuevaConsulta_Click" />
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0">🩺 Registro Clínico del Paciente</h3>
+            <asp:Button ID="btnNuevaConsulta" runat="server" CssClass="btn btn-primary rounded-pill px-3"
+                Text="➕ Nueva consulta" OnClick="btnNuevaConsulta_Click" />
         </div>
 
-        <p class="text-muted mb-4">Aquí puedes visualizar los antecedentes y registros médicos del paciente seleccionado.</p>
+        <p class="text-muted mb-4">Visualiza los antecedentes y consultas médicas del paciente seleccionado.</p>
 
         <!-- Datos del paciente -->
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
-                <h5 class="fw-bold mb-3">Datos del paciente</h5>
+                <h5 class="fw-bold mb-3">👤 Datos del paciente</h5>
                 <div class="row">
                     <div class="col-md-4">
                         <p>
@@ -72,7 +72,7 @@
         <!-- Antecedentes -->
         <div class="card mb-4 shadow-sm border-0">
             <div class="card-body">
-                <h5 class="fw-bold mb-3">Antecedentes de salud</h5>
+                <h5 class="fw-bold mb-3">📋 Antecedentes de salud</h5>
                 <div class="row">
                     <div class="col-md-6">
                         <p>
@@ -93,7 +93,8 @@
         <!-- Consultas -->
         <div class="card shadow-sm border-0">
             <div class="card-body">
-                <h5 class="fw-bold mb-3">Consultas registradas</h5>
+                <h5 class="fw-bold mb-3">🗂️ Consultas registradas</h5>
+
                 <asp:GridView ID="gvConsultas" runat="server" AutoGenerateColumns="False"
                     CssClass="table table-hover align-middle"
                     OnRowCommand="gvConsultas_RowCommand">
@@ -130,17 +131,24 @@
 
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:Button ID="btnVer" runat="server" Text="Ver detalle"
+
+                                <!-- Ver detalle -->
+                                <asp:Button ID="btnVer" runat="server" Text="🔍"
                                     CommandName="Ver"
                                     CommandArgument='<%# Eval("IdTurno") %>'
-                                    CssClass="btn btn-outline-primary btn-sm me-2" />
+                                    CssClass="btn btn-outline-primary btn-sm me-1 rounded-pill"
+                                    data-bs-toggle="tooltip" title="Ver detalle del registro" />
 
+                                <!-- Editar registro -->
                                 <asp:Button ID="btnEditar" runat="server" Text="✏️"
                                     CommandName="Editar"
                                     CommandArgument='<%# Eval("IdTurno") %>'
-                                    CssClass="btn btn-outline-secondary btn-sm" />
+                                    CssClass="btn btn-outline-secondary btn-sm rounded-pill"
+                                    data-bs-toggle="tooltip" title="Editar registro clínico" />
+
                             </ItemTemplate>
                         </asp:TemplateField>
+
 
                     </Columns>
                 </asp:GridView>
@@ -148,35 +156,12 @@
             </div>
         </div>
 
-        <!-- Botón volver -->
+        <!-- Volver -->
         <div class="mt-4">
-            <asp:Button ID="btnVolver" runat="server" Text="Volver"
-                CssClass="btn btn-secondary" PostBackUrl="~/PacienteMedico.aspx" />
+            <asp:Button ID="btnVolver" runat="server" Text="⬅️ Volver"
+                CssClass="btn btn-secondary rounded-pill" PostBackUrl="~/PacienteMedico.aspx" />
         </div>
 
-
-        <%--<!-- Modal de advertencia -->
-        <div class="modal fade" id="modalErrorTurno" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-warning">
-                        <h5 class="modal-title text-dark fw-bold">⚠ No es posible registrar la consulta</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <p class="mb-0">No existe un turno asignado para este día.</p>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>--%>
-
-
     </div>
+
 </asp:Content>

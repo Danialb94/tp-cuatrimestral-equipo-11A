@@ -79,20 +79,22 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             Medico medico = (Medico)Session["Medico"];
             Paciente paciente = (Paciente)Session["PacienteSeleccionado"];
 
-            DateTime hoy = DateTime.Today;
-
-            TurnoNegocio negocio = new TurnoNegocio();
-            int idTurno = negocio.ObtenerTurnoDelDia(medico.IdMedico, paciente.IdPaciente, hoy);
+            TurnoNegocio negTurno = new TurnoNegocio();
+            int idTurno = negTurno.ObtenerTurnoDelDia(medico.IdMedico, paciente.IdPaciente, DateTime.Now);
 
             if (idTurno == 0)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "errorModal",
-                    "$('#modalErrorTurno').modal('show');", true);
+                Response.Write("<script>alert('⚠️ El paciente no tiene turno para hoy.');</script>");
                 return;
             }
 
+            Turno turno = negTurno.ObtenerPorId(idTurno);
+
+            Session["TurnoSeleccionado"] = turno;
+
             Response.Redirect("NuevoRegistroMedico.aspx", false);
         }
+
 
         protected void gvConsultas_RowCommand(object sender, GridViewCommandEventArgs e)
         {

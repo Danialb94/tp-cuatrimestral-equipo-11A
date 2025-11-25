@@ -61,9 +61,7 @@
                 <i class="bi bi-arrow-left me-1"></i>Volver
             </a>
 
-            <a href="RegistroConsultaMedico.aspx" class="btn btn-primary">
-                <i class="bi bi-card-text me-1"></i>Ver registro clínico
-            </a>
+            
         </div>
 
     </div>

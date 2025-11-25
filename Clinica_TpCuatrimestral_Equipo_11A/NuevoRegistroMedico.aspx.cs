@@ -1,11 +1,12 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
@@ -15,50 +16,112 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             if (!IsPostBack)
             {
-                if (Session["Medico"] == null || Session["PacienteSeleccionado"] == null)
+                if (Session["TurnoSeleccionado"] == null)
                 {
                     Response.Redirect("PacienteMedico.aspx", false);
                     return;
                 }
-                Paciente paciente = (Paciente)Session["PacienteSeleccionado"];
-                txtPaciente.Text = paciente.Nombre + " " + paciente.Apellido;
-                txtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
+                string origen = Request.QueryString["origen"];
+
+                if (origen == "inicio")
+                {
+                    btnVolverInicio.Visible = true;
+                    btnCancelar.Visible = false;
+                }
+                else
+                {
+                    btnVolverInicio.Visible = false;
+                    btnCancelar.Visible = true;
+                }
+
+                Turno turno = (Turno)Session["TurnoSeleccionado"];
+
+                txtPaciente.Text = turno.Paciente.Nombre + " " + turno.Paciente.Apellido;
+                txtFecha.Text = turno.FechaHora.ToString("yyyy-MM-dd");
+                txtMotivo.Text = turno.Motivo ?? "-";
             }
+
         }
 
         protected void btnGuardarConsulta_Click(object sender, EventArgs e)
         {
-            try
+            LimpiarErrores();
+            bool valido = true;
+
+            if (string.IsNullOrWhiteSpace(txtDiagnostico.Text))
             {
-                Medico medico = (Medico)Session["Medico"];
-                Paciente paciente = (Paciente)Session["PacienteSeleccionado"];
-                DateTime fecha = DateTime.Parse(txtFecha.Text);
-
-                TurnoNegocio negocio = new TurnoNegocio();
-                int idTurno = negocio.ObtenerTurnoDelDia(medico.IdMedico, paciente.IdPaciente, fecha);
-
-                if (idTurno == 0)
-                {
-                    Response.Write("<script>alert('⚠️ No hay un turno asignado para esa fecha.');</script>");
-                    return;
-                }
-
-                RegistroClinico registro = new RegistroClinico
-                {
-                    Diagnostico = txtDiagnostico.Text,
-                    Observacion = txtObservacion.Text,
-                    Tratamiento = txtTratamiento.Text
-                };
-
-                negocio.AgregarConsulta(idTurno, registro);
-
-                Response.Redirect("RegistroConsultaMedico.aspx", false);
+                txtDiagnostico.CssClass += " is-invalid";
+                lblErrorDiagnostico.Text = "El diagnóstico es obligatorio.";
+                valido = false;
             }
-            catch (Exception)
+            else if (Regex.IsMatch(txtDiagnostico.Text.Trim(), @"^\d+$"))
             {
-                Response.Write("<script>alert('Error al guardar la consulta.');</script>");
+                txtDiagnostico.CssClass += " is-invalid";
+                lblErrorDiagnostico.Text = "El diagnóstico no puede ser solo números.";
+                valido = false;
             }
+
+            if (string.IsNullOrWhiteSpace(txtTratamiento.Text))
+            {
+                txtTratamiento.CssClass += " is-invalid";
+                lblErrorTratamiento.Text = "El tratamiento es obligatorio.";
+                valido = false;
+            }
+            else if (Regex.IsMatch(txtTratamiento.Text.Trim(), @"^\d+$"))
+            {
+                txtTratamiento.CssClass += " is-invalid";
+                lblErrorTratamiento.Text = "El tratamiento no puede ser solo números.";
+                valido = false;
+            }
+
+            
+            if (!string.IsNullOrWhiteSpace(txtObservacion.Text) &&
+                Regex.IsMatch(txtObservacion.Text.Trim(), @"^\d+$"))
+            {
+                txtObservacion.CssClass += " is-invalid";
+                lblErrorObservacion.Text = "La observación no puede ser solo números.";
+                valido = false;
+            }
+
+            
+            if (!valido)
+                return;
+
+            
+            Turno turno = (Turno)Session["TurnoSeleccionado"];
+            int idTurno = turno.IdTurno;
+
+            RegistroClinico registro = new RegistroClinico
+            {
+                Diagnostico = txtDiagnostico.Text.Trim(),
+                Observacion = string.IsNullOrWhiteSpace(txtObservacion.Text)
+                                ? "Sin observaciones"
+                                : txtObservacion.Text.Trim(),
+                Tratamiento = txtTratamiento.Text.Trim()
+            };
+
+            TurnoNegocio negocio = new TurnoNegocio();
+            negocio.AgregarConsulta(idTurno, registro);
+
+            Response.Redirect("RegistroConsultaMedico.aspx", false);
         }
 
+
+        private void LimpiarErrores()
+        {
+            lblErrorDiagnostico.Text = "";
+            lblErrorObservacion.Text = "";
+            lblErrorTratamiento.Text = "";
+
+            txtDiagnostico.CssClass = "form-control";
+            txtObservacion.CssClass = "form-control";
+            txtTratamiento.CssClass = "form-control";
+        }
+
+        protected void btnVolverInicio_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("InicioMedico.aspx", false);
+        }
     }
 }

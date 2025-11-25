@@ -4,6 +4,15 @@
     Inherits="Clinica_TpCuatrimestral_Equipo_11A.NuevoRegistroMedico" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .invalid-feedback {
+            display: block;
+            font-size: 0.875rem;
+        }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -41,12 +50,14 @@
                         <label class="form-label fw-semibold">Diagnóstico</label>
                         <asp:TextBox ID="txtDiagnostico" runat="server" CssClass="form-control"
                             placeholder="Ej.: Migraña, infección urinaria, hipertensión..." />
+                        <asp:Label ID="lblErrorDiagnostico" runat="server" CssClass="invalid-feedback text-danger"></asp:Label>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Observaciones</label>
                         <asp:TextBox ID="txtObservacion" runat="server" CssClass="form-control"
                             TextMode="MultiLine" Rows="3"
                             placeholder="Comentarios clínicos relevantes..." />
+                        <asp:Label ID="lblErrorObservacion" runat="server" CssClass="invalid-feedback text-danger"></asp:Label>
                     </div>
                 </div>
 
@@ -57,6 +68,7 @@
                         <asp:TextBox ID="txtTratamiento" runat="server" CssClass="form-control"
                             TextMode="MultiLine" Rows="3"
                             placeholder="Medicamentos, dosis, frecuencia, recomendaciones..." />
+                        <asp:Label ID="lblErrorTratamiento" runat="server" CssClass="invalid-feedback text-danger"></asp:Label>
                     </div>
                 </div>
 
@@ -69,6 +81,10 @@
 
                     <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
                         CssClass="btn btn-secondary" PostBackUrl="~/RegistroConsultaMedico.aspx" />
+
+                    <asp:Button ID="btnVolverInicio" runat="server" Text="Volver al inicio"
+                        CssClass="btn btn-outline-dark" Visible="false" OnClick="btnVolverInicio_Click" />
+
                 </div>
 
             </div>

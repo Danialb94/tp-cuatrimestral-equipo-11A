@@ -512,6 +512,33 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void ActualizarRegistroClinico(int idRegistro, RegistroClinico registro)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                UPDATE RegistroClinico
+                SET Diagnostico = @Diagnostico,
+                Observacion = @Observacion,
+                Tratamiento = @Tratamiento
+                WHERE IdRegistro = @IdRegistro");
+
+                datos.setearParametro("@Diagnostico", (object)registro.Diagnostico ?? DBNull.Value);
+                datos.setearParametro("@Observacion", (object)registro.Observacion ?? DBNull.Value);
+                datos.setearParametro("@Tratamiento", (object)registro.Tratamiento ?? DBNull.Value);
+                datos.setearParametro("@IdRegistro", idRegistro);
+
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
 

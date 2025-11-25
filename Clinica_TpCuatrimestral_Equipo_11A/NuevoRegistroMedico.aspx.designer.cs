@@ -51,6 +51,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.TextBox txtDiagnostico;
 
         /// <summary>
+        /// Controllo lblErrorDiagnostico.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorDiagnostico;
+
+        /// <summary>
         /// Controllo txtObservacion.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.TextBox txtObservacion;
 
         /// <summary>
+        /// Controllo lblErrorObservacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorObservacion;
+
+        /// <summary>
         /// Controllo txtTratamiento.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTratamiento;
+
+        /// <summary>
+        /// Controllo lblErrorTratamiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorTratamiento;
 
         /// <summary>
         /// Controllo btnGuardarConsulta.
@@ -85,5 +112,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
+
+        /// <summary>
+        /// Controllo btnVolverInicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverInicio;
     }
 }

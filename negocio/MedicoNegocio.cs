@@ -385,6 +385,7 @@ namespace negocio
                 T.Motivo,
                 E.Descripcion AS Especialidad,
                 ES.Descripcion AS Estado,
+                PA.IdPaciente,      
                 P.Nombre AS NombrePaciente,
                 P.Apellido AS ApellidoPaciente
                 FROM Turnos T
@@ -411,6 +412,7 @@ namespace negocio
                         Estado = (string)datos.Lector["Estado"],
                         Paciente = new Paciente
                         {
+                            IdPaciente = (int)datos.Lector["IdPaciente"],
                             Nombre = (string)datos.Lector["NombrePaciente"],
                             Apellido = (string)datos.Lector["ApellidoPaciente"]
                         },

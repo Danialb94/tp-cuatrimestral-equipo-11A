@@ -346,6 +346,144 @@ namespace negocio
             }
         }
 
-        
+
+        public Paciente BuscarPorIdPaciente(int idPaciente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Paciente paciente = new Paciente();
+
+            try
+            {
+                datos.setearConsulta(@"
+            select 
+                P.IdPaciente,
+                PE.Nombre,
+                PE.Apellido,
+                PE.Telefono,
+                TD.Descripcion AS TipoDocumento,
+                P.IdTipoDocumento,
+                P.Documento,
+                P.Domicilio,
+                P.FechaNacimiento,
+                C.Descripcion AS Cobertura,
+                P.IdCobertura,
+                I.IdImagen,
+                I.UrlImagen
+            from Pacientes P
+            join TiposDocumento TD ON TD.IdTipoDocumento = P.IdTipoDocumento
+            join Coberturas C ON C.IdCobertura = P.IdCobertura
+            join Personas PE ON PE.IdPersona = P.IdPersona
+            left join Imagenes I ON I.IdImagen = PE.IdImagen
+            where P.IdPaciente = @IdPaciente
+        ");
+
+                datos.setearParametro("@IdPaciente", idPaciente);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    paciente.IdPaciente = (int)datos.Lector["IdPaciente"];
+                    paciente.Nombre = (string)datos.Lector["Nombre"];
+                    paciente.Apellido = (string)datos.Lector["Apellido"];
+
+                    if (!(datos.Lector["Telefono"] is DBNull))
+                        paciente.Telefono = datos.Lector["Telefono"].ToString();
+
+                    paciente.TipoDocumento.IdTipoDocumento = (int)datos.Lector["IdTipoDocumento"];
+                    paciente.TipoDocumento.Descripcion = (string)datos.Lector["TipoDocumento"];
+
+                    paciente.Documento = datos.Lector["Documento"].ToString();
+                    paciente.Domicilio = (string)datos.Lector["Domicilio"];
+                    paciente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+
+                    if (!(datos.Lector["Cobertura"] is DBNull))
+                    {
+                        paciente.Cobertura.IdCobertura = (int)datos.Lector["IdCobertura"];
+                        paciente.Cobertura.Descripcion = (string)datos.Lector["Cobertura"];
+                    }
+
+                    if (!(datos.Lector["IdImagen"] is DBNull))
+                    {
+                        paciente.Imagen.IdImagen = (int)datos.Lector["IdImagen"];
+                        paciente.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+                    }
+
+                    paciente.Alergias = ListarAlergias(paciente.IdPaciente);
+                    paciente.CondicionBase = ListarCondiciones(paciente.IdPaciente);
+                }
+
+                return paciente;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar paciente por IdPaciente", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public List<Paciente> ListarPorMedico(int idMedico)
+        {
+            List<Paciente> lista = new List<Paciente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT DISTINCT 
+                P.IdPaciente,
+                PE.Nombre,
+                PE.Apellido,
+                PE.Telefono,
+                TD.Descripcion AS TipoDocumento,
+                P.IdTipoDocumento,
+                P.Documento,
+                P.Domicilio,
+                P.FechaNacimiento,
+                C.Descripcion AS Cobertura,
+                P.IdCobertura
+            FROM Turnos T
+            JOIN Pacientes P ON P.IdPaciente = T.IdPaciente
+            JOIN Personas PE ON PE.IdPersona = P.IdPersona
+            JOIN TiposDocumento TD ON TD.IdTipoDocumento = P.IdTipoDocumento
+            JOIN Coberturas C ON C.IdCobertura = P.IdCobertura
+            WHERE T.IdMedico = @IdMedico
+        ");
+
+                datos.setearParametro("@IdMedico", idMedico);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Paciente paciente = new Paciente();
+                    paciente.IdPaciente = (int)datos.Lector["IdPaciente"];
+                    paciente.Nombre = (string)datos.Lector["Nombre"];
+                    paciente.Apellido = (string)datos.Lector["Apellido"];
+                    paciente.Telefono = datos.Lector["Telefono"].ToString();
+                    paciente.Documento = datos.Lector["Documento"].ToString();
+                    paciente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    paciente.Cobertura.Descripcion = datos.Lector["Cobertura"].ToString();
+
+                    lista.Add(paciente);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
     }
 }

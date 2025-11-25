@@ -58,8 +58,12 @@
                                     CommandArgument='<%# Eval("IdPaciente") %>'
                                     OnClick="btnVerHistorial_Click"
                                     CssClass="btn btn-outline-primary btn-sm">
-                                    Ver registro consultas
+                                    <i class="bi bi-card-text me-1"></i>Ver registro consultas
                                 </asp:LinkButton>
+
+                                
+
+
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

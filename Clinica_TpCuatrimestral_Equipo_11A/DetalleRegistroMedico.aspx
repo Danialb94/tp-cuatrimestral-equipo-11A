@@ -8,6 +8,9 @@
 
         <div class="card shadow-sm border-0">
             <div class="card-body">
+
+                <asp:HiddenField ID="hfIdRegistro" runat="server" />
+
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Nombre del paciente</label>

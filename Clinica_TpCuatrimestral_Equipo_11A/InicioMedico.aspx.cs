@@ -76,18 +76,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
             if (e.CommandName == "NuevaConsulta")
             {
-                int idx = Convert.ToInt32(e.CommandArgument);
-                int turnoId = Convert.ToInt32(gvTurnos.DataKeys[index].Value);
-
-                TurnoNegocio neg = new TurnoNegocio();
-                Turno turno = neg.ObtenerPorId(idTurno);
+                TurnoNegocio negTurno = new TurnoNegocio();
+                Turno turno = negTurno.ObtenerPorId(idTurno);
 
                 if (turno != null)
                 {
-                    Session["PacienteSeleccionado"] = turno.Paciente;  
-                    Response.Redirect("NuevoRegistroMedico.aspx", false);
+                    PacienteNegocio negPaciente = new PacienteNegocio();
+                    Paciente pacienteCompleto = negPaciente.BuscarPorIdPaciente(turno.Paciente.IdPaciente);
+                    Session["TurnoSeleccionado"] = turno;
+                    Session["PacienteSeleccionado"] = turno.Paciente;
+
+                    Response.Redirect("NuevoRegistroMedico.aspx?origen=inicio", false);
                 }
             }
+
+
 
 
         }

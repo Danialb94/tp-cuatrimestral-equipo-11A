@@ -59,7 +59,10 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 txtDiagnostico.Text = registro.Diagnostico;
                 txtObservacion.Text = registro.Observacion;
                 txtTratamiento.Text = registro.Tratamiento;
+
+                hfIdRegistro.Value = registro.IdRegistro.ToString();  
             }
+
         }
         protected void btnEditar_Click(object sender, EventArgs e)
         {
@@ -70,8 +73,10 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         {
             try
             {
+                int idRegistro = int.Parse(hfIdRegistro.Value);
+
                 TurnoNegocio negocio = new TurnoNegocio();
-                int idTurno = int.Parse(Request.QueryString["id"]);
+
                 RegistroClinico registro = new RegistroClinico
                 {
                     Diagnostico = txtDiagnostico.Text,
@@ -79,7 +84,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     Tratamiento = txtTratamiento.Text
                 };
 
-                negocio.AgregarConsulta(idTurno, registro);
+                negocio.ActualizarRegistroClinico(idRegistro, registro);
 
                 Response.Redirect("RegistroConsultaMedico.aspx", false);
             }
@@ -89,10 +94,12 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
         }
 
+
         private void HabilitarEdicion(bool habilitar)
         {
             txtDiagnostico.ReadOnly = !habilitar;
             txtObservacion.ReadOnly = !habilitar;
+            txtTratamiento.ReadOnly = !habilitar;
             btnGuardar.Visible = habilitar;
             btnEditar.Visible = !habilitar;
         }

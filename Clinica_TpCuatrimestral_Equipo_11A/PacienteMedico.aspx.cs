@@ -21,10 +21,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         private void CargarPacientes()
         {
-            PacienteNegocio negocio = new PacienteNegocio();
-            listaPacientes = negocio.Listar();
+            var medico = Session["Medico"] as Medico;
+            if (medico == null)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
 
-            // Orden alfabético
+            PacienteNegocio negocio = new PacienteNegocio();
+            listaPacientes = negocio.ListarPorMedico(medico.IdMedico);
+
             listaPacientes = listaPacientes
                 .OrderBy(p => p.Nombre)
                 .ThenBy(p => p.Apellido)
@@ -35,6 +41,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
             lblTotalPacientes.Text = listaPacientes.Count.ToString();
         }
+
 
         protected void txtBuscar_TextChanged(object sender, EventArgs e)
         {

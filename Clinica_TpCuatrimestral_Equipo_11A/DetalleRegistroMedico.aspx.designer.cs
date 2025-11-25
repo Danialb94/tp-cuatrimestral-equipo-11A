@@ -15,6 +15,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
 
         /// <summary>
+        /// Controllo hfIdRegistro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdRegistro;
+
+        /// <summary>
         /// Controllo txtPaciente.
         /// </summary>
         /// <remarks>
