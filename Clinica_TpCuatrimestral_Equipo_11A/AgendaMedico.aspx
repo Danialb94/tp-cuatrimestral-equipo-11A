@@ -7,6 +7,17 @@
         table.table-bordered th, table.table-bordered td {
             border: 1px solid #dee2e6 !important;
         }
+
+        .evento-turno {
+            background-color: #d7ebff !important;  
+            border-left: 3px solid #0d6efd !important;
+            color: #0d3b66 !important;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+            text-align: left;
+        }
+
     </style>
 </asp:Content>
 

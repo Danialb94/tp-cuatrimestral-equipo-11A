@@ -283,14 +283,24 @@ namespace negocio
                 T.IdTurno,
                 T.FechaTurno,
                 T.Motivo,
+                ES.Descripcion AS Estado,
+                PA.IdPaciente,
                 P.Nombre AS NombrePaciente,
-                P.Apellido AS ApellidoPaciente
+                P.Apellido AS ApellidoPaciente,
+                RC.IdRegistro,
+                RC.Diagnostico,
+                RC.Observacion,
+                RC.Tratamiento
                 FROM Turnos T
                 INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
                 INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
-                WHERE T.IdTurno = @idTurno");
+                INNER JOIN Estados ES ON T.IdEstado = ES.IdEstado
+                LEFT JOIN RegistroClinico RC ON RC.IdTurno = T.IdTurno
+                WHERE T.IdTurno = @IdTurno
+                ORDER BY RC.IdRegistro DESC
+                ");
 
-                datos.setearParametro("@idTurno", idTurno);
+                datos.setearParametro("@IdTurno", idTurno);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -299,13 +309,25 @@ namespace negocio
 
                     aux.IdTurno = (int)datos.Lector["IdTurno"];
                     aux.FechaHora = (DateTime)datos.Lector["FechaTurno"];
-                    aux.Motivo = datos.Lector["Motivo"].ToString();
+                    aux.Motivo = datos.Lector["Motivo"]?.ToString();
+                    aux.Estado = datos.Lector["Estado"]?.ToString();
 
                     aux.Paciente = new Paciente
                     {
+                        IdPaciente = (int)datos.Lector["IdPaciente"],   
                         Nombre = datos.Lector["NombrePaciente"].ToString(),
                         Apellido = datos.Lector["ApellidoPaciente"].ToString()
                     };
+
+                    aux.Registros = new List<RegistroClinico>();
+
+                    aux.Registros.Add(new RegistroClinico
+                    {
+                        IdRegistro = datos.Lector["IdRegistro"] != DBNull.Value ? (int)datos.Lector["IdRegistro"] : 0,
+                        Diagnostico = datos.Lector["Diagnostico"]?.ToString(),
+                        Observacion = datos.Lector["Observacion"]?.ToString(),
+                        Tratamiento = datos.Lector["Tratamiento"]?.ToString()
+                    });
 
                     return aux;
                 }
@@ -314,6 +336,8 @@ namespace negocio
             }
             finally { datos.cerrarConexion(); }
         }
+
+
 
         public RegistroClinico ObtenerRegistroPorTurno(int idTurno)
         {

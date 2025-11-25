@@ -143,8 +143,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     var turno = turnos.FirstOrDefault(t => t.FechaHora.Date == fecha.Date && t.FechaHora.Hour == hora.Hours);
                     if (turno != null)
                     {
-                        filas.Append($"<td class='bg-info text-white small'><strong>{turno.Paciente.Nombre} {turno.Paciente.Apellido}</strong><br/><span class='fst-italic'>{turno.Especialidad.Descripcion}</span></td>");
+                        filas.Append($@" <td>
+                            <div class='evento-turno'>
+                                <strong>{turno.Paciente.Nombre} {turno.Paciente.Apellido}</strong><br/>
+                                <small class='fst-italic'>{turno.Especialidad.Descripcion}</small>
+                            </div>
+                        </td>");
                     }
+
                     else
                     {
                         filas.Append("<td></td>");

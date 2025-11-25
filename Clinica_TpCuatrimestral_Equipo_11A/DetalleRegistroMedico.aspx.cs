@@ -51,6 +51,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
             txtPaciente.Text = turno.Paciente.Nombre + " " + turno.Paciente.Apellido;
             txtFecha.Text = turno.FechaHora.ToString("yyyy-MM-dd");
+            txtMotivo.Text = turno.Motivo;
             RegistroClinico registro = negocio.ObtenerRegistroPorTurno(idTurno);
 
             if (registro != null)

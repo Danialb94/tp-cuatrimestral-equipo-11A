@@ -47,7 +47,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 {
                     Diagnostico = txtDiagnostico.Text,
                     Observacion = txtObservacion.Text,
-                    Tratamiento = null 
+                    Tratamiento = txtTratamiento.Text
                 };
 
                 negocio.AgregarConsulta(idTurno, registro);
@@ -59,5 +59,6 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 Response.Write("<script>alert('Error al guardar la consulta.');</script>");
             }
         }
+
     }
 }

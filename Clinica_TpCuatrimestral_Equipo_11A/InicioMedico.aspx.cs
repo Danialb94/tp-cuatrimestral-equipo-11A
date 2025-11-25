@@ -38,20 +38,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
             var negocio = new MedicoNegocio();
             var turnos = negocio.ListarTurnos(medico.IdMedico)
-                                .Where(t => t.FechaHora.Date == fecha.Date)
+                                .Where(t => t.FechaHora >= fecha.Date &&
+                                            t.FechaHora < fecha.Date.AddDays(1))
                                 .ToList();
 
-            // Resumen
             lblTotalTurnos.Text = turnos.Count.ToString();
             lblAtendidos.Text = turnos.Count(t => t.Estado == "Atendido").ToString();
-            lblPendientes.Text = turnos.Count(t => t.Estado == "Pendiente" || t.Estado == "Programado").ToString();
+            lblPendientes.Text = turnos.Count(t => t.Estado == "Pendiente").ToString();
 
-            // Encabezados
             lblTurnosFecha.Text = fecha.ToString("dd/MM/yyyy");
 
-            // Grilla
             gvTurnos.DataSource = turnos.Select(t => new
             {
+                IdTurno = t.IdTurno,
                 Hora = t.FechaHora.ToString("HH:mm"),
                 Paciente = t.Paciente.Nombre + " " + t.Paciente.Apellido,
                 Motivo = t.Motivo ?? "-",
@@ -60,5 +59,39 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
             gvTurnos.DataBind();
         }
+        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            int idTurno = Convert.ToInt32(gvTurnos.DataKeys[index].Value);
+
+            if (e.CommandName == "Registro")
+            {
+                Session["IdTurnoSeleccionado"] = idTurno;
+                Response.Redirect("NuevoRegistroMedico.aspx");
+            }
+            else if (e.CommandName == "Detalle")
+            {
+                Session["IdTurnoSeleccionado"] = idTurno;
+                Response.Redirect("DetalleTurnoMedico.aspx");
+            }
+            if (e.CommandName == "NuevaConsulta")
+            {
+                int idx = Convert.ToInt32(e.CommandArgument);
+                int turnoId = Convert.ToInt32(gvTurnos.DataKeys[index].Value);
+
+                TurnoNegocio neg = new TurnoNegocio();
+                Turno turno = neg.ObtenerPorId(idTurno);
+
+                if (turno != null)
+                {
+                    Session["PacienteSeleccionado"] = turno.Paciente;  
+                    Response.Redirect("NuevoRegistroMedico.aspx", false);
+                }
+            }
+
+
+        }
+
+
     }
 }

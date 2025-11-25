@@ -20,7 +20,8 @@
                 <div class="card text-center shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="fw-bold">Total de Turnos</h5>
-                        <h2 class="text-primary"><asp:Label ID="lblTotalTurnos" runat="server" Text="0" /></h2>
+                        <h2 class="text-primary">
+                            <asp:Label ID="lblTotalTurnos" runat="server" Text="0" /></h2>
                     </div>
                 </div>
             </div>
@@ -28,7 +29,8 @@
                 <div class="card text-center shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="fw-bold">Pacientes Atendidos</h5>
-                        <h2 class="text-success"><asp:Label ID="lblAtendidos" runat="server" Text="0" /></h2>
+                        <h2 class="text-success">
+                            <asp:Label ID="lblAtendidos" runat="server" Text="0" /></h2>
                     </div>
                 </div>
             </div>
@@ -36,7 +38,8 @@
                 <div class="card text-center shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="fw-bold">Turnos Pendientes</h5>
-                        <h2 class="text-warning"><asp:Label ID="lblPendientes" runat="server" Text="0" /></h2>
+                        <h2 class="text-warning">
+                            <asp:Label ID="lblPendientes" runat="server" Text="0" /></h2>
                     </div>
                 </div>
             </div>
@@ -56,20 +59,53 @@
                     <asp:Label ID="lblTurnosFecha" runat="server" />
                 </h5>
 
-                <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="table align-middle table-hover">
+                <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False"
+                    CssClass="table align-middle table-hover"
+                    DataKeyNames="IdTurno"
+                    OnRowCommand="gvTurnos_RowCommand">
+
                     <Columns>
                         <asp:BoundField DataField="Hora" HeaderText="Hora" />
                         <asp:BoundField DataField="Paciente" HeaderText="Paciente" />
                         <asp:BoundField DataField="Motivo" HeaderText="Motivo" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
+
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:Button Text="Registro Clínico" CssClass="btn btn-outline-primary btn-sm me-2" runat="server" />
-                                <asp:Button Text="Detalles" CssClass="btn btn-outline-secondary btn-sm" runat="server" />
+
+                                <!-- Registro clínico -->
+                                <%--<asp:LinkButton ID="btnRegistro" runat="server"
+                                    CssClass="btn btn-outline-primary btn-sm me-1 rounded-pill"
+                                    CommandName="Registro"
+                                    CommandArgument="<%# Container.DataItemIndex %>"
+                                    data-bs-toggle="tooltip" title="Registrar atención del paciente">
+                                    📝
+                                </asp:LinkButton>--%>
+
+                                <!-- Detalles -->
+                                <asp:LinkButton ID="btnDetalle" runat="server"
+                                    CssClass="btn btn-outline-primary btn-sm me-1 rounded-pill action-btn"
+                                    CommandName="Detalle"
+                                    CommandArgument="<%# Container.DataItemIndex %>"
+                                    data-bs-toggle="tooltip" title="Ver detalles del turno">
+            🔍
+                                </asp:LinkButton>
+
+                                <!-- Nueva consulta -->
+                                <asp:LinkButton ID="btnNuevaConsulta" runat="server"
+                                    CssClass="btn btn-outline-primary btn-sm rounded-pill action-btn"
+                                    CommandName="NuevaConsulta"
+                                    CommandArgument="<%# Container.DataItemIndex %>"
+                                    data-bs-toggle="tooltip" title="Agregar nueva consulta médica">
+            ➕
+                                </asp:LinkButton>
+
                             </ItemTemplate>
                         </asp:TemplateField>
+
                     </Columns>
                 </asp:GridView>
+
             </div>
         </div>
     </div>

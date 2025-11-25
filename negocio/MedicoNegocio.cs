@@ -379,20 +379,21 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"
-                    SELECT 
-                        T.IdTurno,
-                        T.FechaTurno,
-                        E.Descripcion AS Especialidad,
-                        ES.Descripcion AS Estado,
-                        P.Nombre AS NombrePaciente,
-                        P.Apellido AS ApellidoPaciente
-                    FROM Turnos T
-                    INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
-                    INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
-                    INNER JOIN Especialidades E ON T.IdEspecialidad = E.IdEspecialidad
-                    INNER JOIN Estados ES ON T.IdEstado = ES.IdEstado
-                    WHERE T.IdMedico = @IdMedico
-                    ORDER BY T.FechaTurno ASC
+                SELECT 
+                T.IdTurno,
+                T.FechaTurno,
+                T.Motivo,
+                E.Descripcion AS Especialidad,
+                ES.Descripcion AS Estado,
+                P.Nombre AS NombrePaciente,
+                P.Apellido AS ApellidoPaciente
+                FROM Turnos T
+                INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+                INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+                INNER JOIN Especialidades E ON T.IdEspecialidad = E.IdEspecialidad
+                INNER JOIN Estados ES ON T.IdEstado = ES.IdEstado
+                WHERE T.IdMedico = @IdMedico
+                ORDER BY T.FechaTurno ASC
                 ");
 
                 datos.setearParametro("@IdMedico", idMedico);
@@ -404,6 +405,9 @@ namespace negocio
                     {
                         IdTurno = (int)datos.Lector["IdTurno"],
                         FechaHora = (DateTime)datos.Lector["FechaTurno"],
+                        Motivo = datos.Lector["Motivo"] != DBNull.Value
+                                    ? datos.Lector["Motivo"].ToString()
+                                    : null,
                         Estado = (string)datos.Lector["Estado"],
                         Paciente = new Paciente
                         {
@@ -430,6 +434,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
 
         // ===================================================
         // Registrar diagnóstico y observación de un turno

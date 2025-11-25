@@ -76,6 +76,21 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnNuevaConsulta_Click(object sender, EventArgs e)
         {
+            Medico medico = (Medico)Session["Medico"];
+            Paciente paciente = (Paciente)Session["PacienteSeleccionado"];
+
+            DateTime hoy = DateTime.Today;
+
+            TurnoNegocio negocio = new TurnoNegocio();
+            int idTurno = negocio.ObtenerTurnoDelDia(medico.IdMedico, paciente.IdPaciente, hoy);
+
+            if (idTurno == 0)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorModal",
+                    "$('#modalErrorTurno').modal('show');", true);
+                return;
+            }
+
             Response.Redirect("NuevoRegistroMedico.aspx", false);
         }
 
