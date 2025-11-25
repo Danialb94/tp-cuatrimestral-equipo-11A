@@ -456,6 +456,38 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+    
+        public List<string> listarEstados()
+        {
+            List<string> lista = new List<string>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = @"
+                    SELECT Descripcion 
+                    FROM Estados";
+
+
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(datos.Lector["Descripcion"].ToString());
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 

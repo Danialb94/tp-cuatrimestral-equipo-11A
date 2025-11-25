@@ -8,11 +8,35 @@
         <div class="card-body">
             <h4 class="fw-bold mb-3">Historial de turnos</h4>
 
-            <div class="mb-4">
-                <asp:DropDownList
-                    ID="ddlEspecialidadesRecepcionista" runat="server" CssClass="border-dark-subtle h-100 rounded-2 form-select" Style="width: 240px;" AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidadesRecepcionista_SelectedIndexChanged">
-                    <asp:ListItem Selected hidden>Seleccione la Especialidad</asp:ListItem>
-                </asp:DropDownList>
+            <div class="mb-4 d-flex">
+                <div class="me-3">
+                    <label class="form-label fw-bold">Especialidades</label>
+                    <asp:DropDownList
+                        ID="ddlEspecialidadesRecepcionista" runat="server" CssClass="border-dark-subtle rounded-2 form-select" Style="width: 240px;" AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                    </asp:DropDownList>
+                </div>
+                <div class="me-3">
+                    <label class="form-label fw-bold">Estado</label>
+                    <asp:DropDownList
+                        ID="ddlEstado"
+                        runat="server"
+                        CssClass="form-select border-dark-subtle"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="AplicarFiltros">
+                    </asp:DropDownList>
+                </div>
+                <div class="me-3"> 
+                    <label class="form-label fw-bold">Desde</label>
+                    <asp:TextBox
+                        ID="txtFechaDesde"
+                        runat="server"
+                        TextMode="Date"
+                        CssClass="form-control border-dark-subtle"
+                        AutoPostBack="true"
+                        OnTextChanged="AplicarFiltros">
+                    </asp:TextBox>
+
+                </div>
             </div>
 
             <asp:GridView ID="gvTurnosRecepcionista" runat="server"

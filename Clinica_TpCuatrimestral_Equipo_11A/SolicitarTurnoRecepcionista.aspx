@@ -4,152 +4,103 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container mt-4">
-        <h2 class="fw-bold">Brindar un nuevo turno</h2>
+        <div class="container mt-4">
+        <h2 class="fw-bold">Solicitar un nuevo turno</h2>
         <div class="row d-flex">
-            <div class="col-8">
+            <div class="">
                 <div class="card shadow-sm border-0 ">
-                    <div class="card-body">
-                        <div class="justify-content-between mb-3">
+                    <div class="card-body d-flex">
+                        <div class="col-3 justify-content-between me-3">
                             <h5 class="fw-bold mb-2">Especialidad</h5>
-                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100" AutoPostBack="true" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged">
+                            <asp:DropDownList ID="ddlEspecialidades" runat="server" class="border-dark-subtle rounded-3 w-100 h-50" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
                         </div>
-                    </div>
-                </div>
-
-                <div class="card shadow-sm border-0 mt-2">
-                    <div class="card-body">
-                        <div class="justify-content-between mb-3">
+                        <div class="col-3 justify-content-between me-3" id="CampoProfesional" runat="server">
                             <h5 class="fw-bold mb-2">Profesional</h5>
-                            <asp:DropDownList ID="ddlProfesionales" runat="server" class="border-dark-subtle rounded-3 w-100">
+                            <asp:DropDownList ID="ddlProfesionales" runat="server" class="border-dark-subtle rounded-3 w-100 h-50" OnSelectedIndexChanged="ddlProfesionales_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
                         </div>
-                    </div>
-                </div>
-
-                <div class="card shadow-sm border-0 mt-2">
-                    <div class="card-body">
-                        <div class="mb-3">
+                        <div class="col" id="CampoMotivo" runat="server">
                             <label class="form-label fw-bold">Motivo de la consulta:</label>
-                            <asp:TextBox ID="txtMotivoConsulta" runat="server" CssClass="form-control" placeholder="Ej: Control, Consulta general..." />
+                            <asp:TextBox ID="txtMotivoConsulta" runat="server" class="h-50 form-control" placeholder="Ej: Control, Consulta general..." />
                         </div>
                     </div>
                 </div>
 
 
-                <div class="card shadow-sm border-0 mt-2">
+                <div class="card shadow-sm border-0 mt-2" id="CampoDias" runat="server">
                     <div class="card-body">
                         <div class="col">
-                            <h5 class="fw-bold mb-2">Dias disponibles</h5>
-                            <table class="table align-middle table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Dia de la Semana</th>
-                                        <th>Profesional</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>3/11</td>
-                                        <td>Lunes</td>
-                                        <td>Dr. Carlos Gomez</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5/11</td>
-                                        <td>Miercoles</td>
-                                        <td>Dr. Juan Perez</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7/11</td>
-                                        <td>Viernes</td>
-                                        <td>Dr. José García</td>
-                                        <td>
-                                            <asp:RadioButton Text="" runat="server" GroupName="DiaTurno" />
-                                        </td>
-                                    </tr>
+                            <div>
+                                <h5 class="fw-bold mb-2">Dias disponibles</h5>
+                                <div class="d-flex align-items-center">
+                                    <span class="fw-bold me-3">Seleccionar fecha:</span>
+                                    <asp:TextBox ID="txtFecha" runat="server" CssClass="form-control w-auto" />
+                                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary ms-3" OnClick="btnBuscar_Click" />
 
-                                </tbody>
-                            </table>
-                            <%--<asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false">
+                                </div>
+                                <div class="mb-3">
+                                    <asp:Label Text="" runat="server" ID="aviso" class="text-danger"/>
+
+                                </div>
+                            </div>
+                            <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false"
+                                CssClass="table table-striped"
+                                OnRowCommand="dgvFechas_RowCommand">
                                 <Columns>
-                                    <asp:BoundField headertext="Fecha" DataField="FechaHora.Date"/>
-                                    
-                                    <asp:BoundField headertext="Dia de la Semana" DataField="FechaHora.DayofWeek"/>
-                                    
-                                    <asp:BoundField headertext="Fecha" DataField="Medico"/>
+                                    <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
+                                    <asp:BoundField HeaderText="Profesional" DataField="Medico" />
+                                    <asp:BoundField HeaderText="Fecha" DataField="Fecha" />
+                                    <asp:BoundField HeaderText="Día de la Semana" DataField="DiaSemana" />
+                                    <asp:BoundField HeaderText="Hora" DataField="Hora" />
+
+                                    <asp:TemplateField HeaderText="Acción">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btnSeleccionar" runat="server"
+                                                CssClass="btn btn-sm btn-primary"
+                                                Text="Seleccionar"
+                                                CommandName="SeleccionarTurno"
+                                                CommandArgument='<%# Eval("FechaCompleta") %>'>
+                                            </asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
-                            </asp:GridView>--%>
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar el Turno</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Especialidad:</strong> <%: ddlEspecialidades.SelectedItem != null ? ddlEspecialidades.SelectedItem.Text : "" %></p>
+                                <p><strong>Profesional:</strong> <%: ddlProfesionales.SelectedItem != null ? ddlProfesionales.SelectedItem.Text : "" %></p>
+                                <p><strong>Fecha:</strong> <%: FechaSeleccionada ?? "" %></p>
+                                <p><strong>Día:</strong> <%: DiaSeleccionado ?? "" %></p>
+                                <p><strong>Hora:</strong> <%: HoraSeleccionada ?? "" %></p>
+                                <p><strong>Motivo:</strong> <%: txtMotivoConsulta.Text %></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="border-dark-subtle btn" data-bs-dismiss="modal">Cancelar</button>
+                                <asp:Button ID="btnConfirmarTurno" runat="server"
+                                    Text="Confirmar Turno"
+                                    CssClass="btn btn-primary"
+                                    OnClick="btnConfirmarTurno_Click" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card shadow-sm border-0 mt-2 col">
-                <div class="card-body">
-                    <div class="justify-content-between mb-3">
-                        <h5 class="fw-bold mb-2">Horarios Disponibles</h5>
-                        <table class="table align-middle table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Horario</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>9:00</td>
-                                    <td>
-                                        <asp:RadioButton Text="" runat="server" GroupName="Horario" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>10:00</td>
-                                    <td>
-                                        <asp:RadioButton Text="" runat="server" GroupName="Horario" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>11:00</td>
-                                    <td>
-                                        <asp:RadioButton Text="" runat="server" GroupName="Horario" />
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end mt-3">
-                <a href="PacientesRecepcionista.aspx" class="btn btn-secondery border-black me-2" style="width: 100px;">Volver</a>
-                <button type="button" class="btn btn-primary" style="width: 200px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Turno</button>
-            </div>
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Turno</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            El turno se asignó con éxito!
-                        </div>
-                        <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="InicioRecepcionista.aspx">OK</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
+        <script>
+            function abrirModal() {
+                var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                modal.show();
+                return false;
+            }
+        </script>
 </asp:Content>
