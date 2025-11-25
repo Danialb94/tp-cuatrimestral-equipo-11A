@@ -35,7 +35,14 @@
                         AutoPostBack="true"
                         OnTextChanged="AplicarFiltros">
                     </asp:TextBox>
-
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <asp:Button 
+                        ID="btnLimpiarFiltros" 
+                        runat="server" 
+                        Text="Limpiar Filtros" 
+                        CssClass="btn btn-secondary" 
+                        OnClick="btnLimpiarFiltros_Click" />
                 </div>
             </div>
 

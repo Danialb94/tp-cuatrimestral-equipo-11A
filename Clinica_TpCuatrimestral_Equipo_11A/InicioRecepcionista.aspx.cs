@@ -122,5 +122,16 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             gvTurnosRecepcionista.DataSource = turnosFiltrados;
             gvTurnosRecepcionista.DataBind();
         }
+
+        protected void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            // Limpiar todos los filtros
+            ddlEspecialidadesRecepcionista.SelectedIndex = 0;
+            ddlEstado.SelectedIndex = 0;
+            txtFechaDesde.Text = "";
+
+            // Recargar todos los turnos
+            cargarTurnosRecepcionista();
+        }
     }
 }
