@@ -15,7 +15,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             if (!IsPostBack)
             {
                 cargarEspecialidades();
-                cargarTurnos(); 
+                cargarTurnos();
             }
         }
 
@@ -68,22 +68,40 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             if (e.CommandName == "CancelarTurno")
             {
                 int idTurno = Convert.ToInt32(e.CommandArgument);
-                RecepcionistaNegocio negocio = new RecepcionistaNegocio();
-
-                try
-                {
-                    negocio.CancelarClinica(idTurno);
-                    
-                    int idEspecialidad = int.Parse(ddlCancelarRecepcionista.SelectedValue);
-                    cargarTurnos(idEspecialidad);
-                }
-                catch (Exception ex)
-                {
-                    lblMensaje.CssClass = "text-danger fw-semibold";
-                    lblMensaje.Text = "Error al cancelar el turno.";
-                    Session.Add("error", ex);
-                }
+                hiddenIdTurno.Value = idTurno.ToString(); 
+                panelConfirmacion.Visible = true; 
             }
+        }
+
+        
+        protected void btnConfirmarCancelar_Click(object sender, EventArgs e)
+        {
+            int idTurno = int.Parse(hiddenIdTurno.Value);
+            RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            try
+            {
+                negocio.CancelarClinica(idTurno); 
+
+                int idEspecialidad = int.Parse(ddlCancelarRecepcionista.SelectedValue);
+                cargarTurnos(idEspecialidad);
+
+                lblMensaje.CssClass = "text-success fw-semibold";
+                lblMensaje.Text = "Turno cancelado correctamente";
+
+                panelConfirmacion.Visible = false; 
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.CssClass = "text-danger fw-semibold";
+                lblMensaje.Text = "Error al cancelar el turno.";
+                Session.Add("error", ex);
+            }
+        }
+
+     
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            panelConfirmacion.Visible = false;
         }
     }
 }

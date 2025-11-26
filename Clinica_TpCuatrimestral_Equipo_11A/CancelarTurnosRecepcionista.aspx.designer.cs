@@ -24,6 +24,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.DropDownList ddlCancelarRecepcionista;
 
         /// <summary>
+        /// updCancelarTurno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updCancelarTurno;
+
+        /// <summary>
         /// dgvCancelarTurnosRecepcionista control.
         /// </summary>
         /// <remarks>
@@ -40,5 +49,41 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// panelConfirmacion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelConfirmacion;
+
+        /// <summary>
+        /// hiddenIdTurno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenIdTurno;
+
+        /// <summary>
+        /// btnConfirmarCancelar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarCancelar;
+
+        /// <summary>
+        /// btnCancelar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
     }
 }

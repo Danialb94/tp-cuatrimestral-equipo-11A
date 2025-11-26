@@ -38,25 +38,33 @@
                         <label for="txtEmail" class="form-label fw-bold">Correo electrónico</label>
                         <asp:TextBox ID="txtEmail" CssClass="form-control p-2" placeholder="Ingresá tu correo" TextMode="Email" runat="server"></asp:TextBox>
                     </div>
-
                     <div class="mb-3">
-                        <label for="txtPassword" class="form-label fw-bold">Contraseña</label>
+                        <label class="form-label fw-bold">Contraseña</label>
+
                         <div class="input-group">
-                            <asp:TextBox ID="txtPassword" CssClass="form-control p-2" placeholder="Ingresá tu contraseña" TextMode="Password" runat="server"></asp:TextBox>
-                            <span class="input-group-text bg-white border-start-0">
-                                <i class="bi bi-eye"></i>
+                            <asp:TextBox ID="txtPassword" CssClass="form-control p-2"
+                                placeholder="Ingresá tu contraseña"
+                                TextMode="Password" runat="server">
+                            </asp:TextBox>
 
-                            </span>
-
+                            <button type="button"
+                                class="input-group-text bg-white border-start-0"
+                                onclick="togglePassword()"
+                                style="cursor: pointer; width: 45px;">
+                                <i id="iconPassword" class="bi bi-eye fs-5"></i>
+                            </button>
                         </div>
                     </div>
+
+
+
 
                     <div class="d-flex justify-content-end mb-3">
                         <a href="OlvidarPass.aspx" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
                     </div>
 
 
-                    <asp:Button ID="btnSubmit" Text="Ingresar" CssClass="btn btn-primary w-100 py-2" runat="server" OnClick="btnLogin_Click"/>
+                    <asp:Button ID="btnSubmit" Text="Ingresar" CssClass="btn btn-primary w-100 py-2" runat="server" OnClick="btnLogin_Click" />
 
                     <div class="text-center mt-3">
                         <span class="text-muted">¿No tenés una cuenta?</span>
@@ -74,4 +82,20 @@
 
         </div>
     </div>
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('<%= txtPassword.ClientID %>');
+            const icon = document.getElementById('iconPassword');
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
 </asp:Content>

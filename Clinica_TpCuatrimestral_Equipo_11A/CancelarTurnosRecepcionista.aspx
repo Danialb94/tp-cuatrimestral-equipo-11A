@@ -20,32 +20,52 @@
                     </div>
                 </div>
 
-                <asp:GridView ID="dgvCancelarTurnosRecepcionista" runat="server"
-                    CssClass="table table-bordered text-center align-middle"
-                    AutoGenerateColumns="false" OnRowCommand="dgvCancelarTurnosRecepcionista_RowCommand">
-                    <Columns>
-                        <asp:BoundField DataField="FechaHora" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                        <asp:TemplateField HeaderText="Paciente">
-                            <ItemTemplate><%# Eval("Paciente.Nombre") %></ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Médico">
-                            <ItemTemplate><%# Eval("Medico.Nombre") %></ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Especialidad">
-                            <ItemTemplate><%# Eval("Especialidad.Descripcion") %></ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                        <asp:TemplateField HeaderText="Acción">
-                            <ItemTemplate>
-                                <asp:Button runat="server" Text="Cancelar" CommandName="CancelarTurno"
-                                    CommandArgument='<%# Eval("IdTurno") %>'
-                                     CssClass="btn btn-primary" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+                
+                <asp:UpdatePanel ID="updCancelarTurno" runat="server">
+                    <ContentTemplate>
 
-                <asp:Label ID="lblMensaje" runat="server" CssClass="text-success fw-semibold mt-3 d-block"></asp:Label>
+                        <asp:GridView ID="dgvCancelarTurnosRecepcionista" runat="server"
+                            CssClass="table table-bordered text-center align-middle"
+                            AutoGenerateColumns="false" OnRowCommand="dgvCancelarTurnosRecepcionista_RowCommand">
+                            <Columns>
+                                <asp:BoundField DataField="FechaHora" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                                <asp:TemplateField HeaderText="Paciente">
+                                    <ItemTemplate><%# Eval("Paciente.Nombre") %></ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Médico">
+                                    <ItemTemplate><%# Eval("Medico.Nombre") %></ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Especialidad">
+                                    <ItemTemplate><%# Eval("Especialidad.Descripcion") %></ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                                <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" Text="Cancelar" CommandName="CancelarTurno"
+                                            CommandArgument='<%# Eval("IdTurno") %>'
+                                             CssClass="btn btn-primary" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+
+                        <asp:Label ID="lblMensaje" runat="server" CssClass="text-success fw-semibold mt-3 d-block"></asp:Label>
+
+                      
+                        <asp:Panel ID="panelConfirmacion" runat="server" CssClass="border rounded p-3 bg-light mt-3" Visible="false">
+                            <h5>Confirmar cancelación</h5>
+                            <p>¿Desea cancelar la agenda seleccionada?</p>
+
+                            <asp:HiddenField ID="hiddenIdTurno" runat="server" />
+
+                            <asp:Button ID="btnConfirmarCancelar" runat="server" Text="Sí, cancelar"
+                                CssClass="btn btn-primary me-2" OnClick="btnConfirmarCancelar_Click" />
+                            <asp:Button ID="btnCancelar" runat="server" Text="No"
+                                CssClass="btn btn-secondary" OnClick="btnCancelar_Click" />
+                        </asp:Panel>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
 
             </div>
         </div>
