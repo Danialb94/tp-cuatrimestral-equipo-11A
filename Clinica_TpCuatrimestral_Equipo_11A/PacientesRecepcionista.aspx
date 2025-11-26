@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="fw-bold">Pacientes Registrados</h4>
-                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AltaPaciente.aspx">Nuevo Paciente</a>
+                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AltaPaciente.aspx"> Nuevo Paciente</a>
             </div>
             <div>
                 <div class="d-flex mb-2 justify-content-between rounded-2" style="background-color: #d3d3d38f; width: 450px;">

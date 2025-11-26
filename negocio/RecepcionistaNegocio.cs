@@ -192,14 +192,13 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void AgregarMedico(Medico nuevo, List<string> diasSeleccionados, string franjaHoraria)
+        public void AgregarMedico(Medico nuevo, List<EspecialidadHorario> configuraciones)
         {
             AccesoDatos datos = new AccesoDatos();
             int idMedico = 0;
 
             try
             {
-
                 datos.setearConsulta(@"
             DECLARE @IDU int, @IDP int;
 
@@ -219,7 +218,6 @@ namespace negocio
             SELECT SCOPE_IDENTITY() AS IdMedico;
         ");
 
-
                 datos.setearParametro("@Email", nuevo.Usuario.Email);
                 datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
                 datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
@@ -230,30 +228,33 @@ namespace negocio
 
                 datos.ejecutarLectura();
 
-
                 if (datos.Lector.Read())
                     idMedico = Convert.ToInt32(datos.Lector["IdMedico"]);
 
                 datos.cerrarConexion();
-                foreach (string dia in diasSeleccionados)
+
+                // Recorrer cada especialidad con sus días y horarios
+                foreach (var config in configuraciones)
                 {
-                    int diaSemana = ObtenerNumeroDia(dia);
-                    int idHorario = ObtenerIdHorario(diaSemana, franjaHoraria);
-
-                    foreach (Especialidad esp in nuevo.Especialidades)
+                    foreach (string dia in config.Dias)
                     {
-                        datos = new AccesoDatos();
-                        datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades (IdMedico, IdHorario, IdEspecialidad) VALUES (@idMedico, @idHorario, @idEspecialidad)");
+                        int diaSemana = ObtenerNumeroDia(dia);
 
-                        datos.setearParametro("@IdMedico", idMedico);
-                        datos.setearParametro("@IdHorario", idHorario);
-                        datos.setearParametro("@IdEspecialidad", esp.IdEspecialidad);
+                        foreach (string franja in config.FranjasHorarias)
+                        {
+                            int idHorario = ObtenerIdHorario(diaSemana, franja);
+                            if (idHorario == 0) continue;
 
-                        datos.ejecutarAccion();
-                        datos.cerrarConexion();
+                            datos = new AccesoDatos();
+                            datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades (IdMedico, IdHorario, IdEspecialidad) VALUES (@idMedico, @idHorario, @idEspecialidad)");
+                            datos.setearParametro("@idMedico", idMedico);
+                            datos.setearParametro("@idHorario", idHorario);
+                            datos.setearParametro("@idEspecialidad", config.Especialidad.IdEspecialidad);
+                            datos.ejecutarAccion();
+                            datos.cerrarConexion();
+                        }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -264,6 +265,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
         private int ObtenerNumeroDia(string dia)
         {
             switch (dia.ToLower())
@@ -283,10 +285,19 @@ namespace negocio
 
         private int ObtenerIdHorario(int diaSemana, string franja)
         {
+            if (string.IsNullOrWhiteSpace(franja) || !franja.Contains("-"))
+                return 0;
 
             string[] partes = franja.Split('-');
-            string entrada = partes[0].Trim();
-            string salida = partes[1].Trim();
+            if (partes.Length != 2)
+                return 0;
+
+            string entradaStr = partes[0].Trim();
+            string salidaStr = partes[1].Trim();
+
+            TimeSpan entrada, salida;
+            if (!TimeSpan.TryParse(entradaStr, out entrada) || !TimeSpan.TryParse(salidaStr, out salida))
+                return 0;
 
             AccesoDatos datos = new AccesoDatos();
             try
@@ -307,6 +318,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
 
 
 

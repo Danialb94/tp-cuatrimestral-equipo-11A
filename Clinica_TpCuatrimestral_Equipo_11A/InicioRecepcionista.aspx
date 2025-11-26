@@ -41,7 +41,7 @@
                         ID="btnLimpiarFiltros" 
                         runat="server" 
                         Text="Limpiar Filtros" 
-                        CssClass="btn btn-secondary" 
+                        CssClass="btn btn-primary" 
                         OnClick="btnLimpiarFiltros_Click" />
                 </div>
             </div>

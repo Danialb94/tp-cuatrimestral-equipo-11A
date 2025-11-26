@@ -49,7 +49,19 @@
             </div>
 
             <div class="row mb-3">
-                <asp:ListBox ID="lstEspecialidades" runat="server" SelectionMode="Multiple" CssClass="form-control" Height="150px"></asp:ListBox>
+
+               
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Especialidad</label>
+                    <asp:DropDownList
+                        ID="ddlEspecialidades"
+                        runat="server"
+                        CssClass="form-select"
+                        Style="height: 36px; font-size: 14px;">
+                    </asp:DropDownList>
+                </div>
+
+               
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Matrícula</label>
                     <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" />
@@ -57,6 +69,7 @@
                     <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtMatricula" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
                     <asp:RegularExpressionValidator ErrorMessage="No es un formato válido" ControlToValidate="txtMatricula" ValidationExpression="^((M\.?\s?(P|N)\.?\s?\d{4,6})|\d{4,6})$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
+
             </div>
 
             <div class="row mb-3">
@@ -88,12 +101,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="mt-3">
-                <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary me-2" Text="Guardar médico" OnClick="btnGuardar_Click" />
-                <a href="MedicosRecepcionista.aspx" class="btn btn-secondary">Cancelar</a>
+                <asp:Button ID="btnAgregarEspecialidad" runat="server" CssClass="btn btn-primary me-2" Text="Agregar especialidad" OnClick="btnAgregarEspecialidad_Click" />
 
-            </div>
+                <div class="mt-3">
+                    <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary me-2" Text="Guardar médico" OnClick="btnGuardar_Click" />
+                    <a href="MedicosRecepcionista.aspx" class="btn btn-secondary">Cancelar</a>
+
+                </div>
         </form>
     </div>
 </asp:Content>

@@ -10,7 +10,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="fw-bold">Médicos Registrados</h4>
-                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx">Nuevo Médico</a>
+                <a class="bi bi-plus-circle me-1 btn btn-primary" href="AgregarMedico.aspx"> Nuevo Médico</a>
             </div>
 
             <asp:UpdatePanel ID="updPanelMedicos" runat="server">

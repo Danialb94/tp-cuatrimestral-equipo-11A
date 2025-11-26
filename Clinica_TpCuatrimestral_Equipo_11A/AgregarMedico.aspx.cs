@@ -26,10 +26,10 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 EspecialidadNegocio negocio = new EspecialidadNegocio();
                 List<Especialidad> lista = negocio.listar();
 
-                lstEspecialidades.DataSource = lista;
-                lstEspecialidades.DataTextField = "Descripcion";
-                lstEspecialidades.DataValueField = "IdEspecialidad";
-                lstEspecialidades.DataBind();
+                ddlEspecialidades.DataSource = lista;
+                ddlEspecialidades.DataTextField = "Descripcion";
+                ddlEspecialidades.DataValueField = "IdEspecialidad";
+                ddlEspecialidades.DataBind();
             }
             catch (Exception ex)
             {
@@ -38,6 +38,42 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
         }
 
+        protected void btnAgregarEspecialidad_Click(object sender, EventArgs e)
+        {
+            List<string> diasSeleccionados = new List<string>();
+            if (chkLunes.Checked) diasSeleccionados.Add("Lunes");
+            if (chkMartes.Checked) diasSeleccionados.Add("Martes");
+            if (chkMiercoles.Checked) diasSeleccionados.Add("Miércoles");
+            if (chkJueves.Checked) diasSeleccionados.Add("Jueves");
+            if (chkViernes.Checked) diasSeleccionados.Add("Viernes");
+
+            string franja = txtFranjaHoraria.Text;
+
+            EspecialidadHorario config = new EspecialidadHorario
+            {
+                Especialidad = new Especialidad
+                {
+                    IdEspecialidad = int.Parse(ddlEspecialidades.SelectedValue),
+                    Descripcion = ddlEspecialidades.SelectedItem.Text
+                },
+                Dias = diasSeleccionados,
+                FranjasHorarias = new List<string> { franja }
+            };
+
+            // Guardar en Session
+            List<EspecialidadHorario> lista;
+            if (Session["Configuraciones"] == null)
+                lista = new List<EspecialidadHorario>();
+            else
+                lista = (List<EspecialidadHorario>)Session["Configuraciones"];
+
+            lista.Add(config);
+            Session["Configuraciones"] = lista;
+
+            // Limpiar campos visualmente
+            txtFranjaHoraria.Text = "";
+            chkLunes.Checked = chkMartes.Checked = chkMiercoles.Checked = chkJueves.Checked = chkViernes.Checked = false;
+        }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -61,7 +97,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             nuevo.Usuario.Contrasenia = claveTemporal;
             nuevo.Usuario.Permiso = new Permiso() { IdPermiso = 2 };
             nuevo.Especialidades = new List<Especialidad> {
-        new Especialidad { IdEspecialidad = int.Parse(lstEspecialidades.SelectedValue) }
+        new Especialidad { IdEspecialidad = int.Parse(ddlEspecialidades.SelectedValue) }
     };
 
             List<string> diasSeleccionados = new List<string>();
@@ -76,7 +112,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             RecepcionistaNegocio negocio = new RecepcionistaNegocio();
             nuevo.Especialidades = new List<Especialidad>();
 
-            foreach (ListItem item in lstEspecialidades.Items)
+            foreach (ListItem item in ddlEspecialidades.Items)
             {
                 if (item.Selected)
                 {
@@ -87,7 +123,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     });
                 }
             }
-            negocio.AgregarMedico(nuevo, diasSeleccionados, franjaHoraria);
+            List<EspecialidadHorario> configuraciones = (List<EspecialidadHorario>)Session["Configuraciones"];
+            negocio.AgregarMedico(nuevo, configuraciones);
+
 
 
             EmailService emailService = new EmailService("programacionpruebamail@gmail.com", "wnzlnohczkdzlbas");

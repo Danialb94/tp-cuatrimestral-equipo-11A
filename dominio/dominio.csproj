@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Administrador.cs" />
     <Compile Include="Especialidad.cs" />
+    <Compile Include="EspecialidadHorario.cs" />
     <Compile Include="RegistroClinico.cs" />
     <Compile Include="Horario.cs" />
     <Compile Include="Imagen.cs" />
