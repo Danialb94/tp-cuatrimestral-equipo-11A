@@ -6,6 +6,7 @@
         .is-invalid {
             border-color: #dc3545 !important;
         }
+
         .invalid-feedback {
             display: block;
             font-size: 0.875rem;
@@ -57,6 +58,12 @@
                             <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" />
                             <asp:Label ID="lblErrorApellido" runat="server" CssClass="invalid-feedback text-danger"></asp:Label>
                         </div>
+                        <!-- Foto de perfil -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Foto de perfil (URL)</label>
+                            <asp:TextBox ID="txtFoto" runat="server" CssClass="form-control" />
+                        </div>
+
                     </div>
 
                     <!-- Datos de contacto -->

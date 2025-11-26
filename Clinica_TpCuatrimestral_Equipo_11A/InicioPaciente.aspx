@@ -4,9 +4,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
-        <h2 class="fw-bold">Bienvenido,</h2>
-        <div class="card shadow-sm border-0">
+        <h2 class="fw-bold mb-1">
+            <asp:Label ID="lblSaludo" runat="server"></asp:Label>,
+        <asp:Label ID="lblNombrePaciente" runat="server" CssClass="fw-bold"></asp:Label>
+        </h2>
+        <p class="text-muted mb-4" style="font-size: 0.95rem;">
+            Acá podés ver tus turnos próximos y gestionar su cancelación si lo necesitás.
+        </p>
+        <div class="card shadow-sm border-0 rounded-3">
             <div class="card-body">
+
                 <div class="d-flex justify-content-between mb-3">
                     <asp:Label ID="lblTitulo" runat="server"
                         Text="Turnos Próximos"
