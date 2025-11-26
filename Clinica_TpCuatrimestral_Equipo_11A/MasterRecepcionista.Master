@@ -11,7 +11,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-         <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <div class="d-flex">
 
             <div class="bg-light border-end vh-100 p-3 shadow-sm" style="width: 250px;">

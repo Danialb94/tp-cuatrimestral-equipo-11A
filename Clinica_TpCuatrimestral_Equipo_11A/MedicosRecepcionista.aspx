@@ -4,7 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
     <div class="card shadow-sm border-0">
         <div class="card-body">
@@ -81,7 +80,7 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:Panel ID="panelConfirmacion" runat="server" CssClass="border rounded p-3 bg-light" Visible="false">
+                    <asp:Panel ID="panelConfirmacion" runat="server" CssClass="border rounded p-3 bg-light mt-3" Visible="false">
                         <h5>Confirmar cancelación</h5>
                         <p>¿Desea cancelar la agenda seleccionada?</p>
 
@@ -96,4 +95,5 @@
             </asp:UpdatePanel>
         </div>
     </div>
+
 </asp:Content>

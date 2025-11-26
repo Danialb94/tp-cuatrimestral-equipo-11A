@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="container mt-4">
         <div class="card shadow-sm border-0">
             <div class="card-body">
@@ -20,7 +21,6 @@
                     </div>
                 </div>
 
-                
                 <asp:UpdatePanel ID="updCancelarTurno" runat="server">
                     <ContentTemplate>
 
@@ -43,7 +43,7 @@
                                     <ItemTemplate>
                                         <asp:Button runat="server" Text="Cancelar" CommandName="CancelarTurno"
                                             CommandArgument='<%# Eval("IdTurno") %>'
-                                             CssClass="btn btn-primary" />
+                                            CssClass="btn btn-primary" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -51,7 +51,6 @@
 
                         <asp:Label ID="lblMensaje" runat="server" CssClass="text-success fw-semibold mt-3 d-block"></asp:Label>
 
-                      
                         <asp:Panel ID="panelConfirmacion" runat="server" CssClass="border rounded p-3 bg-light mt-3" Visible="false">
                             <h5>Confirmar cancelación</h5>
                             <p>¿Desea cancelar la agenda seleccionada?</p>
@@ -70,4 +69,5 @@
             </div>
         </div>
     </div>
+
 </asp:Content>
