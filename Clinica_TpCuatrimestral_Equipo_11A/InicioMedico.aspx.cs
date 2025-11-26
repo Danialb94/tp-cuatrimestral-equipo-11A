@@ -79,6 +79,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 TurnoNegocio negTurno = new TurnoNegocio();
                 Turno turno = negTurno.ObtenerPorId(idTurno);
 
+                if (turno.Estado == "Atendido" || turno.Estado == "Cancelado por Clínica"
+                || turno.Estado == "Cancelado por Paciente" || negTurno.ExisteRegistro(idTurno))
+                {
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        GetType(),
+                        "alertaRegistro",
+                        "alert('⚠ Este turno ya fue atendido o Cancelado o ya tiene un registro clínico. Solo puede ver o editar desde Pacientes.');",
+                        true
+                    );
+                    return;
+                }
+
                 if (turno != null)
                 {
                     PacienteNegocio negPaciente = new PacienteNegocio();

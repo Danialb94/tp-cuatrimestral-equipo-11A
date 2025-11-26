@@ -539,6 +539,28 @@ namespace negocio
             }
         }
 
+        public bool ExisteRegistro(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM RegistroClinico WHERE IdTurno = @IdTurno");
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0] > 0;
+
+                return false;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
 }
 
