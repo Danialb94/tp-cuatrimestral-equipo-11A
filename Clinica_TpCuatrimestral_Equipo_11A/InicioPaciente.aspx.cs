@@ -1,12 +1,12 @@
-﻿using dominio;
-using negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
 {
@@ -22,6 +22,12 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             {
                 Response.Redirect("Default.aspx");
             }
+            string nombre = paciente.Nombre.Trim();
+            string saludo = (nombre.EndsWith("a", StringComparison.OrdinalIgnoreCase))
+                            ? "Bienvenida"
+                            : "Bienvenido";
+            lblSaludo.Text = saludo;
+            lblNombrePaciente.Text = paciente.Nombre + " " + paciente.Apellido;
             CargarTurnos();
         }
 

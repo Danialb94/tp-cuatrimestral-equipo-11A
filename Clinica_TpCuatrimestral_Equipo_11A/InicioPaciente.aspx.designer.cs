@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <generado automáticamente>
-//     Este código fue generado por una herramienta.
+// <generato automaticamente>
+//     Questo codice è stato generato da uno strumento.
 //
-//     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
-//     se vuelve a generar el código. 
-// </generado automáticamente>
+//     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
+//     il codice viene rigenerato. 
+// </generato automaticamente>
 //------------------------------------------------------------------------------
 
 namespace Clinica_TpCuatrimestral_Equipo_11A
@@ -15,38 +15,56 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
     {
 
         /// <summary>
-        /// Control lblTitulo.
+        /// Controllo lblSaludo.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSaludo;
+
+        /// <summary>
+        /// Controllo lblNombrePaciente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombrePaciente;
+
+        /// <summary>
+        /// Controllo lblTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTitulo;
 
         /// <summary>
-        /// Control gvTurnos.
+        /// Controllo gvTurnos.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvTurnos;
 
         /// <summary>
-        /// Control hdnTurnoId.
+        /// Controllo hdnTurnoId.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnTurnoId;
 
         /// <summary>
-        /// Control btnConfirmarCancelar.
+        /// Controllo btnConfirmarCancelar.
         /// </summary>
         /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnConfirmarCancelar;
     }

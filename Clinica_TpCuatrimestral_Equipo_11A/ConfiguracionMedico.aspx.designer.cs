@@ -60,6 +60,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.Label lblErrorApellido;
 
         /// <summary>
+        /// Controllo txtFoto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFoto;
+
+        /// <summary>
         /// Controllo txtCorreo.
         /// </summary>
         /// <remarks>

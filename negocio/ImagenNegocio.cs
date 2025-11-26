@@ -69,5 +69,36 @@ namespace negocio
             }
         }
 
+        public void AgregarImagenMedico(Imagen imagen, int idPersona)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                INSERT INTO Imagenes (UrlImagen)
+                VALUES (@UrlImagen);
+                DECLARE @NuevoID INT = SCOPE_IDENTITY();       
+                UPDATE Personas
+                SET IdImagen = @NuevoID
+                WHERE IdPersona = @IdPersona;
+                ");
+
+                datos.setearParametro("@UrlImagen", imagen.UrlImagen);
+                datos.setearParametro("@IdPersona", idPersona);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
 }

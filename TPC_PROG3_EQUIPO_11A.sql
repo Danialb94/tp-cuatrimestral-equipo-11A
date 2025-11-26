@@ -277,11 +277,10 @@ CREATE TABLE Turnos (
 GO
 
 
-
 INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, Motivo, IdEstado, IdEspecialidad) VALUES
 (1, 1, '20251029 08:00:00', 'Dolor de cabeza muy intenso' , 1, 1),
 -- Valeria Torres, Dra. Ana Martinez, CLINICA
-(1, 2, '20251125 11:00:00', 'Tiene tos y mocos desde hace dos días' , 2, 2);
+(1, 2, '20251125 11:00:00', 'Tiene tos y mocos desde hace dos días' , 2, 2),
 -- Valeria Torres, Dra. Laura Fernández, PEDIATRIA
 (1, 1, '20251203 10:00:00', 'Chequeo de rutina cardiológico' , 2, 3),
 -- Valeria Torres, Dra. Ana Martinez, CARDIOLOGIA
@@ -311,7 +310,7 @@ INSERT INTO Turnos (IdPaciente, IdMedico, FechaTurno, Motivo, IdEstado, IdEspeci
 -- Fernando Castro, Dra. María López, TRAUMATOLOGÍA
 (2, 4, '20251128 16:00:00', 'Chequeo' , 2, 6),
 -- Diego Morales, Dra. María López, TRAUMATOLOGÍA
-(2, 2, '20251125 09:00:00', 'Tiene dolor de garganta' , 3, 2);
+(2, 2, '20251125 09:00:00', 'Tiene dolor de garganta', 3, 2);
 -- Diego Morales, Dra. Laura Fernández, PEDIATRIA
 GO
 -- Tabla RegistroClinico

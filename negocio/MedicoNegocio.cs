@@ -639,6 +639,43 @@ namespace negocio
             }
         }
 
+        public void ActualizarFoto(Medico medico)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                if (medico.Imagen == null || string.IsNullOrWhiteSpace(medico.Imagen.UrlImagen))
+                {
+                    // Quitar imagen
+                    datos.setearConsulta("UPDATE Personas SET IdImagen = NULL WHERE IdPersona = @IdPersona");
+                    datos.setearParametro("@IdPersona", medico.IdPersona);
+                    datos.ejecutarAccion();
+                }
+                else if (medico.Imagen.IdImagen > 0)
+                {
+                    // Actualizar imagen existente
+                    ImagenNegocio imgNeg = new ImagenNegocio();
+                    imgNeg.Modificar(medico.Imagen);
+                }
+                else
+                {
+                    // Agregar nueva imagen
+                    ImagenNegocio imgNeg = new ImagenNegocio();
+                    imgNeg.AgregarImagenMedico(medico.Imagen, medico.IdPersona);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
     }
 }

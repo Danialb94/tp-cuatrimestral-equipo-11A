@@ -29,6 +29,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                 txtNombre.Text = medico.Nombre;
                 txtApellido.Text = medico.Apellido;
+                txtFoto.Text = medico.Imagen != null ? medico.Imagen.UrlImagen : "";
                 txtTelefono.Text = medico.Telefono;
                 txtCorreo.Text = medico.Email;
                 lblMatricula.Text = medico.Matricula;
@@ -108,14 +109,48 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 if (!valido)
                     return;
 
+                bool sinCambios =
+                    medico.Nombre == txtNombre.Text.Trim() &&
+                    medico.Apellido == txtApellido.Text.Trim() &&
+                    medico.Telefono == txtTelefono.Text.Trim() &&
+                    medico.Email == txtCorreo.Text.Trim() &&
+                    ((medico.Imagen == null && string.IsNullOrWhiteSpace(txtFoto.Text)) ||
+                    (medico.Imagen != null && medico.Imagen.UrlImagen == txtFoto.Text.Trim()));
+
+                if (sinCambios)
+                {
+                    lblMensajeGeneral.Text = "⚠ No se detectaron cambios. La información permanece igual.";
+                    lblMensajeGeneral.CssClass = "text-secondary fw-semibold";
+                    return;
+                }
+
                 // Actualiza los datos
                 medico.Nombre = txtNombre.Text.Trim();
                 medico.Apellido = txtApellido.Text.Trim();
                 medico.Telefono = txtTelefono.Text.Trim();
                 medico.Email = txtCorreo.Text.Trim();
 
+
+
+                string nuevaFoto = txtFoto.Text.Trim();
+
+                if (string.IsNullOrEmpty(nuevaFoto))
+                {
+
+                    medico.Imagen = null;
+                }
+                else
+                {
+
+                    if (medico.Imagen == null)
+                        medico.Imagen = new Imagen();
+
+                    medico.Imagen.UrlImagen = nuevaFoto;
+                }
+
                 MedicoNegocio negocio = new MedicoNegocio();
                 negocio.ActualizarDatosBasicos(medico);
+                negocio.ActualizarFoto(medico);
                 Session["Medico"] = medico;
 
                 lblMensajeGeneral.Text = "Los datos se actualizaron correctamente.";
