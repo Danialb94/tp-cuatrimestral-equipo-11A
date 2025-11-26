@@ -24,6 +24,15 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.DropDownList ddlEspecialidadesRecepcionista;
 
         /// <summary>
+        /// lblRecordatorioFiltros control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRecordatorioFiltros;
+
+        /// <summary>
         /// ddlEstado control.
         /// </summary>
         /// <remarks>

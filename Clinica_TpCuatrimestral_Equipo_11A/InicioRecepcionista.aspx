@@ -9,12 +9,29 @@
             <h4 class="fw-bold mb-3">Historial de turnos</h4>
 
             <div class="mb-4 d-flex">
-                <div class="me-3">
+                <div class="me-3 position-relative">
                     <label class="form-label fw-bold">Especialidades</label>
+
                     <asp:DropDownList
-                        ID="ddlEspecialidadesRecepcionista" runat="server" CssClass="border-dark-subtle rounded-2 form-select" Style="width: 240px;" AutoPostBack="true" OnSelectedIndexChanged="AplicarFiltros">
+                        ID="ddlEspecialidadesRecepcionista"
+                        runat="server"
+                        CssClass="border-dark-subtle rounded-2 form-select"
+                        Style="width: 240px;"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="AplicarFiltros">
                     </asp:DropDownList>
+
+                   
+                    <asp:Label
+                        ID="lblRecordatorioFiltros"
+                        runat="server"
+                        Text="* Recuerde limpiar los filtros"
+                        CssClass="text-muted position-absolute"
+                        Style="font-size: 11px; bottom: -18px; left: 0;">
+                    </asp:Label>
                 </div>
+
+
                 <div class="me-3">
                     <label class="form-label fw-bold">Estado</label>
                     <asp:DropDownList
@@ -25,7 +42,7 @@
                         OnSelectedIndexChanged="AplicarFiltros">
                     </asp:DropDownList>
                 </div>
-                <div class="me-3"> 
+                <div class="me-3">
                     <label class="form-label fw-bold">Desde</label>
                     <asp:TextBox
                         ID="txtFechaDesde"
@@ -37,11 +54,11 @@
                     </asp:TextBox>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
-                    <asp:Button 
-                        ID="btnLimpiarFiltros" 
-                        runat="server" 
-                        Text="Limpiar Filtros" 
-                        CssClass="btn btn-primary" 
+                    <asp:Button
+                        ID="btnLimpiarFiltros"
+                        runat="server"
+                        Text="Limpiar Filtros"
+                        CssClass="btn btn-primary"
                         OnClick="btnLimpiarFiltros_Click" />
                 </div>
             </div>

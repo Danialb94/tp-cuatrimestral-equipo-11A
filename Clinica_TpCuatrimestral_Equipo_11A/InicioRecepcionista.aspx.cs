@@ -69,8 +69,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         private void cargarTurnosRecepcionista()
         {
-            TurnoNegocio negocio = new TurnoNegocio();
-            List<Turno> listaTurnos = negocio.listarTurnos();
+            RecepcionistaNegocio negocio = new RecepcionistaNegocio();
+            List<Turno> listaTurnos = negocio.listarTurnosRecep();
             Session["ListaTurnosCompleta"] = listaTurnos;
             gvTurnosRecepcionista.DataSource = listaTurnos;
             gvTurnosRecepcionista.DataBind();
