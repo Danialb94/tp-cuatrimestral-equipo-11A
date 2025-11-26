@@ -54,6 +54,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                         // Guardamos el objeto médico completo para usar en MasterMedico y otras páginas
                         Session["Paciente"] = paciente;
+                        paciente.IdUsuario = usuario.IdUsuario;
 
                         Response.Redirect("InicioPaciente.aspx", false);
                     }

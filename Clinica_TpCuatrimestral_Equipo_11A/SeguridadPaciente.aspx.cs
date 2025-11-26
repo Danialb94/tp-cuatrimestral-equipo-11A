@@ -26,6 +26,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     return;
                 }
 
+               
+
+
                 string actual = txtActualClave.Text;
                 string nueva = txtNuevaClave.Text;
                 string confirmar = txtConfirmarClave.Text;
@@ -47,7 +50,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                     return;
                 }
 
-                // ⚠️ Nueva validación: que la nueva no sea igual a la actual
+                //  Nueva validación: que la nueva no sea igual a la actual
                 if (nueva == actual)
                 {
                     lblErrorNueva.Text = "La nueva contraseña no puede ser igual a la actual.";
@@ -55,7 +58,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 }
 
                 // Actualizar la contraseña
-                negocio.ActualizarClave(paciente.IdUsuario, actual);
+                negocio.ActualizarClave(paciente.IdUsuario, nueva);
+
+
 
                 lblMensajeGeneral.Text = "Contraseña actualizada correctamente.";
                 lblMensajeGeneral.CssClass = "text-success";

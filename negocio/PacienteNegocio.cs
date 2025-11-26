@@ -489,6 +489,33 @@ namespace negocio
             }
         }
 
+        public int ObtenerIdPacientePorUsuario(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(
+                    "SELECT P.IdPaciente " +
+                    "FROM Pacientes P " +
+                    "INNER JOIN Personas Per ON P.IdPersona = Per.IdPersona " +
+                    "INNER JOIN Usuarios U ON Per.IdUsuario = U.IdUsuario " +
+                    "WHERE U.IdUsuario = @idUsuario"
+                );
+
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["IdPaciente"];
+
+                return -1;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
         public List<Paciente> ListarPorMedico(int idMedico)
         {
@@ -638,25 +665,7 @@ namespace negocio
             }
         }
 
-        public int ObtenerIdPacientePorUsuario(int idUsuario)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("SELECT P.IdPaciente FROM Pacientes P JOIN Personas PE ON P.IdPersona = PE.IdPersona WHERE PE.IdUsuario = @idUsuario");
-                datos.setearParametro("@idUsuario", idUsuario);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
-                    return (int)datos.Lector["IdPaciente"];
-                else
-                    throw new Exception("No se encontró el paciente para ese usuario.");
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+       
 
 
     }
