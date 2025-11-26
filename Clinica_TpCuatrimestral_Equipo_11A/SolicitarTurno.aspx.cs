@@ -220,6 +220,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void dgvFechas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName != "SeleccionarTurno")
+                return;
             // Obtener la fecha completa del CommandArgument
             DateTime fechaCompleta = DateTime.Parse(e.CommandArgument.ToString());
 
@@ -239,6 +241,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
+            if (!Page.IsValid)
+                return;
             try
             {
                 Turno turno = new Turno();

@@ -212,6 +212,9 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
         protected void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
+            if (!Page.IsValid)
+                return;
+
             try
             {
                 Turno turno = new Turno();

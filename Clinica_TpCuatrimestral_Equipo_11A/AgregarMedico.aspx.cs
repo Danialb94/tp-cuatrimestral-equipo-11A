@@ -38,6 +38,29 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }
         }
 
+        private void ActualizarLabel()
+        {
+            var lista = Session["Configuraciones"] as List<EspecialidadHorario>;
+
+            if (lista == null || lista.Count == 0)
+            {
+                lblResumenEspecialidades.Visible = false;
+                return;
+            }
+
+            lblResumenEspecialidades.Visible = true;
+            lblResumenEspecialidades.Text = "Especialidades cargadas:<br/>";
+
+            foreach (var item in lista)
+            {
+                string dias = string.Join(", ", item.Dias);
+                string franjas = string.Join(" | ", item.FranjasHorarias);
+
+                lblResumenEspecialidades.Text +=
+                    $"- {item.Especialidad.Descripcion} → {dias} | {franjas}<br/>";
+            }
+        }
+
         protected void btnAgregarEspecialidad_Click(object sender, EventArgs e)
         {
             List<string> diasSeleccionados = new List<string>();
@@ -73,6 +96,8 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             // Limpiar campos visualmente
             txtFranjaHoraria.Text = "";
             chkLunes.Checked = chkMartes.Checked = chkMiercoles.Checked = chkJueves.Checked = chkViernes.Checked = false;
+
+            ActualizarLabel();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)

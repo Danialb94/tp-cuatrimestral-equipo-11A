@@ -23,6 +23,9 @@
                         <div class="col" id="CampoMotivo" runat="server">
                             <label class="form-label fw-bold">Motivo de la consulta:</label>
                             <asp:TextBox ID="txtMotivoConsulta" runat="server" class="h-50 form-control" placeholder="Ej: Control, Consulta general..." />
+                             <asp:RequiredFieldValidator  ID="rfvMotivoConsulta" runat="server" ControlToValidate="txtMotivoConsulta" ErrorMessage="El motivo es obligatorio" ValidationGroup="TurnoVal" Display="Dynamic" CssClass="text-danger" />
+                            <asp:RegularExpressionValidator runat="server" ControlToValidate="txtMotivoConsulta" ErrorMessage="Motivo inválido (no puede ser vacío, solo espacios ni solo números. Máx. 200 caracteres)" ValidationGroup="TurnoVal" ValidationExpression="^(?=.*\S)(?!^\d+$).{1,200}$" Display="Dynamic" CssClass="text-danger" />
+
                         </div>
                     </div>
                 </div>
@@ -89,6 +92,7 @@
                                 <asp:Button ID="btnConfirmarTurno" runat="server"
                                     Text="Confirmar Turno"
                                     CssClass="btn btn-primary"
+                                    ValidationGroup="TurnoVal"
                                     OnClick="btnConfirmarTurno_Click" />
                             </div>
                         </div>

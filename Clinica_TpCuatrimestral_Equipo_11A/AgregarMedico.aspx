@@ -50,7 +50,7 @@
 
             <div class="row mb-3">
 
-               
+
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Especialidad</label>
                     <asp:DropDownList
@@ -61,7 +61,7 @@
                     </asp:DropDownList>
                 </div>
 
-               
+
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Matrícula</label>
                     <asp:TextBox ID="txtMatricula" runat="server" CssClass="form-control" />
@@ -103,6 +103,8 @@
             </div>
             <div class="mt-3">
                 <asp:Button ID="btnAgregarEspecialidad" runat="server" CssClass="btn btn-primary me-2" Text="Agregar especialidad" OnClick="btnAgregarEspecialidad_Click" />
+                <asp:Label ID="lblResumenEspecialidades" runat="server" CssClass="text-primary fw-bold mt-3 d-block" Visible="false">
+                </asp:Label>
 
                 <div class="mt-3">
                     <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary me-2" Text="Guardar médico" OnClick="btnGuardar_Click" />

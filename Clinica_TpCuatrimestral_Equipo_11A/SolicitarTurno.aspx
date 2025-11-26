@@ -23,6 +23,8 @@
                         <div class="col" id="CampoMotivo" runat="server">
                             <label class="form-label fw-bold">Motivo de la consulta:</label>
                             <asp:TextBox ID="txtMotivoConsulta" runat="server" class="h-50 form-control" placeholder="Ej: Control, Consulta general..." />
+                            <asp:RequiredFieldValidator ID="rfvMotivoConsulta" runat="server" ControlToValidate="txtMotivoConsulta" ErrorMessage="El motivo es obligatorio" ValidationGroup="TurnoVal" Display="Dynamic" CssClass="text-danger" />
+                            <asp:RegularExpressionValidator runat="server" ControlToValidate="txtMotivoConsulta" ErrorMessage="Motivo inválido (no puede ser vacío, solo espacios ni solo números. Máx. 200 caracteres)" ValidationGroup="TurnoVal" ValidationExpression="^(?=.*\S)(?!^\d+$).{1,200}$" Display="Dynamic" CssClass="text-danger" />
                         </div>
                     </div>
                 </div>
@@ -40,13 +42,14 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <asp:Label Text="" runat="server" ID="aviso" class="text-danger"/>
+                                    <asp:Label Text="" runat="server" ID="aviso" class="text-danger" />
 
                                 </div>
                             </div>
                             <asp:GridView ID="dgvFechas" runat="server" AutoGenerateColumns="false"
                                 CssClass="table table-striped"
-                                OnRowCommand="dgvFechas_RowCommand">
+                                OnRowCommand="dgvFechas_RowCommand"
+                                ValidationGroup="TurnoVal">
                                 <Columns>
                                     <asp:BoundField HeaderText="Especialidad" DataField="Especialidad" />
                                     <asp:BoundField HeaderText="Profesional" DataField="Medico" />
@@ -60,7 +63,9 @@
                                                 CssClass="btn btn-sm btn-primary"
                                                 Text="Seleccionar"
                                                 CommandName="SeleccionarTurno"
-                                                CommandArgument='<%# Eval("FechaCompleta") %>'>
+                                                CommandArgument='<%# Eval("FechaCompleta") %>'
+                                                CausesValidation="true"
+                                                ValidationGroup="TurnoVal">
                                             </asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -89,6 +94,8 @@
                                 <asp:Button ID="btnConfirmarTurno" runat="server"
                                     Text="Confirmar Turno"
                                     CssClass="btn btn-primary"
+                                    ValidationGroup="TurnoVal"
+                                    CausesValidation="true"
                                     OnClick="btnConfirmarTurno_Click" />
                             </div>
                         </div>
@@ -97,11 +104,11 @@
             </div>
         </div>
     </div>
-        <script>
-            function abrirModal() {
-                var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-                modal.show();
-                return false;
-            }
-        </script>
+    <script>
+        function abrirModal() {
+            var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            modal.show();
+            return false;
+        }
+    </script>
 </asp:Content>

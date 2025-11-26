@@ -83,4 +83,94 @@
             <div class="text-center mt-3">
                 <a href="Default.aspx" class="text-decoration-none">Volver al inicio</a>
             </div>
+           <script>
+               document.addEventListener("DOMContentLoaded", function () {
+                  
+                   var ids = [
+            '<%= txtCodigo1.ClientID %>',
+            '<%= txtCodigo2.ClientID %>',
+            '<%= txtCodigo3.ClientID %>',
+            '<%= txtCodigo4.ClientID %>',
+            '<%= txtCodigo5.ClientID %>',
+            '<%= txtCodigo6.ClientID %>'
+        ];
+
+        var inputs = ids.map(function(id) { return document.getElementById(id); });
+
+        inputs.forEach(function(input, index) {
+            if (!input) return;
+
+            
+            input.setAttribute('maxlength', '1');
+           
+            input.setAttribute('inputmode', 'numeric');
+            input.setAttribute('autocomplete', 'off');
+
+            input.addEventListener('input', function (e) {
+               
+                this.value = this.value.replace(/[^0-9]/g, '');
+
+               
+                if (this.value.length > 1) {
+                    var chars = this.value.split('');
+                    this.value = chars[0];
+                    var k = 1;
+                    for (var j = index + 1; j < inputs.length && k < chars.length; j++, k++) {
+                        inputs[j].value = chars[k].replace(/[^0-9]/g, '');
+                    }
+                }
+
+                
+                if (this.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                    inputs[index + 1].select();
+                }
+
+              
+                // var allFilled = inputs.every(i => i && i.value.length === 1);
+                // if (allFilled) document.getElementById('<%= btnSubmit.ClientID %>').removeAttribute('disabled');
+            });
+
+            
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                    inputs[index - 1].select();
+                }
+                
+                if (['ArrowLeft', 'ArrowRight', 'Tab', 'Delete'].indexOf(e.key) !== -1) {
+                    return;
+                }
+              
+                if (!/^\d$/.test(e.key) && e.key.length === 1) {
+                    e.preventDefault();
+                }
+            });
+
+            
+            input.addEventListener('paste', function (e) {
+                e.preventDefault();
+                var paste = (e.clipboardData || window.clipboardData).getData('text');
+                paste = paste.replace(/[^0-9]/g, '');
+                if (!paste) return;
+                var chars = paste.split('');
+               
+                this.value = chars[0];
+                var k = 1;
+                for (var j = index + 1; j < inputs.length && k < chars.length; j++, k++) {
+                    inputs[j].value = chars[k];
+                }
+                
+                for (var n = index; n < inputs.length; n++) {
+                    if (inputs[n] && inputs[n].value.length === 0) {
+                        inputs[n].focus();
+                        break;
+                    }
+                }
+            });
+        });
+    });
+           </script>
+
+
 </asp:Content>

@@ -192,7 +192,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        private bool ExisteHorarioParaMedico(int idMedico, int idHorario)
+        private bool ExisteHorarioParaMedico(int idMedico, int idHorario, int idEspecialidad)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -200,11 +200,12 @@ namespace negocio
                 datos.setearConsulta(
                     "SELECT COUNT(*) AS Cantidad " +
                     "FROM MedicosHorariosEspecialidades " +
-                    "WHERE IdMedico = @idMedico AND IdHorario = @idHorario"
+                    "WHERE IdMedico = @idMedico AND IdHorario = @idHorario AND IdEspecialidad = @idEspecialidad"
                 );
 
                 datos.setearParametro("@idMedico", idMedico);
                 datos.setearParametro("@idHorario", idHorario);
+                datos.setearParametro("@idEspecialidad", idEspecialidad);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -212,6 +213,35 @@ namespace negocio
                     int cantidad = Convert.ToInt32(datos.Lector["Cantidad"]);
                     return cantidad > 0;
                 }
+                return false;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        private bool ExisteConfiguracion(int idMedico, int idHorario, int idEspecialidad)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+            SELECT COUNT(*) AS Cantidad 
+            FROM MedicosHorariosEspecialidades 
+            WHERE IdMedico = @idMedico 
+              AND IdHorario = @idHorario 
+              AND IdEspecialidad = @idEspecialidad
+        ");
+
+                datos.setearParametro("@idMedico", idMedico);
+                datos.setearParametro("@idHorario", idHorario);
+                datos.setearParametro("@idEspecialidad", idEspecialidad);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return Convert.ToInt32(datos.Lector["Cantidad"]) > 0;
+
                 return false;
             }
             finally
@@ -279,19 +309,37 @@ SELECT SCOPE_IDENTITY() AS IdMedico;
 
                         foreach (string franja in config.FranjasHorarias)
                         {
-                           
+
                             string[] partes = franja.Split('-');
-                            TimeSpan horaEntrada = TimeSpan.Parse(partes[0].Trim());
-                            TimeSpan horaSalida = TimeSpan.Parse(partes[1].Trim());
+                            if (partes.Length != 2)
+                                continue;
+
+                            TimeSpan horaEntrada, horaSalida;
+
+                            bool entradaOk = TimeSpan.TryParse(partes[0].Trim(), out horaEntrada);
+                            bool salidaOk = TimeSpan.TryParse(partes[1].Trim(), out horaSalida);
+
+                            if (!entradaOk && int.TryParse(partes[0].Trim(), out int entradaInt))
+                                horaEntrada = new TimeSpan(entradaInt, 0, 0);
+
+                            if (!salidaOk && int.TryParse(partes[1].Trim(), out int salidaInt))
+                                horaSalida = new TimeSpan(salidaInt, 0, 0);
 
                            
+                            if (horaEntrada == default || horaSalida == default)
+                                continue;
+
+
+
                             int idHorario = ObtenerIdHorario(diaSemana, franja);
                             if (idHorario == 0)
                                 continue;
 
-                          
-                            if (ExisteHorarioParaMedico(idMedico, idHorario))
+
+                            if (ExisteConfiguracion(idMedico, idHorario, config.Especialidad.IdEspecialidad))
                                 continue;
+
+
 
                             datos = new AccesoDatos();
                             datos.setearConsulta("INSERT INTO MedicosHorariosEspecialidades VALUES (@idMedico, @idHorario, @idEspecialidad)");
