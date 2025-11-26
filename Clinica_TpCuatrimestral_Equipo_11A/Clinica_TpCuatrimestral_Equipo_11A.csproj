@@ -68,6 +68,7 @@
     <Content Include="DetalleRegistroMedico.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Imagenes\gatito_error.png" />
+    <Content Include="InformeRegistroMedico.aspx" />
     <Content Include="NuevoRegistroMedico.aspx" />
     <Content Include="AgregarMedico.aspx" />
     <Content Include="AltaPaciente.aspx" />
@@ -118,6 +119,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InformeRegistroMedico.aspx.cs">
+      <DependentUpon>InformeRegistroMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeRegistroMedico.aspx.designer.cs">
+      <DependentUpon>InformeRegistroMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="NuevoRegistroMedico.aspx.cs">
       <DependentUpon>NuevoRegistroMedico.aspx</DependentUpon>

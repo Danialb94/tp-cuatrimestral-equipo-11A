@@ -56,13 +56,21 @@
                         CssClass="btn btn-success"
                         OnClick="btnGuardar_Click" Visible="false" />
 
-                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+                    <asp:Button ID="btnCancelar" runat="server" Text="⬅️ Volver"
                         CssClass="btn btn-secondary"
                         PostBackUrl="~/RegistroConsultaMedico.aspx" />
 
                     <asp:Button ID="btnImprimir" runat="server" Text="🖨️ Imprimir"
-                        CssClass="btn btn-outline-dark" />
+                        CssClass="btn btn-outline-dark"
+                        OnClick="btnImprimir_Click" />
+
+
                 </div>
+                <!-- Mensaje de resultado -->
+                <asp:Label ID="lblResultado" runat="server"
+                    CssClass="fw-bold mt-3 d-block"
+                    Visible="false" />
+
             </div>
         </div>
     </div>

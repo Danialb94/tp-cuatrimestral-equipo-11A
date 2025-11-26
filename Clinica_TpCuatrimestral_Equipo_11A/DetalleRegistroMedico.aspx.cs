@@ -79,20 +79,29 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
                 RegistroClinico registro = new RegistroClinico
                 {
-                    Diagnostico = txtDiagnostico.Text,
-                    Observacion = txtObservacion.Text,
-                    Tratamiento = txtTratamiento.Text
+                    Diagnostico = txtDiagnostico.Text.Trim(),
+                    Observacion = txtObservacion.Text.Trim(),
+                    Tratamiento = txtTratamiento.Text.Trim()
                 };
 
                 negocio.ActualizarRegistroClinico(idRegistro, registro);
 
-                Response.Redirect("RegistroConsultaMedico.aspx", false);
+                // Mostrar mensaje de éxito
+                lblResultado.Text = "✅ Los cambios se guardaron correctamente.";
+                lblResultado.CssClass = "text-success fw-bold mt-3 d-block";
+                lblResultado.Visible = true;
+
+                // Bloquear edición y volver a mostrar botón Editar
+                HabilitarEdicion(false);
             }
             catch
             {
-                Response.Write("<script>alert('Error al guardar los cambios.');</script>");
+                lblResultado.Text = "❌ Error al guardar los cambios.";
+                lblResultado.CssClass = "text-danger fw-bold mt-3 d-block";
+                lblResultado.Visible = true;
             }
         }
+
 
 
         private void HabilitarEdicion(bool habilitar)
@@ -102,6 +111,11 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             txtTratamiento.ReadOnly = !habilitar;
             btnGuardar.Visible = habilitar;
             btnEditar.Visible = !habilitar;
+        }
+
+        protected void btnImprimir_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("InformeRegistroMedico.aspx?id=" + Request.QueryString["id"], false);
         }
     }
 }
