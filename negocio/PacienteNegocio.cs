@@ -110,7 +110,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("UPDATE Pacientes SET IdTipoDocumento = @IdTipoDocumento, Documento = @Documento, Domicilio = @Domicilio, FechaNacimiento = @FechaNacimiento, IdCobertura = @IdCobertura WHERE IdPaciente = @IdPaciente; go UPDATE Personas  SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono WHERE IdPersona = @IdPersona; go UPDATE Usuarios  SET Email = @Email, Contrasenia = @Contrasenia IdPermiso = @IdPermiso WHERE IdUsuario = @IdUsuario;");
+                datos.setearConsulta("UPDATE Pacientes SET IdTipoDocumento = @IdTipoDocumento, Documento = @Documento, Domicilio = @Domicilio, FechaNacimiento = @FechaNacimiento, IdCobertura = @IdCobertura WHERE IdPaciente = @IdPaciente;  UPDATE Personas  SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono WHERE IdPersona = @IdPersona; UPDATE Usuarios SET Email = @Email, Contrasenia = @Contrasenia, IdPermiso = @IdPermiso WHERE IdUsuario = @IdUsuario;");
                 //USUARIO
                 datos.setearParametro("@IdPaciente", nuevo.IdPaciente);
                 datos.setearParametro("@Email", nuevo.Usuario.Email);
@@ -167,6 +167,71 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void ModificarPac(Paciente nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"
+            UPDATE Pacientes 
+            SET IdTipoDocumento = @IdTipoDocumento, 
+                Documento = @Documento, 
+                Domicilio = @Domicilio, 
+                FechaNacimiento = @FechaNacimiento, 
+                IdCobertura = @IdCobertura 
+            WHERE IdPaciente = @IdPaciente;
+
+            UPDATE Personas  
+            SET Nombre = @Nombre, 
+                Apellido = @Apellido, 
+                Telefono = @Telefono,
+                IdImagen = (SELECT IdImagen FROM Imagenes WHERE UrlImagen = @UrlImagen)
+            WHERE IdPersona = @IdPersona;
+
+            UPDATE Usuarios  
+            SET Email = @Email, 
+                Contrasenia = @Contrasenia, 
+                IdPermiso = @IdPermiso 
+            WHERE IdUsuario = @IdUsuario;
+        ");
+
+                // Parámetros
+                datos.setearParametro("@IdPaciente", nuevo.IdPaciente);
+                if (nuevo.Usuario == null || string.IsNullOrEmpty(nuevo.Usuario.Email))
+                    throw new Exception("El objeto Usuario no está correctamente cargado.");
+
+                datos.setearParametro("@Email", nuevo.Usuario.Email);
+                datos.setearParametro("@Contrasenia", nuevo.Usuario.Contrasenia);
+                datos.setearParametro("@IdPermiso", nuevo.Usuario.Permiso.IdPermiso);
+
+                datos.setearParametro("@IdPersona", nuevo.IdPersona);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+                datos.setearParametro("@UrlImagen", nuevo.Imagen.UrlImagen);
+
+                datos.setearParametro("@IdUsuario", nuevo.IdUsuario);
+                datos.setearParametro("@IdTipoDocumento", nuevo.TipoDocumento.IdTipoDocumento);
+                datos.setearParametro("@Documento", nuevo.Documento);
+                datos.setearParametro("@Domicilio", nuevo.Domicilio);
+                datos.setearParametro("@FechaNacimiento", nuevo.FechaNacimiento);
+                datos.setearParametro("@IdCobertura", nuevo.Cobertura.IdCobertura);
+
+                // Ejecutar acción
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
         public Paciente BuscarPorIdUsuario(int idUsuario)
         {
@@ -483,6 +548,115 @@ namespace negocio
         }
 
 
+        public Paciente BuscarPorIdPac(int idPaciente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Paciente paciente = new Paciente();
+
+            try
+            {
+                datos.setearConsulta(@"
+        SELECT 
+            U.IdUsuario,
+            U.Email,
+            U.Contrasenia,
+            U.IdPermiso,
+            P.IdPaciente,
+            PE.IdPersona,
+            PE.Nombre,
+            PE.Apellido,
+            PE.Telefono,
+            TD.Descripcion AS TipoDocumento,
+            P.IdTipoDocumento,
+            P.Documento,
+            P.Domicilio,
+            P.FechaNacimiento,
+            C.Descripcion AS Cobertura,
+            P.IdCobertura,
+            I.IdImagen,
+            I.UrlImagen
+        FROM Pacientes P
+        JOIN TiposDocumento TD ON TD.IdTipoDocumento = P.IdTipoDocumento
+        JOIN Coberturas C ON C.IdCobertura = P.IdCobertura
+        JOIN Personas PE ON PE.IdPersona = P.IdPersona
+        JOIN Usuarios U ON U.IdUsuario = PE.IdUsuario
+        LEFT JOIN Imagenes I ON I.IdImagen = PE.IdImagen
+        WHERE P.IdPaciente = @IdPaciente
+        ");
+
+                datos.setearParametro("@IdPaciente", idPaciente);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    
+                    paciente.Usuario = new Usuario();
+                    paciente.Usuario.IdUsuario = (int)datos.Lector["IdUsuario"];
+                    paciente.Usuario.Email = (string)datos.Lector["Email"];
+                    paciente.Usuario.Contrasenia = (string)datos.Lector["Contrasenia"];
+                    paciente.Usuario.Permiso = new Permiso { IdPermiso = (int)datos.Lector["IdPermiso"] };
+
+              
+                    paciente.IdPaciente = (int)datos.Lector["IdPaciente"];
+                    paciente.IdPersona = (int)datos.Lector["IdPersona"];
+                    paciente.Nombre = (string)datos.Lector["Nombre"];
+                    paciente.Apellido = (string)datos.Lector["Apellido"];
+                    paciente.Telefono = datos.Lector["Telefono"].ToString();
+
+                    paciente.TipoDocumento = new TipoDocumento();
+                    paciente.TipoDocumento.IdTipoDocumento = (int)datos.Lector["IdTipoDocumento"];
+                    paciente.TipoDocumento.Descripcion = (string)datos.Lector["TipoDocumento"];
+
+                    paciente.Documento = datos.Lector["Documento"].ToString();
+                    paciente.Domicilio = (string)datos.Lector["Domicilio"];
+                    paciente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+
+                    paciente.Cobertura = new Cobertura();
+                    paciente.Cobertura.IdCobertura = (int)datos.Lector["IdCobertura"];
+                    paciente.Cobertura.Descripcion = (string)datos.Lector["Cobertura"];
+
+                    paciente.Imagen = new Imagen();
+                    if (!(datos.Lector["IdImagen"] is DBNull))
+                    {
+                        paciente.Imagen.IdImagen = (int)datos.Lector["IdImagen"];
+                        paciente.Imagen.UrlImagen = (string)datos.Lector["UrlImagen"];
+                    }
+
+                    paciente.Alergias = ListarAlergias(paciente.IdPaciente);
+                    paciente.CondicionBase = ListarCondiciones(paciente.IdPaciente);
+                }
+
+                return paciente;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar paciente por IdPaciente", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public int ObtenerIdPacientePorUsuario(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT P.IdPaciente FROM Pacientes P JOIN Personas PE ON P.IdPersona = PE.IdPersona WHERE PE.IdUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["IdPaciente"];
+                else
+                    throw new Exception("No se encontró el paciente para ese usuario.");
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
     }
