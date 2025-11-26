@@ -75,6 +75,11 @@
                 <h2 class="fw-bold mt-2">ClinicApp</h2>
                 <p class="text-muted">Informe clínico del paciente</p>
             </div>
+           <!-- DATOS DEL MÉDICO -->
+            <h4 class="section-title">Datos del médico</h4>
+            <p><strong>Médico:</strong> <asp:Label ID="lblMedico" runat="server" /></p>
+            <p><strong>Matrícula:</strong> <asp:Label ID="lblMatricula" runat="server" /></p>
+            <p><strong>Especialidad:</strong> <asp:Label ID="lblEspecialidad" runat="server" /></p>
 
             <!-- DATOS DEL PACIENTE -->
             <h4 class="section-title">Datos del paciente</h4>

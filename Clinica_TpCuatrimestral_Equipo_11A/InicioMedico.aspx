@@ -73,22 +73,14 @@
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
 
-                                <!-- Registro clínico -->
-                                <%--<asp:LinkButton ID="btnRegistro" runat="server"
-                                    CssClass="btn btn-outline-primary btn-sm me-1 rounded-pill"
-                                    CommandName="Registro"
-                                    CommandArgument="<%# Container.DataItemIndex %>"
-                                    data-bs-toggle="tooltip" title="Registrar atención del paciente">
-                                    📝
-                                </asp:LinkButton>--%>
+
 
                                 <!-- Detalles -->
                                 <asp:LinkButton ID="btnDetalle" runat="server"
                                     CssClass="btn btn-outline-primary btn-sm me-1 rounded-pill action-btn"
                                     CommandName="Detalle"
                                     CommandArgument="<%# Container.DataItemIndex %>"
-                                    data-bs-toggle="tooltip" title="Ver detalles del turno">
-            🔍
+                                    data-bs-toggle="tooltip" title="Ver detalles del turno">🔍
                                 </asp:LinkButton>
 
                                 <!-- Nueva consulta -->
@@ -96,8 +88,7 @@
                                     CssClass="btn btn-outline-primary btn-sm rounded-pill action-btn"
                                     CommandName="NuevaConsulta"
                                     CommandArgument="<%# Container.DataItemIndex %>"
-                                    data-bs-toggle="tooltip" title="Agregar nueva consulta médica">
-            ➕
+                                    data-bs-toggle="tooltip" title="Agregar nueva consulta médica"> ➕
                                 </asp:LinkButton>
 
                             </ItemTemplate>
@@ -105,6 +96,9 @@
 
                     </Columns>
                 </asp:GridView>
+                <asp:Label ID="lblSinTurnos" runat="server"
+                    CssClass="text-muted fw-bold mt-3 d-block"
+                    Visible="false" />
 
             </div>
         </div>

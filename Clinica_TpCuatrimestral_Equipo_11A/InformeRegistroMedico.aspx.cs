@@ -30,7 +30,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         private void CargarInforme(int idTurno)
         {
             TurnoNegocio negocio = new TurnoNegocio();
-            Turno turno = negocio.ObtenerPorId(idTurno);
+            Turno turno = negocio.ObtenerDatosCompletosDelTurno(idTurno);
+
+
+            if (turno.Medico != null)
+            {
+                lblMedico.Text = turno.Medico.Nombre + " " + turno.Medico.Apellido;
+                lblMatricula.Text = turno.Medico.Matricula;
+            }
+
+            if (turno.Especialidad != null)
+            {
+                lblEspecialidad.Text = turno.Especialidad.Descripcion;
+            }
 
             if (turno == null) return;
 

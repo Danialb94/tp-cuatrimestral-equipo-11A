@@ -38,9 +38,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
 
             var negocio = new MedicoNegocio();
             var turnos = negocio.ListarTurnos(medico.IdMedico)
-                                .Where(t => t.FechaHora >= fecha.Date &&
-                                            t.FechaHora < fecha.Date.AddDays(1))
-                                .ToList();
+                .Where(t => t.FechaHora >= fecha.Date &&
+                    t.FechaHora < fecha.Date.AddDays(1) &&
+                    (t.Estado == "Pendiente" || t.Estado == "Atendido"))
+                .OrderBy(t => t.Estado == "Atendido")
+                .ThenBy(t => t.FechaHora)
+                .ToList();
+
+
 
             lblTotalTurnos.Text = turnos.Count.ToString();
             lblAtendidos.Text = turnos.Count(t => t.Estado == "Atendido").ToString();
@@ -58,6 +63,19 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             }).ToList();
 
             gvTurnos.DataBind();
+
+            if (turnos.Count == 0)
+            {
+                gvTurnos.Visible = false;
+                lblSinTurnos.Visible = true;
+                lblSinTurnos.Text = "📭 No hay turnos pendientes para esta fecha.";
+            }
+            else
+            {
+                gvTurnos.Visible = true;
+                lblSinTurnos.Visible = false;
+            }
+
         }
         protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
         {

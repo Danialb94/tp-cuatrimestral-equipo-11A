@@ -560,6 +560,90 @@ namespace negocio
             }
         }
 
+        public Turno ObtenerDatosCompletosDelTurno(int idTurno)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+                SELECT 
+                T.IdTurno,
+                T.FechaTurno,
+                T.Motivo,         
+                PA.IdPaciente,
+                P.Nombre AS NombrePaciente,
+                P.Apellido AS ApellidoPaciente,
+                M.IdMedico,
+                PM.Nombre AS NombreMedico,
+                PM.Apellido AS ApellidoMedico,
+                M.Matricula,
+                ESP.IdEspecialidad,
+                ESP.Descripcion AS Especialidad,        
+                RC.IdRegistro,
+                RC.Diagnostico,
+                RC.Observacion,
+                RC.Tratamiento
+                FROM Turnos T
+                INNER JOIN Pacientes PA ON T.IdPaciente = PA.IdPaciente
+                INNER JOIN Personas P ON PA.IdPersona = P.IdPersona
+                INNER JOIN Medicos M ON T.IdMedico = M.IdMedico
+                INNER JOIN Personas PM ON M.IdPersona = PM.IdPersona
+                INNER JOIN Especialidades ESP ON ESP.IdEspecialidad = T.IdEspecialidad
+                LEFT JOIN RegistroClinico RC ON RC.IdTurno = T.IdTurno
+                WHERE T.IdTurno = @IdTurno
+                ORDER BY RC.IdRegistro DESC
+                ");
+
+                datos.setearParametro("@IdTurno", idTurno);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Turno turno = new Turno();
+
+                    turno.IdTurno = (int)datos.Lector["IdTurno"];
+                    turno.FechaHora = (DateTime)datos.Lector["FechaTurno"];
+                    turno.Motivo = datos.Lector["Motivo"].ToString();
+
+                    turno.Paciente = new Paciente
+                    {
+                        IdPaciente = (int)datos.Lector["IdPaciente"],
+                        Nombre = datos.Lector["NombrePaciente"].ToString(),
+                        Apellido = datos.Lector["ApellidoPaciente"].ToString()
+                    };
+
+                    turno.Medico = new Medico
+                    {
+                        IdMedico = (int)datos.Lector["IdMedico"],
+                        Nombre = datos.Lector["NombreMedico"].ToString(),
+                        Apellido = datos.Lector["ApellidoMedico"].ToString(),
+                        Matricula = datos.Lector["Matricula"].ToString()
+                    };
+
+                    turno.Especialidad = new Especialidad
+                    {
+                        IdEspecialidad = (int)datos.Lector["IdEspecialidad"],
+                        Descripcion = datos.Lector["Especialidad"].ToString()
+                    };
+
+                    turno.Registros = new List<RegistroClinico>();
+                    turno.Registros.Add(new RegistroClinico
+                    {
+                        IdRegistro = datos.Lector["IdRegistro"] != DBNull.Value ? (int)datos.Lector["IdRegistro"] : 0,
+                        Diagnostico = datos.Lector["Diagnostico"]?.ToString(),
+                        Observacion = datos.Lector["Observacion"]?.ToString(),
+                        Tratamiento = datos.Lector["Tratamiento"]?.ToString()
+                    });
+
+                    return turno;
+                }
+
+                return null;
+            }
+            finally { datos.cerrarConexion(); }
+        }
+
 
     }
 }

@@ -85,5 +85,14 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvTurnos;
+
+        /// <summary>
+        /// Controllo lblSinTurnos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinTurnos;
     }
 }
