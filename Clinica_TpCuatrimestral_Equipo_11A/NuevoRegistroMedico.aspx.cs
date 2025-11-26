@@ -104,7 +104,12 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
             TurnoNegocio negocio = new TurnoNegocio();
             negocio.AgregarConsulta(idTurno, registro);
 
-            Response.Redirect("RegistroConsultaMedico.aspx", false);
+            lblResultado.Text = "✅ La consulta fue registrada correctamente.";
+            lblResultado.CssClass = "text-success fw-bold mt-3 d-block";
+            lblResultado.Visible = true;
+
+            
+            
         }
 
 

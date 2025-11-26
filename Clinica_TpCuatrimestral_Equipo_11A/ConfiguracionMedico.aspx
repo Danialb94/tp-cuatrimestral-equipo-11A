@@ -97,7 +97,7 @@
                     <div class="mt-4">
                         <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios" CssClass="btn btn-primary me-2"
                             OnClick="btnGuardar_Click" />
-                        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary"
+                        <asp:Button ID="btnVolver" runat="server" Text="⬅️ Volver" CssClass="btn btn-secondary rounded-pill"
                             PostBackUrl="~/InicioMedico.aspx" />
                     </div>
 

@@ -123,13 +123,13 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
         protected global::System.Web.UI.WebControls.Button btnGuardar;
 
         /// <summary>
-        /// Controllo btnCancelar.
+        /// Controllo btnVolver.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
         /// Controllo lblMensajeGeneral.

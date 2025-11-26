@@ -84,9 +84,8 @@
 
                     <asp:Button ID="btnVolverInicio" runat="server" Text="Volver al inicio"
                         CssClass="btn btn-outline-dark" Visible="false" OnClick="btnVolverInicio_Click" />
-
                 </div>
-
+                <asp:Label ID="lblResultado" runat="server" CssClass="fw-bold mt-3 d-block" Visible="false" />
             </div>
         </div>
 
