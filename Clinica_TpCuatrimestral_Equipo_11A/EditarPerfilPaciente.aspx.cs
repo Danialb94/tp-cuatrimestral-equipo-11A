@@ -34,7 +34,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 txtDNI.Text = paciente.Documento;
                 txtNacimiento.Text = paciente.FechaNacimiento.ToString("dd/MM/yyyy");
                 txtDireccion.Text = paciente.Domicilio;
-                txtEmail.Text = paciente.Email;
+                txtEmail.Text = paciente.Usuario.Email;
                 txtTelefono.Text = paciente.Telefono;
                 txtCobertura.Text = paciente.Cobertura.Descripcion;
                 txtFoto.Text = paciente.Imagen.UrlImagen;
@@ -61,7 +61,7 @@ namespace Clinica_TpCuatrimestral_Equipo_11A
                 }
 
                 paciente.Domicilio = txtDireccion.Text;
-                paciente.Email = txtEmail.Text;
+                paciente.Usuario.Email = txtEmail.Text;
                 paciente.Telefono = txtTelefono.Text;
                 paciente.Imagen.UrlImagen = txtFoto.Text;
 

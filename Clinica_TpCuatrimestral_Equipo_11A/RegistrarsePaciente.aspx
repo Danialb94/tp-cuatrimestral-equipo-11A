@@ -75,13 +75,22 @@
                     <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtTelefono" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
 
                 </div>
-                <div class="col-12 mb-3">
+                <div class="col-12 mb-3 position-relative">
                     <label for="txtPassword" class="form-label">Contraseña</label>
-                    <asp:TextBox ID="txtPassword" CssClass="form-control" placeholder="Ingresa tu contraseña" TextMode="Password" oninput="verificarPassword()" runat="server"></asp:TextBox>
+
+                    <div class="input-group">
+                        <asp:TextBox ID="txtPassword" CssClass="form-control" placeholder="Ingresa tu contraseña" TextMode="Password"  oninput="verificarPassword()" runat="server" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
+                            <i id="iconoPassword" class="bi bi-eye"></i>
+                        </button>
+                    </div>
                     <asp:RequiredFieldValidator ErrorMessage="La contraseña es obligatoria" ControlToValidate="txtPassword" Display="Dynamic" CssClass="text-danger" runat="server" />
                     <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtPassword" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
                     <asp:RegularExpressionValidator ErrorMessage="No cumple con los requisitos" ControlToValidate="txtPassword" ValidationExpression="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
+
+
+
                 <div>
                     <label for="ddlCobertura">Obra Social</label>
                     <asp:DropDownList ID="ddlCobertura" runat="server" CssClass="form-select border-dark-subtle w-100">
@@ -91,14 +100,10 @@
                 <div>
                     <label for="txtFoto">Foto de Perfil</label>
                     <asp:TextBox runat="server" ID="txtFoto" placeholder="https://foto.com" class="border-dark-subtle form-control" />
-                     <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtFoto" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
-                     <asp:RegularExpressionValidator ErrorMessage="No tiene un formato válido" ControlToValidate="txtFoto" ValidationExpression="^(https?:\/\/.*\.(?:png|jpg|jpeg|gif))$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="No se permiten espacios vacíos" ControlToValidate="txtFoto" ValidationExpression="^\S(.*\S)?$" Display="Dynamic" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ErrorMessage="La URL no es válida o supera los 1000 caracteres" ControlToValidate="txtFoto" ValidationExpression="^(?=.{1,1000}$)(https?:\/\/.*\.(png|jpg|jpeg|gif))$" Display="Dynamic" CssClass="text-danger" runat="server" />
                 </div>
-
-
             </div>
-
-
             <div class="row mt-3">
                 <div class="col-6">
                     <div class="form-check">
@@ -161,4 +166,20 @@
         }
     </script>
 
+    <script>
+        function togglePassword() {
+            const passInput = document.getElementById('<%= txtPassword.ClientID %>');
+            const icon = document.getElementById('iconoPassword');
+
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                passInput.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
 </asp:Content>
